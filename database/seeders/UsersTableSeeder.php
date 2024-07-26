@@ -56,7 +56,7 @@ class UsersTableSeeder extends Seeder
             'guard_name' => 'web',
         ]);
         Role::create([
-            'name' => 'volonteer',
+            'name' => 'volunteer',
             'guard_name' => 'web',
         ]);
         Role::create([
