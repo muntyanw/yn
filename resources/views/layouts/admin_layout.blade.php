@@ -49,7 +49,7 @@
                             class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
+                    <a href={{route('dashboard') }} class="nav-link">{{ __('Home') }}</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -204,7 +204,7 @@
                         <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">{{ Auth::user()->first_name }}</a>
                     </div>
                 </div>
 
@@ -239,15 +239,115 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin_volunteers_list') }}" class="nav-link">
                                         <i class="fas fa-user-friends"></i>
-                                        <p>{{ __('List') }}</p>
+                                        <p class="ml-3">{{ __('List') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin_volunteer_create') }}" class="nav-link">
-                                        <p>
-                                            <i class="fas fa-user-plus"></i>
+                                        <i class="fas fa-user-plus"></i>
+                                        <p class="ml-3">
+                                            {{ __('Create') }}
                                         </p>
-                                        {{ __('Create') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="fab fa-readme"></i>
+                                <p>
+                                    {{ __('Reports') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_reports_list') }}" class="nav-link">
+                                        <i class="fas fa-layer-group"></i>
+                                        <p class="ml-3">{{ __('List') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_report_create') }}" class="nav-link">
+                                        <i class="fas fa-plus"></i>
+                                        <p class="ml-3">
+                                            {{ __('Create') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-tools"></i>
+                                <p>
+                                    {{ __('Skills') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_skills_list') }}" class="nav-link">
+                                        <i class="fas fa-tasks"></i>
+                                        <p class="ml-3">{{ __('List') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_skill_create') }}" class="nav-link">
+                                        <i class="fas fa-plus"></i>
+                                        <p class="ml-3">
+                                            {{ __('Create') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-bullhorn"></i>
+                                <p>
+                                    {{ __('Offers') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_offers_index') }}" class="nav-link">
+                                        <i class="fas fa-briefcase"></i>
+                                        <p class="ml-3">{{ __('List') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_offer_create') }}" class="nav-link">
+                                        <i class="fas fa-plus"></i>
+                                        <p class="ml-3">
+                                            {{ __('Create') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-award"></i>
+                                <p>
+                                    {{ __('Tenders') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_tender_index') }}" class="nav-link">
+                                        <i class="fas fa-bars"></i>
+                                        <p class="ml-3">{{ __('List') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_tender_create') }}" class="nav-link">
+                                        <i class="fas fa-plus"></i>
+                                        <p class="ml-3">
+                                            {{ __('Create') }}
+                                        </p>
                                     </a>
                                 </li>
                             </ul>

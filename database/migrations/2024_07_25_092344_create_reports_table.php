@@ -19,6 +19,14 @@ class CreateReportsTable extends Migration
             $table->text('text'); // Текст звіту
             $table->timestamps(); // Created_at and updated_at
         });
+
+        Schema::create('report_photos', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('report_id')->constrained()->onDelete('cascade');
+            $table->string('photo');
+            $table->string('html_link');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -29,5 +37,6 @@ class CreateReportsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('reports');
+        Schema::dropIfExists('report_photos');
     }
 }
