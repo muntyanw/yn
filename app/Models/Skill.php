@@ -18,4 +18,9 @@ class Skill extends Model
         return $this->belongsToMany(Offer::class);
     }
 
+    public function volunteers()
+{
+    return $this->belongsToMany(Volunteer::class, 'skill_volunteer');
+}
+
 }

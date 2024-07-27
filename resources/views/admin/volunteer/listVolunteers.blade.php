@@ -1,62 +1,57 @@
 @extends('layouts.admin_layout')
 
-@section('title', __('List'))
+@section('title', __('Volunteers'))
 
 @section('content')
-    <div class="container mt-5 mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>{{ __('Volunteers') }} {{ __('List') }}</h2>
-            <a href="{{ route('admin_volunteer_create') }}" class="btn btn-primary">{{ __('Create') }}</a>
-        </div>
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ __('Volunteers') }}</h2>
+        <a href="{{ route('admin_volunteer_create') }}" class="btn btn-primary">{{ __('Add New Volunteer') }}</a>
+    </div>
 
-        <table class="table table-striped table-hover">
+    @if($volunteers->isEmpty())
+        <p>{{ __('No volunteers found') }}</p>
+    @else
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>{{ __('Photo') }}</th>
-                    <th>{{ __('First Name') }}</th>
-                    <th>{{ __('Middle Name') }}</th>
-                    <th>{{ __('Last Name') }}</th>
-                    <th>{{ __('Email') }}</th>
+                    <th>{{ __('Name') }}</th>
                     <th>{{ __('Phone') }}</th>
+                    <th>{{ __('Email') }}</th>
+                    <th>{{ __('Skills') }}</th>
                     <th>{{ __('Actions') }}</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($volunteers as $volunteer)
+                @foreach($volunteers as $volunteer)
                     <tr>
                         <td>
                             @if($volunteer->photo)
-                                <img src="{{ asset('storage/' . $volunteer->photo) }}" alt="{{ $volunteer->first_name }}'s Photo" class="img-thumbnail" width="100">
+                                <img src="{{ asset('storage/' . $volunteer->photo) }}" alt="{{ $volunteer->first_name }}" style="width: 50px; height: 50px;">
                             @else
-                                <img src="{{ asset('images/default-avatar.png') }}" alt="Default Photo" class="img-thumbnail" width="100">
+                                {{ __('No Photo') }}
                             @endif
                         </td>
-                        <td>{{ $volunteer->first_name }}</td>
-                        <td>{{ $volunteer->middle_name }}</td>
-                        <td>{{ $volunteer->last_name }}</td>
-                        <td>{{ $volunteer->email }}</td>
+                        <td>{{ $volunteer->first_name }} {{ $volunteer->last_name }}</td>
                         <td>{{ $volunteer->phone }}</td>
+                        <td>{{ $volunteer->email }}</td>
+                        <td>{{ $volunteer->skills->pluck('name')->implode(', ') }}</td>
                         <td>
-                            <a href="{{ route('admin_volunteer_show', ['id' => $volunteer->id]) }}" class="btn btn-info btn-sm">{{ __('View Details') }}</a>
-                            <a href="{{ route('admin_volunteer_edit', ['id' => $volunteer->id]) }}" class="btn btn-warning btn-sm">{{ __('Edit') }}</a>
-                            <form action="{{ route('admin_volunteer_destroy', ['id' => $volunteer->id]) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('{{ __('Are you sure you want to delete this volunteer?') }}');">
+                            <a href="{{ route('admin_volunteer_show', $volunteer->id) }}" class="btn btn-info">{{ __('Show') }}</a>
+                            <a href="{{ route('admin_volunteer_edit', $volunteer->id) }}" class="btn btn-warning">{{ __('Edit') }}</a>
+                            <form action="{{ route('admin_volunteer_destroy', $volunteer->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('{{ __('Are you sure you want to delete this volunteer?') }}')">{{ __('Delete') }}</button>
                             </form>
                         </td>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="7" class="text-center">{{ __('No volunteers found') }}</td>
-                    </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
 
-        <!-- Пагинация -->
-        <div class="d-flex justify-content-center mt-4">
-            {{ $volunteers->links() }}
-        </div>
-    </div>
+        {{ $volunteers->links() }} <!-- Пагинация -->
+    @endif
+</div>
 @endsection

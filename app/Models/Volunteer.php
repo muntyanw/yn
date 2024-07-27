@@ -22,4 +22,9 @@ class Volunteer extends Model
     protected $casts = [
         'registration_date' => 'datetime',
     ];
+
+    public function skills()
+{
+    return $this->belongsToMany(Skill::class, 'skill_volunteer');
+}
 }

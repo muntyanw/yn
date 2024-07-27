@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 
-@section('title', __('Main'))
+@section('title', __('Edit Volunteer'))
 
 @section('content')
 <div class="container mt-5 mb-5">
@@ -15,86 +15,55 @@
 
         <div class="form-group">
             <label for="first_name">{{ __('First Name') }}</label>
-            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ old('first_name', $volunteer->first_name) }}" required>
-            @error('first_name')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ $volunteer->first_name }}" required>
         </div>
 
         <div class="form-group">
             <label for="middle_name">{{ __('Middle Name') }}</label>
-            <input type="text" class="form-control" id="middle_name" name="middle_name" value="{{ old('middle_name', $volunteer->middle_name) }}">
-            @error('middle_name')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+            <input type="text" class="form-control" id="middle_name" name="middle_name" value="{{ $volunteer->middle_name }}">
         </div>
 
         <div class="form-group">
             <label for="last_name">{{ __('Last Name') }}</label>
-            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ old('last_name', $volunteer->last_name) }}" required>
-            @error('last_name')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ $volunteer->last_name }}" required>
         </div>
 
         <div class="form-group">
             <label for="photo">{{ __('Photo') }}</label>
-            <input type="file" class="form-control-file" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
             @if($volunteer->photo)
-                <img id="currentPhoto" src="{{ asset('storage/' . $volunteer->photo) }}" alt="{{ __('Current Photo') }}" class="img-thumbnail mt-2" width="150">
-            @else
-                <img id="currentPhoto" src="#" alt="{{ __('Current Photo') }}" class="img-thumbnail mt-2" width="150" style="display:none;">
+                <div class="mb-2">
+                    <img src="{{ asset('storage/' . $volunteer->photo) }}" alt="{{ $volunteer->first_name }}" style="width: 150px; height: 150px;">
+                </div>
+                <p>{{ __('Current Photo') }}</p>
             @endif
-            @error('photo')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+            <input type="file" class="form-control" id="photo" name="photo">
         </div>
 
         <div class="form-group">
             <label for="phone">{{ __('Phone') }}</label>
-            <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone', $volunteer->phone) }}" required>
-            @error('phone')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+            <input type="text" class="form-control" id="phone" name="phone" value="{{ $volunteer->phone }}" required>
         </div>
 
         <div class="form-group">
             <label for="email">{{ __('Email') }}</label>
-            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $volunteer->email) }}" required>
-            @error('email')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+            <input type="email" class="form-control" id="email" name="email" value="{{ $volunteer->email }}" required>
         </div>
 
         <div class="form-group">
             <label for="address">{{ __('Address') }}</label>
-            <textarea class="form-control" id="address" name="address" required>{{ old('address', $volunteer->address) }}</textarea>
-            @error('address')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+            <input type="text" class="form-control" id="address" name="address" value="{{ $volunteer->address }}">
+        </div>
+
+        <div class="form-group">
+            <label for="skills">{{ __('Skills') }}</label>
+            <select multiple class="form-control" id="skills" name="skills[]">
+                @foreach($skills as $skill)
+                    <option value="{{ $skill->id }}" @if($volunteer->skills->contains($skill->id)) selected @endif>{{ $skill->name }}</option>
+                @endforeach
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
     </form>
 </div>
-
-@section('scripts')
-<script>
-function previewImage(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-        const img = document.getElementById('currentPhoto');
-        img.src = e.target.result;
-        img.style.display = 'block';  // Показываем изображение
-    }
-    
-    if (file) {
-        reader.readAsDataURL(file);
-    }
-}
-</script>
-@endsection
-
 @endsection
