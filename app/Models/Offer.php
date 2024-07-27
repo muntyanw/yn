@@ -22,4 +22,9 @@ class Offer extends Model
     protected $casts = [
         'created_at' => 'datetime',
     ];
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class);
+    }
 }

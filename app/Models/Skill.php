@@ -12,4 +12,10 @@ class Skill extends Model
         'name',
         'description',
     ];
+
+    public function offers()
+    {
+        return $this->belongsToMany(Offer::class);
+    }
+
 }

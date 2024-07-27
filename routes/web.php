@@ -50,13 +50,17 @@ Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
     Route::put('skills/{skill}', [SkillController::class, 'update'])->name('admin_skill_update');
     Route::delete('skills/{skill}', [SkillController::class, 'destroy'])->name('admin_skill_destroy');
 
-    Route::get('/offers', [OfferController::class, 'index'])->name('admin_offers_index');
-    Route::get('/offers/create', [OfferController::class, 'create'])->name('admin_offer_create');
-    Route::post('/offers', [OfferController::class, 'store'])->name('admin_offer_store');
-    Route::get('/offers/{id}', [OfferController::class, 'show'])->name('admin_offer_show');
-    Route::get('/offers/{id}/edit', [OfferController::class, 'edit'])->name('admin_offer_edit');
-    Route::put('/offers/{id}', [OfferController::class, 'update'])->name('admin_offer_update');
-    Route::delete('/admin/offers/{id}', [OfferController::class, 'destroy'])->name('admin_offer_destroy');
+
+    Route::name('admin_')->group(function () {
+        Route::get('offers', [OfferController::class, 'index'])->name('offers_index');
+        Route::get('offers/create', [OfferController::class, 'create'])->name('offer_create');
+        Route::post('offers', [OfferController::class, 'store'])->name('offer_store');
+        Route::get('offers/{id}', [OfferController::class, 'show'])->name('offer_show');
+        Route::get('offers/{id}/edit', [OfferController::class, 'edit'])->name('offer_edit');
+        Route::put('offers/{id}', [OfferController::class, 'update'])->name('offer_update');
+        Route::delete('offers/{id}', [OfferController::class, 'destroy'])->name('offer_destroy');
+    });
+
 
     Route::prefix('tenders')->group(function () {
         Route::get('/', [TenderController::class, 'index'])->name('admin_tender_index');
