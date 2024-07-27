@@ -352,6 +352,31 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-bahai"></i>
+                                <p>
+                                    {{ __('Tender Proposal') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_tender_proposals_index') }}" class="nav-link">
+                                        <i class="fas fa-bars"></i>
+                                        <p class="ml-3">{{ __('List') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_tender_index') }}" class="nav-link">
+                                        <i class="fas fa-plus"></i>
+                                        <p class="ml-3">
+                                            {{ __('Create') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a href="pages/widgets.html" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>

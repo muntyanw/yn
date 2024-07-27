@@ -19,6 +19,13 @@ class CreateTenderProposalsTable extends Migration
             $table->string('contact_person_name'); // ПІБ контактної особи
             $table->string('contact_person_phone'); // Телефон контактної особи
             $table->timestamps(); // Created_at and updated_at
+
+            $table->unsignedBigInteger('tender_id');
+
+            $table->foreign('tender_id')
+                  ->references('id')
+                  ->on('tenders')
+                  ->onDelete('cascade');
         });
     }
 

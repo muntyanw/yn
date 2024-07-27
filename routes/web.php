@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\VolunteerController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\TenderController;
+use App\Http\Controllers\Admin\TenderProposalController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,12 +50,12 @@ Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
     Route::put('skills/{skill}', [SkillController::class, 'update'])->name('admin_skill_update');
     Route::delete('skills/{skill}', [SkillController::class, 'destroy'])->name('admin_skill_destroy');
 
-    Route::get('/admin/offers', [OfferController::class, 'index'])->name('admin_offers_index');
-    Route::get('/admin/offers/create', [OfferController::class, 'create'])->name('admin_offer_create');
-    Route::post('/admin/offers', [OfferController::class, 'store'])->name('admin_offer_store');
-    Route::get('/admin/offers/{id}', [OfferController::class, 'show'])->name('admin_offer_show');
-    Route::get('/admin/offers/{id}/edit', [OfferController::class, 'edit'])->name('admin_offer_edit');
-    Route::put('/admin/offers/{id}', [OfferController::class, 'update'])->name('admin_offer_update');
+    Route::get('/offers', [OfferController::class, 'index'])->name('admin_offers_index');
+    Route::get('/offers/create', [OfferController::class, 'create'])->name('admin_offer_create');
+    Route::post('/offers', [OfferController::class, 'store'])->name('admin_offer_store');
+    Route::get('/offers/{id}', [OfferController::class, 'show'])->name('admin_offer_show');
+    Route::get('/offers/{id}/edit', [OfferController::class, 'edit'])->name('admin_offer_edit');
+    Route::put('/offers/{id}', [OfferController::class, 'update'])->name('admin_offer_update');
     Route::delete('/admin/offers/{id}', [OfferController::class, 'destroy'])->name('admin_offer_destroy');
 
     Route::prefix('tenders')->group(function () {
@@ -66,7 +67,17 @@ Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
         Route::put('/{id}', [TenderController::class, 'update'])->name('admin_tender_update');
         Route::delete('/{id}', [TenderController::class, 'destroy'])->name('admin_tender_destroy');
     });
-    
+
+    // Тендерные предложения
+    Route::prefix('/tender-proposals')->name('admin_tender_proposals_')->group(function () {
+        Route::get('/', [TenderProposalController::class, 'index'])->name('index');
+        Route::get('create/{tenderId}', [TenderProposalController::class, 'create'])->name('create');
+        Route::post('store', [TenderProposalController::class, 'store'])->name('store');
+        Route::get('{id}/edit', [TenderProposalController::class, 'edit'])->name('edit');
+        Route::put('{id}', [TenderProposalController::class, 'update'])->name('update');
+        Route::delete('{id}', [TenderProposalController::class, 'destroy'])->name('destroy');
+        Route::get('{id}', [TenderProposalController::class, 'show'])->name('show');
+    });
 });
 
 require __DIR__ . '/auth.php';

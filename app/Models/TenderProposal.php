@@ -14,5 +14,11 @@ class TenderProposal extends Model
         'legal_address',
         'contact_person_name',
         'contact_person_phone',
+        'tender_id',
     ];
+
+    public function tender()
+    {
+        return $this->belongsTo(Tender::class);
+    }
 }

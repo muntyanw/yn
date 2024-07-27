@@ -328,5 +328,19 @@
     "No tenders found": "Тендери не знайдено",
     "Tender created successfully.": "Тендер успішно створено",
     "Tender updated successfully.": "Тендер успішно оновлено",
-    "Tender deleted successfully.": "Тендер успішно видалено"
+    "Tender deleted successfully.": "Тендер успішно видалено",
+    "Are you sure you want to delete this tender proposal?": "Ви впевнені, що хочете видалити це пропозицію по тендеру:",
+    "Add New Tender Proposal": "Додати нову пропозицію по тендеру:",
+    "Create Tender Proposal": "Створити пропозицію по тендеру:",
+    "Edit Tender Proposal": "Редагувати пропозицію по тендеру:",
+    "Company Name": "Назва компанії/ФОП:",
+    "Legal Address": "Юридична адреса:",
+    "Contact Person Name": "ПІБ контактної особи:",
+    "Contact Person Phone": "Телефон контактної особи:",
+    "No tender proposals found": "Пропозицій по тендеру не знайдено:",
+    "Tender Proposal created successfully.": "Пропозицію по тендеру успішно створено:",
+    "Tender Proposal updated successfully.": "Пропозицію по тендеру успішно оновлено:",
+    "Tender Proposal deleted successfully.": "Пропозицію по тендеру успішно видалено:",
+    "Tender Proposal": "Тендерна пропозиція",
+    "Tender Information":"Інформація про тендер"
 }

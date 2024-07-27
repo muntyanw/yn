@@ -37,7 +37,7 @@ class TenderController extends Controller
 
     public function show($id)
     {
-        $tender = Tender::findOrFail($id);
+        $tender = Tender::with('proposals')->findOrFail($id);
         return view('admin.tenders.show', compact('tender'));
     }
 

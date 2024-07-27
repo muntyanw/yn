@@ -25,4 +25,9 @@ class Tender extends Model
         'delivery_date_range_start' => 'datetime',
         'delivery_date_range_end' => 'datetime',
     ];
+
+    public function proposals()
+    {
+        return $this->hasMany(TenderProposal::class);
+    }
 }
