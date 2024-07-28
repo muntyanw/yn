@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Volunteer;
 use App\Models\Skill;
 use Illuminate\Http\Request;
@@ -23,13 +24,15 @@ class VolunteerController extends Controller
         return view('admin.volunteer.listVolunteers', compact('volunteers'));
     }
 
-    public function create()
+    public function create($user_id)
     {
-        return view('admin.volunteer.createVolunteer');
+        $user = $user_id ? User::findOrFail($user_id) : null;
+        return view('admin.volunteer.createVolunteer', compact('user'));
     }
 
     public function store(Request $request)
     {
+        // Валидируем входящие данные
         $request->validate([
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
@@ -38,29 +41,46 @@ class VolunteerController extends Controller
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'address' => 'nullable|string',
-            'skills' => 'nullable|array',  // <-- Добавьте это правило
-            'skills.*' => 'exists:skills,id',  // <-- Убедитесь, что скиллы существуют
+            'skills' => 'nullable|array',
+            'skills.*' => 'exists:skills,id',
+            'user_id' => 'required|exists:users,id' // Добавляем правило для user_id
         ]);
 
-        $volunteer = Volunteer::create($request->only([
-            'first_name',
-            'middle_name',
-            'last_name',
-            'photo',
-            'phone',
-            'email',
-            'address',
-        ]));
+        // Retrieve the user based on user_id
+        $user = User::find($request->input('user_id'));
 
+        // Check if a volunteer already exists for this user
+        if ($user->volunteer) {
+            return redirect()->back()->withErrors(['user_id' => __('This user already has a volunteer record.')]);
+        }
+
+        // Создаем новый объект волонтера и связываем его с пользователем
+        $volunteer = Volunteer::create(array_merge(
+            $request->only([
+                'first_name',
+                'middle_name',
+                'last_name',
+                'phone',
+                'email',
+                'address',
+            ]),
+            ['user_id' => $request->input('user_id')]
+        ));
+
+        // Сохраняем фото, если оно было загружено
         if ($request->hasFile('photo')) {
             $volunteer->photo = $request->file('photo')->store('volunteers', 'public');
             $volunteer->save();
         }
 
+        $user = User::find($request->input('user_id'));
+        $user->assignRole('volunteer');
+        // Привязываем выбранные скиллы
         $volunteer->skills()->sync($request->input('skills', []));
 
-        return redirect()->route('admin_volunteer_list')->with('success', __('Volunteer created successfully.'));
+        return redirect()->route('admin_volunteers_index')->with('success', __('Volunteer created successfully.'));
     }
+
 
     public function edit($id)
     {
@@ -72,8 +92,7 @@ class VolunteerController extends Controller
 
     public function show($id)
     {
-        $volunteer = Volunteer::with('skills')->findOrFail($id);
-
+        $volunteer = Volunteer::with('user')->findOrFail($id);
         return view('admin.volunteer.showVolunteer', compact('volunteer'));
     }
 
@@ -111,12 +130,12 @@ class VolunteerController extends Controller
         $volunteer->save();
         $volunteer->skills()->sync($request->input('skills', []));
 
-        return redirect()->route('admin_volunteers_list')->with('success', __('Volunteer updated successfully.'));
+        return redirect()->route('admin_volunteers_index')->with('success', __('Volunteer updated successfully.'));
     }
 
     public function destroy(Volunteer $volunteer)
     {
         $volunteer->delete();
-        return redirect()->route('admin_volunteers_list')->with('success', __('Volunteer deleted successfully.'));
+        return redirect()->route('admin_volunteers_index')->with('success', __('Volunteer deleted successfully.'));
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\TenderController;
 use App\Http\Controllers\Admin\TenderProposalController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,15 +28,15 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
     Route::get('/', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin_panel');
 
-    Route::get('/volunteers_list', [VolunteerController::class, 'list'])->name('admin_volunteers_list');
-    Route::get('/volunteers_create', [VolunteerController::class, 'create'])->name('admin_volunteer_create');
+    Route::get('/volunteers_list', [VolunteerController::class, 'list'])->name('admin_volunteers_index');
+    Route::get('/volunteers_create/{user_id}', [VolunteerController::class, 'create'])->name('admin_volunteer_create');
     Route::get('/volunteers_edit/{id}', [VolunteerController::class, 'edit'])->name('admin_volunteer_edit');
     Route::post('/volunteers_store', [VolunteerController::class, 'store'])->name('admin_volunteer_store');
     Route::put('/volunteers_update/{id}', [VolunteerController::class, 'update'])->name('admin_volunteer_update');
     Route::post('/volunteers_destroy', [VolunteerController::class, 'destroy'])->name('admin_volunteer_destroy');
     Route::get('/volunteers_show/{id}', [VolunteerController::class, 'show'])->name('admin_volunteer_show');
 
-    Route::get('/reports', [ReportController::class, 'index'])->name('admin_reports_list');
+    Route::get('/reports', [ReportController::class, 'index'])->name('admin_reports_index');
     Route::get('/reports/create', [ReportController::class, 'create'])->name('admin_report_create');
     Route::post('/reports', [ReportController::class, 'store'])->name('admin_report_store');
     Route::get('/reports/{id}/edit', [ReportController::class, 'edit'])->name('admin_report_edit');
@@ -82,6 +83,18 @@ Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
         Route::delete('{id}', [TenderProposalController::class, 'destroy'])->name('destroy');
         Route::get('{id}', [TenderProposalController::class, 'show'])->name('show');
     });
+
+    Route::prefix('/users')->name('admin_users_')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('create', [UserController::class, 'create'])->name('create');
+        Route::post('store', [UserController::class, 'store'])->name('store');
+        Route::get('{id}', [UserController::class, 'show'])->name('show');
+        Route::get('{id}/edit', [UserController::class, 'edit'])->name('edit');
+        Route::put('{id}', [UserController::class, 'update'])->name('update');
+        Route::delete('{id}', [UserController::class, 'destroy'])->name('destroy');
+    });
+
+
 });
 
 require __DIR__ . '/auth.php';

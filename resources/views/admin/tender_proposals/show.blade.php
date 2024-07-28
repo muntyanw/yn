@@ -6,7 +6,7 @@
     <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>{{ __('Tender Proposal Details') }}</h2>
-            <a href="{{ route('admin_tender_proposals_list') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
+            <a href="{{ route('admin_tender_proposals_index') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
         </div>
 
         <dl class="row">

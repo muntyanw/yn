@@ -15,6 +15,7 @@ class CreateVolunteersTable extends Migration
     {
         Schema::create('volunteers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('first_name'); // Додаємо ім'я
             $table->string('middle_name')->nullable(); // Додаємо по-батькові
             $table->string('last_name'); // Додаємо прізвище
@@ -24,6 +25,7 @@ class CreateVolunteersTable extends Migration
             $table->string('email')->unique(); // Емайл
             $table->text('address'); // Адреса проживання
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -34,6 +36,9 @@ class CreateVolunteersTable extends Migration
      */
     public function down()
     {
+        Schema::table('volunteers', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('volunteers');
     }
 }

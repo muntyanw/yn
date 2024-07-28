@@ -226,6 +226,31 @@
                         data-accordion="false">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
+                                <i class="fas fa-user-alt"></i>
+                                <p style="margin-left: 12px;">
+                                    {{ __('All Users') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_users_index') }}" class="nav-link">
+                                        <i class="fas fa-user-friends"></i>
+                                        <p class="ml-3">{{ __('List') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin_users_create') }}" class="nav-link">
+                                        <i class="fas fa-user-plus"></i>
+                                        <p class="ml-3">
+                                            {{ __('Create') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-grin-stars"></i>
                                 <p style="margin-left: 2px;">
                                     {{ __('Volunteers') }}
@@ -234,13 +259,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin_volunteers_list') }}" class="nav-link">
+                                    <a href="{{ route('admin_volunteers_index') }}" class="nav-link">
                                         <i class="fas fa-user-friends"></i>
                                         <p class="ml-3">{{ __('List') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('admin_volunteer_create') }}" class="nav-link">
+                                    <a href="{{ route('admin_users_index') }}" class="nav-link">
                                         <i class="fas fa-user-plus"></i>
                                         <p class="ml-3">
                                             {{ __('Create') }}
@@ -259,7 +284,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin_reports_list') }}" class="nav-link">
+                                    <a href="{{ route('admin_reports_index') }}" class="nav-link">
                                         <i class="fas fa-layer-group"></i>
                                         <p class="ml-3">{{ __('List') }}</p>
                                     </a>

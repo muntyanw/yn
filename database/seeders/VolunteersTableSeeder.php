@@ -17,6 +17,7 @@ class VolunteersTableSeeder extends Seeder
     {
         DB::table('volunteers')->insert([
             [
+                'user_id' => 1,
                 'first_name' => 'Олександр',
                 'middle_name' => 'Іванович',
                 'last_name' => 'Петренко',
@@ -27,6 +28,7 @@ class VolunteersTableSeeder extends Seeder
                 'address' => 'Київ, вул. Шевченка, 10',
             ],
             [
+                'user_id' => 2,
                 'first_name' => 'Марія',
                 'middle_name' => 'Володимирівна',
                 'last_name' => 'Іванова',
@@ -37,6 +39,7 @@ class VolunteersTableSeeder extends Seeder
                 'address' => 'Львів, пр. Свободи, 5',
             ],
             [
+                'user_id' => 3,
                 'first_name' => 'Іван',
                 'middle_name' => 'Петрович',
                 'last_name' => 'Сидоренко',
@@ -46,7 +49,6 @@ class VolunteersTableSeeder extends Seeder
                 'email' => 'ivan.sydorenko@example.com',
                 'address' => 'Одеса, вул. Дерибасівська, 2',
             ],
-            // Додайте інші записи за потреби
         ]);
     }
 }

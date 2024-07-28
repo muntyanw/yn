@@ -6,7 +6,7 @@
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>{{ __('Volunteers') }}</h2>
-        <a href="{{ route('admin_volunteer_create') }}" class="btn btn-primary">{{ __('Add New Volunteer') }}</a>
+        <a href="{{ route('admin_users_index') }}" class="btn btn-primary">{{ __('Add New Volunteer') }}</a>
     </div>
 
     @if($volunteers->isEmpty())

@@ -17,7 +17,6 @@ class CreateOffersTable extends Migration
             $table->string('title'); // Назва
             $table->string('image')->nullable(); // Зображення запису
             $table->text('description')->nullable(); // Опис, можливо з зображеннями
-            $table->string('skills_type'); // Тип професійних навичок
             $table->integer('vacancies')->default(1); // Кількість вакансій
             $table->boolean('is_active')->default(true); // Активність пропозиції
             $table->timestamps(); // Automatically adds created_at and updated_at columns

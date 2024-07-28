@@ -45,4 +45,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function volunteer()
+    {
+        return $this->hasOne(Volunteer::class);
+    }
+
+    public function isVolunteer(): bool
+    {
+        return $this->volunteer()->exists();
+    }
+
 }

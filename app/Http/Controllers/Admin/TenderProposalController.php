@@ -11,7 +11,7 @@ class TenderProposalController extends Controller
 {
     public function index()
     {
-        $tenderProposals = TenderProposal::paginate(20);
+        $tenderProposals = TenderProposal::with('tender')->paginate(20);
         return view('admin.tender_proposals.index', compact('tenderProposals'));
     }
 
@@ -33,7 +33,7 @@ class TenderProposalController extends Controller
 
         TenderProposal::create($validated);
 
-        return redirect()->route('admin_tender_proposals_list')->with('success', __('Tender Proposal created successfully.'));
+        return redirect()->route('admin_tender_proposals_index')->with('success', __('Tender Proposal created successfully.'));
     }
 
     public function edit(TenderProposal $tenderProposal)
@@ -52,7 +52,7 @@ class TenderProposalController extends Controller
 
         $tenderProposal->update($request->all());
 
-        return redirect()->route('admin_tender_proposals_list')
+        return redirect()->route('admin_tender_proposals_index')
             ->with('success', __('Tender Proposal updated successfully.'));
     }
 
@@ -60,7 +60,7 @@ class TenderProposalController extends Controller
     {
         $tenderProposal->delete();
 
-        return redirect()->route('admin_tender_proposals_list')
+        return redirect()->route('admin_tender_proposals_index')
             ->with('success', __('Tender Proposal deleted successfully.'));
     }
 

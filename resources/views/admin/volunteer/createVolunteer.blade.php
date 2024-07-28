@@ -6,11 +6,27 @@
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>{{ __('Create Volunteer') }}</h2>
-        <a href="{{ route('admin_volunteers_list') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
+        <a href="{{ route('admin_volunteers_index') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
     </div>
+
+    <!-- Информация о пользователе -->
+    @if($user)
+    <div class="card mb-4">
+        <div class="card-header">
+            {{ __('User Information') }}
+        </div>
+        <div class="card-body">
+            <p><strong>{{ __('Name') }}:</strong> {{ $user->name }}</p>
+            <p><strong>{{ __('Email') }}:</strong> {{ $user->email }}</p>
+        </div>
+    </div>
+    @endif
 
     <form action="{{ route('admin_volunteer_store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+
+        <!-- Скрытое поле для передачи user_id -->
+        <input type="hidden" name="user_id" value="{{ $user->id ?? '' }}">
 
         <div class="form-group">
             <label for="first_name">{{ __('First Name') }}</label>
@@ -38,10 +54,14 @@
 
         <div class="form-group">
             <label for="photo">{{ __('Photo') }}</label>
-            <input type="file" class="form-control-file" id="photo" name="photo">
+            <input type="file" class="form-control-file" id="photo" name="photo" onchange="previewImage()">
             @error('photo')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
+            <!-- Место для отображения предварительного просмотра изображения -->
+            <div id="photo-preview" class="mt-2">
+                <img id="photo-preview-img" src="#" alt="Photo Preview" style="display:none; max-width: 100%; height: auto;">
+            </div>
         </div>
 
         <div class="form-group">
@@ -71,4 +91,28 @@
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
     </form>
 </div>
+
+@section('scripts')
+<script>
+    function previewImage() {
+        const file = document.getElementById('photo').files[0];
+        const preview = document.getElementById('photo-preview-img');
+        const photoPreview = document.getElementById('photo-preview');
+        
+        if (file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+        }
+    }
+</script>
+@endsection
 @endsection

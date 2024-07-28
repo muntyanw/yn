@@ -16,49 +16,56 @@
         <div class="form-group">
             <label for="title">{{ __('Title') }}</label>
             <input type="text" class="form-control" id="title" name="title" value="{{ $offer->title }}" required>
+            @error('title')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="image">{{ __('Image') }}</label>
             @if($offer->image)
                 <div class="mb-2">
-                    <img id="current-image" src="{{ asset('storage/' . $offer->image) }}" alt="{{ $offer->title }}" style="width: 150px; height: 150px;">
+                    <img src="{{ asset('storage/' . $offer->image) }}" alt="{{ $offer->title }}" class="img-thumbnail" width="150">
                 </div>
                 <p>{{ __('Current Image') }}</p>
-            @else
-                <p>{{ __('No current image') }}</p>
             @endif
-            <input type="file" class="form-control" id="image" name="image" onchange="previewImage()">
-            <div id="image-preview" class="mt-2"></div>
+            <input type="file" class="form-control-file" id="image" name="image" onchange="previewImage(event)">
+            @error('image')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+            <div id="imagePreview" class="mt-2"></div>
         </div>
 
         <div class="form-group">
             <label for="description">{{ __('Description') }}</label>
-            <textarea class="form-control" id="description" name="description" rows="5">{{ $offer->description }}</textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="skills">{{ __('Skills') }}</label>
-            <select multiple class="form-control" id="skills" name="skills[]">
-                @foreach($skills as $skill)
-                    <option value="{{ $skill->id }}" @if($offer->skills->contains($skill->id)) selected @endif>{{ $skill->name }}</option>
-                @endforeach
-            </select>
+            <textarea class="form-control" id="description" name="description" required>{{ old('description', $offer->description) }}</textarea>
+            @error('description')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="skills_type">{{ __('Skills Type') }}</label>
             <input type="text" class="form-control" id="skills_type" name="skills_type" value="{{ $offer->skills_type }}" required>
+            @error('skills_type')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="vacancies">{{ __('Vacancies') }}</label>
             <input type="number" class="form-control" id="vacancies" name="vacancies" value="{{ $offer->vacancies }}" required>
+            @error('vacancies')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="is_active" name="is_active" @if($offer->is_active) checked @endif>
-            <label class="form-check-label" for="is_active">{{ __('Active') }}</label>
+        <div class="form-group">
+            <label for="is_active">{{ __('Active') }}</label>
+            <input type="checkbox" id="is_active" name="is_active" @if($offer->is_active) checked @endif>
+            @error('is_active')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
@@ -66,27 +73,21 @@
 </div>
 
 @section('scripts')
-<script>
-    function previewImage() {
-        var file = document.getElementById('image').files[0];
-        var preview = document.getElementById('image-preview');
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const previewContainer = document.getElementById('imagePreview');
 
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.width = '150px';
-                img.style.height = '150px';
-                preview.innerHTML = '';
-                preview.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            preview.innerHTML = '';
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewContainer.innerHTML = `<img src="${e.target.result}" class="img-thumbnail" width="150">`;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.innerHTML = '';
+            }
         }
-    }
-</script>
+    </script>
 @endsection
-
 @endsection

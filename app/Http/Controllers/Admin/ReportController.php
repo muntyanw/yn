@@ -58,7 +58,7 @@ class ReportController extends Controller
       }
 
       // Redirect or return response
-      return redirect()->route('reports.index')->with('success', __('Report created successfully.'));
+      return redirect()->route('admin_reports_index')->with('success', __('Report created successfully.'));
    }
 
    public function edit($id)
@@ -87,14 +87,14 @@ class ReportController extends Controller
          }
       }
 
-      return redirect()->route('admin_reports_list')->with('success', __('Report updated successfully.'));
+      return redirect()->route('admin_reports_index')->with('success', __('Report updated successfully.'));
    }
 
    public function destroy($id)
    {
       $report = Report::findOrFail($id);
       $report->delete();
-      return redirect()->route('admin_reports_list')->with('success', __('Report deleted successfully.'));
+      return redirect()->route('admin_reports_index')->with('success', __('Report deleted successfully.'));
    }
 
    public function show($id)

@@ -34,17 +34,16 @@ class OfferController extends Controller
          'title' => 'required|string|max:255',
          'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
          'description' => 'nullable|string',
-         'skills_type' => 'required|string|max:255',
          'vacancies' => 'required|integer|min:1',
-         'is_active' => 'nullable|boolean',
+         'is_active' => 'string',
+         'skills' => 'array'
       ]);
 
       $offer = new Offer();
       $offer->title = $request->input('title');
       $offer->description = $request->input('description');
-      $offer->skills_type = $request->input('skills_type');
       $offer->vacancies = $request->input('vacancies');
-      $offer->is_active = $request->input('is_active', true);
+      $offer->is_active = $request->has('is_active') ? 1 : 0;
 
       if ($request->hasFile('image')) {
          $imagePath = $request->file('image')->store('offers', 'public');
@@ -71,7 +70,6 @@ class OfferController extends Controller
          'title' => 'required|string|max:255',
          'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
          'description' => 'nullable|string',
-         'skills_type' => 'required|string|max:255',
          'vacancies' => 'required|integer|min:1',
          'is_active' => 'string',
          'skills' => 'array'
@@ -80,7 +78,6 @@ class OfferController extends Controller
       $offer = Offer::findOrFail($id);
       $offer->title = $request->input('title');
       $offer->description = $request->input('description');
-      $offer->skills_type = $request->input('skills_type');
       $offer->vacancies = $request->input('vacancies');
       $offer->is_active = $request->has('is_active') ? 1 : 0;
 
@@ -112,6 +109,6 @@ class OfferController extends Controller
       }
       $offer->delete();
 
-      return redirect()->route('admin_offers_list')->with('success', __('Offer deleted successfully.'));
+      return redirect()->route('admin_offers_index')->with('success', __('Offer deleted successfully.'));
    }
 }
