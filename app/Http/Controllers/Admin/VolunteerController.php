@@ -87,6 +87,9 @@ class VolunteerController extends Controller
         $volunteer = Volunteer::with('skills')->findOrFail($id);
         $skills = Skill::all();
 
+        $volunteer->assignRole('user');
+        $volunteer->assignRole('volunteer');
+
         return view('admin.volunteer.editVolunteer', compact('volunteer', 'skills'));
     }
 

@@ -44,6 +44,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->assignRole('user');
+
         foreach ($request->roles as $role) {
             $user->assignRole($role);
         }
@@ -75,6 +77,12 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password ? Hash::make($request->password) : $user->password,
         ]);
+
+        $user->assignRole('user');
+
+        foreach ($request->roles as $role) {
+            $user->assignRole($role);
+        }
 
         return redirect()->route('admin_users_index')->with('success', 'User updated successfully.');
     }
