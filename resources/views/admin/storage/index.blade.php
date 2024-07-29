@@ -1,5 +1,3 @@
-<!-- resources/views/storage/index.blade.php -->
-
 @extends('layouts.admin_layout')
 
 @section('title', __('Storage Files'))
@@ -12,14 +10,6 @@
                 {{ session('success') }}
             </div>
         @endif
-        <form id="upload-form" action="{{ route('admin_storage_files_upload') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="image">{{ __('Add Image to Common Folder') }}</label>
-                <input type="file" class="form-control" name="image" id="image">
-            </div>
-            <button type="submit" class="btn btn-primary">{{ __('Upload') }}</button>
-        </form>
         <div class="accordion mt-4" id="accordionExample">
             @foreach ($files as $directory => $fileList)
                 <div class="card">
@@ -47,13 +37,17 @@
                                 <tbody>
                                     @foreach ($fileList as $file)
                                         <tr>
-                                            <td><img src="{{ Storage::url($file) }}" alt="{{ basename($file) }}" style="max-width: 100px;"></td>
+                                            <td><img src="{{ Storage::url($file) }}" alt="{{ basename($file) }}"
+                                                    style="max-width: 100px;"></td>
                                             <td>{{ basename($file) }}</td>
                                             <td>{{ Storage::url($file) }}</td>
                                             <td>
-                                                <a href="{{ Storage::url($file) }}" target="_blank" class="btn btn-primary btn-sm">{{ __('View') }}</a>
-                                                <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('{{ Storage::url($file) }}')">{{ __('Copy Link') }}</button>
-                                                <button class="btn btn-danger btn-sm" onclick="deleteFile('{{ Storage::url($file) }}')">{{ __('Delete') }}</button>
+                                                <a href="{{ Storage::url($file) }}" target="_blank"
+                                                    class="btn btn-primary btn-sm">{{ __('View') }}</a>
+                                                <button class="btn btn-secondary btn-sm"
+                                                    onclick="copyToClipboard('{{ Storage::url($file) }}')">{{ __('Copy Link') }}</button>
+                                                <button class="btn btn-danger btn-sm"
+                                                    onclick="deleteFile('{{ Storage::url($file) }}')">{{ __('Delete') }}</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -64,6 +58,25 @@
                 </div>
             @endforeach
         </div>
+
+        <form id="upload-form" action="{{ route('admin_storage_files_upload') }}" method="POST"
+            enctype="multipart/form-data">
+            @csrf
+            <div class="form-group mt-4">
+                <label for="image">{{ __('Add Image to Common Folder') }}</label>
+                <input type="file" class="form-control" name="image" id="image">
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">{{ __('Upload') }}</button>
+        </form>
+
+        <form id="download-form" action="{{ route('admin_storage_download_images') }}" method="POST" class="mt-4">
+            @csrf
+            <div class="form-group">
+                <label for="urls">{{ __('Image URLs through comma') }}</label>
+                <textarea name="urls" class="form-control" rows="10" id="urls"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">{{ __('Download') }}</button>
+        </form>
     </div>
 
     <script>
@@ -81,26 +94,28 @@
         function deleteFile(path) {
             if (confirm('{{ __('Are you sure you want to delete this file?') }}')) {
                 fetch('{{ route('admin_storage_files_delete') }}', {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                    },
-                    body: JSON.stringify({ path: path })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('{{ __('File deleted successfully') }}');
-                        location.reload();
-                    } else {
-                        alert(data.message || '{{ __('File deletion failed') }}');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('{{ __('File deletion failed') }}');
-                });
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        },
+                        body: JSON.stringify({
+                            path: path
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('{{ __('File deleted successfully') }}');
+                            location.reload();
+                        } else {
+                            alert(data.message || '{{ __('File deletion failed') }}');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('{{ __('File deletion failed') }}');
+                    });
             }
         }
 
@@ -110,25 +125,25 @@
             var formData = new FormData(this);
 
             fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('{{ __('Image uploaded successfully') }}');
-                    location.reload();
-                } else {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('{{ __('Image uploaded successfully') }}');
+                        location.reload();
+                    } else {
+                        alert('{{ __('Image upload failed') }}');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                     alert('{{ __('Image upload failed') }}');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('{{ __('Image upload failed') }}');
-            });
+                });
         });
     </script>
 @endsection

@@ -10,11 +10,14 @@ use App\Http\Controllers\Admin\TenderController;
 use App\Http\Controllers\Admin\TenderProposalController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StorageController;
+use App\Http\Controllers\Guest\GuestController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
+
+Route::get('/', [GuestController::class, 'aboutUs'])->name('guest_aboutUs');
 
 
 Route::middleware('auth')->group(function () {
@@ -98,6 +101,7 @@ Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
     Route::get('/storage/files', [StorageController::class, 'index'])->name('admin_storage_files_index');
     Route::post('/storage/files/upload', [StorageController::class, 'upload'])->name('admin_storage_files_upload');
     Route::delete('/storage/files/delete', [StorageController::class, 'delete'])->name('admin_storage_files_delete');
+    Route::post('/admin/storage/download-images', [StorageController::class, 'downloadImages'])->name('admin_storage_download_images');
 
 });
 

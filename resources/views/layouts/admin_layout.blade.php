@@ -401,7 +401,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-bahai"></i>
+                                <i class="far fa-file"></i>
                                 <p style="margin-left: 8px;">
                                     {{ __('Storage Files') }}
                                     <i class="right fas fa-angle-left"></i>
