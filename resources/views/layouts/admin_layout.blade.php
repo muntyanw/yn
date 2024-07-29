@@ -401,6 +401,23 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
+                                <i class="far fa-newspaper"></i>
+                                <p style="margin-left: 8px;">
+                                    {{ __('News') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.news.index') }}" class="nav-link">
+                                        <i class="fas fa-bars"></i>
+                                        <p class="ml-3">{{ __('List') }}</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
                                 <i class="far fa-file"></i>
                                 <p style="margin-left: 8px;">
                                     {{ __('Storage Files') }}
@@ -416,6 +433,7 @@
                                 </li>
                             </ul>
                         </li>
+
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

@@ -11,13 +11,14 @@ use App\Http\Controllers\Admin\TenderProposalController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StorageController;
 use App\Http\Controllers\Guest\GuestController;
+use App\Http\Controllers\Admin\NewsController;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
 
-Route::get('/', [GuestController::class, 'aboutUs'])->name('guest_aboutUs');
+Route::get('/', [GuestController::class, 'home'])->name('guest_aboutUs');
 
 
 Route::middleware('auth')->group(function () {
@@ -101,7 +102,16 @@ Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
     Route::get('/storage/files', [StorageController::class, 'index'])->name('admin_storage_files_index');
     Route::post('/storage/files/upload', [StorageController::class, 'upload'])->name('admin_storage_files_upload');
     Route::delete('/storage/files/delete', [StorageController::class, 'delete'])->name('admin_storage_files_delete');
-    Route::post('/admin/storage/download-images', [StorageController::class, 'downloadImages'])->name('admin_storage_download_images');
+    Route::post('/storage/download-images', [StorageController::class, 'downloadImages'])->name('admin_storage_download_images');
+
+    Route::get('/news', [NewsController::class, 'index'])->name('admin.news.index');
+    Route::get('/news/create', [NewsController::class, 'create'])->name('admin.news.create');
+    Route::post('/news', [NewsController::class, 'store'])->name('admin.news.store');
+    Route::get('/news/{news}', [NewsController::class, 'show'])->name('admin.news.show');
+    Route::get('/news/{news}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
+    Route::put('/news/{news}', [NewsController::class, 'update'])->name('admin.news.update');
+    Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
+
 
 });
 

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $thiclears->call([
+        $this->call([
             UsersTableSeeder::class,
             SkillsTableSeeder::class,
             VolunteersTableSeeder::class,
@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ReportsTableSeeder::class,
             TenderProposalsTableSeeder::class,
             TendersTableSeeder::class,
-
+            NewsSeeder::class
         ]);
     }
 }

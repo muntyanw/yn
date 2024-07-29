@@ -72,7 +72,7 @@
         <form id="download-form" action="{{ route('admin_storage_download_images') }}" method="POST" class="mt-4">
             @csrf
             <div class="form-group">
-                <label for="urls">{{ __('Image URLs through comma') }}</label>
+                <label for="urls">{{ __('Here you insert links to images separated by commas, they are downloaded to our server and appear in the common folder') }}</label>
                 <textarea name="urls" class="form-control" rows="10" id="urls"></textarea>
             </div>
             <button type="submit" class="btn btn-primary mt-2">{{ __('Download') }}</button>

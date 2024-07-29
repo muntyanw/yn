@@ -362,7 +362,7 @@
     "Storage Files": "Файли у сховищі",
     "File Name": "Ім'я файлу",
     "Link": "Посилання",
-    "Add Image to Common Folder": "Додати зображення до загальної папки",
+    "Add Image to Common Folder": "Додати зображення до загальної папки common",
     "Upload": "Завантажити",
     "Copy Link": "Скопіювати посилання",
     "Link copied to clipboard": "Посилання скопійовано в буфер обміну",
@@ -371,5 +371,18 @@
     "Are you sure you want to delete this file?": "Ви впевнені, що хочете видалити цей файл?",
     "File deleted successfully": "Файл успішно видалено",
     "File deletion failed": "Помилка видалення файлу",
-    "File not found": "Файл не знайдено"
+    "File not found": "Файл не знайдено",
+    "Here you insert links to images separated by commas, they are downloaded to our server and appear in the common folder": "Сюди вставляєте посилання на картинки через кому, вони завантажуються на наш сервер і з'являються в папці common",
+    "News": "Новини",
+    "Add News": "Додати новину",
+    "Edit News": "Редагувати новину",
+    "Date": "Дата",
+    "Time": "Час",
+    "Short Content": "Короткий зміст",
+    "Full Content": "Повний зміст",
+    "News successfully created": "Новина успішно створена",
+    "News successfully updated": "Новина успішно оновлена",
+    "News successfully deleted": "Новина успішно видалена",
+    "Are you sure you want to delete this news?": "Ви впевнені, що хочете видалити цю новину?",
+    "No news found": "Новини не знайдені"
 }
