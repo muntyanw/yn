@@ -12,13 +12,15 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StorageController;
 use App\Http\Controllers\Guest\GuestController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Guest\GuestVolunteersController;
+use App\Http\Controllers\Guest\TeamController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', [GuestController::class, 'home'])->name('guest_home');
+Route::get('/aboutus', [GuestController::class, 'aboutUs'])->name('guest_aboutus');
+Route::get('/volunteers', [GuestVolunteersController::class, 'index'])->name('guest_volunteers');
+Route::get('/volunteers/fetch', [GuestVolunteersController::class, 'fetchVolunteers'])->name('guest_volunteers_fetch');
+Route::get('/team', [TeamController::class, 'index'])->name('guest_team');
 
-
-Route::get('/', [GuestController::class, 'home'])->name('guest_aboutUs');
 
 
 Route::middleware('auth')->group(function () {

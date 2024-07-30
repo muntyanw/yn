@@ -17,6 +17,41 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        .content-section {
+            padding: 3rem 1rem;
+            background-color: #f5f5dc;
+            /* светлый бежевый */
+        }
+
+        .content-section.bg-dark {
+            background-color: #d2b48c;
+            /* темный бежевый */
+        }
+
+        .content-section h2 {
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            /* еще крупнее */
+        }
+
+        .content-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section p {
+            font-size: 1.3rem;
+            text-align: justify;
+        }
+
+        .section-heading {
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
         .header {
             transition: background-color 0.3s ease;
         }
@@ -85,110 +120,16 @@
             color: #FFC107;
         }
     </style>
-    
+
     @yield('style')
 </head>
 
 <body>
     @include('guest.partials.header')
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="mobileMenuLabel">Меню</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <ul class="nav flex-column">
-                <li class="nav-item"><a href="index.php" class="nav-link active">Про нас</a></li>
-                <li class="nav-item"><a href="volunteers.php" class="nav-link">Команда</a></li>
-                <li class="nav-item"><a href="projects.php" class="nav-link">Проекти</a></li>
-                <li class="nav-item"><a href="tenders.php" class="nav-link">Тендери</a></li>
-                <li class="nav-item"><a href="reports.php" class="nav-link">Звіти</a></li>
-                <li class="nav-item"><a href="blog.php" class="nav-link">Блог</a></li>
-            </ul>
-        </div>
-    </div>
     <main>
         @yield('content')
     </main>
-    <!-- Footer Start -->
-    <footer class="bg-dark text-light py-4">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <h5>Розділи сайту</h5>
-                    <ul class="nav flex-column">
-                        <li class="nav-item"><a href="index.php" class="nav-link text-light">Головна</a></li>
-                        <li class="nav-item"><a href="" class="nav-link text-light">Про нас</a></li>
-                        <li class="nav-item"><a href="projects.php" class="nav-link text-light">Проекти</a></li>
-                        <li class="nav-item"><a href="blog.php" class="nav-link text-light">Блог</a></li>
-                        <li class="nav-item"><a href="feedback.php" class="nav-link text-light">Відгуки</a></li>
-                        <li class="nav-item"><a href="mission.php" class="nav-link text-light">Наша місія</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Отримати підтримку</h5>
-                    <ul class="nav flex-column">
-                        <li class="nav-item"><a href="volunteer.php" class="nav-link text-light">Стати волонтером</a>
-                        </li>
-                        <li class="nav-item"><a href="how-it-works.php" class="nav-link text-light">Як це працює</a>
-                        </li>
-                        <li class="nav-item"><a href="knowledge-base.php" class="nav-link text-light">База знань</a>
-                        </li>
-                        <li class="nav-item"><a href="success-stories.php" class="nav-link text-light">Успішні
-                                історії</a></li>
-                        <li class="nav-item"><a href="contacts.php" class="nav-link text-light">Контакти</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Контакти</h5>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <i class="bi bi-envelope"></i>
-                            <a href="mailto:donation@gmail.com"
-                                class="nav-link text-light d-inline-block">donation@gmail.com</a>
-                        </li>
-                        <li class="nav-item">
-                            <i class="bi bi-telephone"></i>
-                            <a href="tel:+88111222333" class="nav-link text-light d-inline-block">(+88) 111-222-333</a>
-                        </li>
-                        <li class="nav-item">
-                            <i class="bi bi-geo-alt"></i>
-                            <span class="nav-link text-light d-inline-block">Місцезнаходження, Харків</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Проекти</h5>
-                    <ul class="nav flex-column">
-                        <li class="nav-item d-flex align-items-center">
-                            <img src="https://en.torushost.com/assets/images/gallery/project-1.png"
-                                class="img-fluid me-2" alt="project">
-                            <a href="donation-details.html" class="nav-link text-light">Соціальні їдальні</a>
-                        </li>
-                        <li class="nav-item d-flex align-items-center">
-                            <img src="https://en.torushost.com/assets/images/gallery/project-2.png"
-                                class="img-fluid me-2" alt="project">
-                            <a href="donation-details.html" class="nav-link text-light">Збір вторсировини</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <p class="mb-0">&copy; 2024 ГО "Єдина Нація". Всі права захищені.</p>
-                <ul class="nav justify-content-center">
-                    <li class="nav-item"><a href="#" class="nav-link text-light"><i
-                                class="bi bi-facebook"></i></a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-light"><i
-                                class="bi bi-youtube"></i></a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-light"><i
-                                class="bi bi-instagram"></i></a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-light"><i
-                                class="bi bi-linkedin"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-    <!-- End-of Footer -->
+    @include('guest.partials.footer')
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

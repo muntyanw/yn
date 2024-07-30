@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 class VolunteerController extends Controller
 {
-    public function index()
-    {
-        $volunteers = Volunteer::all();
-        return view('volunteers.index', compact('volunteers'));
-    }
-
     public function list()
     {
         // Получаем волонтеров с пагинацией по 20 элементов на страницу

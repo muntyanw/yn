@@ -41,11 +41,12 @@
             <label for="photo">{{ __('Photo') }}</label>
             @if($volunteer->photo)
                 <div class="mb-2">
-                    <img src="{{ asset('storage/' . $volunteer->photo) }}" alt="{{ $volunteer->first_name }}" style="width: 150px; height: 150px;">
+                    <img id="currentPhoto" src="{{ asset('storage/' . $volunteer->photo) }}" alt="{{ $volunteer->first_name }}" style="width: 150px; height: 150px;">
                 </div>
                 <p>{{ __('Current Photo') }}</p>
             @endif
-            <input type="file" class="form-control" id="photo" name="photo">
+            <input type="file" class="form-control" id="photo" name="photo" onchange="previewPhoto(event)">
+            <img id="previewImage" src="#" alt="Preview" style="display: none; width: 150px; height: 150px;">
             @error('photo')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -90,4 +91,18 @@
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    function previewPhoto(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('previewImage');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 @endsection

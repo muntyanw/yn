@@ -4,172 +4,81 @@
 
 @section('content')
 
-    <!-- Hero area Start -->
-    <section class="hero-section text-center d-flex align-items-center justify-content-center" style="background-image: url('https://en.torushost.com/assets/images/hero/hero-lider-2.jpg'); background-size: cover; background-position: center; position: relative;">
-      <div style="background-color: rgba(0, 0, 0, 0.5); position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-      <div class="container" style="position: relative; z-index: 1;">
-          <div class="row align-items-center">
-              <div class="col-lg-12">
-                  <h1 class="text-white">Ми – команда однодумців, які об’єдналися з метою змінити життя людей на краще</h1>
-                  <p class="lead text-white">
-                      Наш засновник і лідер – <strong>Цвєтков Борис Віталійович</strong> 
-                      <img src="/storage/common/hero-lider.jpg" alt="Цвєтков Борис Віталійович" class="img-fluid rounded shadow float-lg-start ms-lg-3 mb-3" style="max-width: 200px;">
-                      – з дитинства мав бажання допомагати тим, хто потребує підтримки. Він народився 31 травня 1996 року в м. Харкові в родині інженерів. Він закінчив УІПА (енергетичний факультет) в 2021 році, зараз навчається в НЮУ ім. Я. Мудрого на III курсі (факультет адвокатури). Він почав свою діяльність з невеликих справ: купував продукти, ліки, доставляв хворих до лікарні, допомагав зробити ремонт. З часом він знайшов однодумців, які поділяли його цінності та бачення. Він також має досвід роботи на будівництві, в мережі супермаркетів «Клас» та підприємницької діяльності.
-                  </p>
-              </div>
-         </div>
-         <div class="row align-items-center justify-content-center">
-            <a href="donation.html" class="btn btn-primary" style="width: 16em">Приєднатися</a>
-        </div>
-        
-      </div>
-  </section>
-  
+    @include('guest.partials.hero', ['isButton' => false])
+    <!-- Content Start -->
 
-
-  
-  </section>
-  
-</section>
-
-    <!-- End-of Hero -->
-
-    <!-- Blog Start -->
-    <section class="py-5" style="background-color: rgb(229, 229, 193);">
+    <section class="content-section">
         <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="display-5 text-primary">Новини</h2>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://en.torushost.com/assets/images/gallery/blog-1.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Реалізовано проект “Продовольчі подарунки”</h5>
-                            <p class="card-text">За 2023 рік нашої роботи ми роздали 470 000 продовольчих пакунків різного призначення.</p>
-                            <a href="blog-details.html" class="btn btn-outline-primary">Детальніше</a>
-                        </div>
-                    </div>
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <p>Ми працюємо в різних напрямках, але <strong>наша основна місія &#8211; це допомога людям, які
+                            опинилися в складних життєвих умовах</strong>. Ми надаємо допомогу дитячим будинкам,
+                        багатодітним родинам, одиноким пенсіонерам, безпритульним тваринам. Ми також підтримуємо постраждале
+                        населення з деокупованих територій. Ми не лише забезпечуємо їх матеріальними ресурсами, але й
+                        надаємо їм комфорт та надію.</p>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://en.torushost.com/assets/images/gallery/blog-2.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Реалізовано проект “Продовольчі подарунки”</h5>
-                            <p class="card-text">За 2023 рік нашої роботи ми роздали 470 000 продовольчих пакунків різного призначення.</p>
-                            <a href="blog-details.html" class="btn btn-outline-primary">Детальніше</a>
-                        </div>
-                    </div>
+                    <img src="https://www.edinaianatsiia.org.ua/wp-content/uploads/2023/08/photo_2023-08-22_16-27-36-3-768x1024.jpg"
+                        alt="Допомога" style="margin-left: 4em;">
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section bg-light">
+        <div class="container">
+            <div class="row align-items-center">
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://en.torushost.com/assets/images/gallery/blog-3.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Реалізовано проект “Продовольчі подарунки”</h5>
-                            <p class="card-text">За 2023 рік нашої роботи ми роздали 470 000 продовольчих пакунків різного призначення.</p>
-                            <a href="blog-details.html" class="btn btn-outline-primary">Детальніше</a>
-                        </div>
-                    </div>
+                    <img src="https://www.edinaianatsiia.org.ua/wp-content/uploads/2023/08/photo_2023-08-22_16-27-27-1024x768.jpg"
+                        alt="Проект" style="margin-left: -4em;">
+                </div>
+                <div class="col-md-8">
+                    <p>Ми віримо, що кожна людина має право на гідне життя, а кожна тварина &#8211; на любов та догляд. Ми
+                        віримо, що разом ми можемо створити світ, де панує мир, рівність та співчуття. Ми віримо, що наша
+                        діяльність &#8211; це не піар-хід, а наша місія.</p>
                 </div>
             </div>
         </div>
     </section>
-    <!-- End-of Blog -->
 
-    <!-- About us Area Start -->
-    <section class="bg-light py-5">
+    <section class="content-section">
         <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-6">
-                    <h2 class="display-5 text-primary">“Фудшерінг” – національний центр спасіння їжі та турботи про екологію</h2>
-                    <p class="lead">ГО “Єдина Нація” представляє програму “Фудшерінг” – національний центр спасіння їжі та турботи про екологію та закликає всі підприємства, кафе, пекарні, та магазини долучитися до програми “Фудшерінг”. Ваша участь може зробити реальну різницю в житті тих, хто постраждав від війни.</p>
-                    <h3 class="h5 mt-4">Як ви можете допомогти?</h3>
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <h5 class="h6">Передайте продукти</h5>
-                            <p>Ваші непродані, але якісні продукти можуть стати цінним ресурсом для тих, хто потребує.</p>
-                        </li>
-                        <li class="mb-3">
-                            <h5 class="h6">Станьте партнером</h5>
-                            <p>Підпишіть договір пожертвування з ГО “Єдина Нація” по програмі “Фудшериінг” і допомагайте регулярно.</p>
-                        </li>
-                        <li class="mb-3">
-                            <h5 class="h6">Підтримайте спільноту</h5>
-                            <p>Ваша участь допоможе забезпечити їжею малозабезпечені сім’ї, пенсіонерів, та інших, хто зазнає потреби.</p>
-                        </li>
-                    </ul>
-                    <a href="about.html" class="btn btn-primary">Стати партнером</a>
+            <div class="row align-items-center">
+                <div class="col-md-8" style="margin-left: -4em;">
+                    <p>Якщо ви поділяєте наші цінності та бажаєте долучитися до нашої справи, ви можете зробити пожертву на
+                        наш сайт або зв’язатися з нами за телефоном або електронною поштою. Ваша підтримка дуже важлива для
+                        нас та для тих, кому ми допомагаємо. Дякуємо за вашу щедрість та доброту!</p>
                 </div>
-                <div class="col-lg-6">
-                    <div class="row g-3">
-                        <div class="col-6">
-                            <img src="https://en.torushost.com/assets/images/gallery/foodshering-4.jpg" class="img-fluid rounded shadow" alt="...">
-                        </div>
-                        <div class="col-6">
-                            <img src="https://en.torushost.com/assets/images/gallery/foodshering-3.jpg" class="img-fluid rounded shadow" alt="...">
-                        </div>
-                        <div class="col-12">
-                            <img src="https://en.torushost.com/assets/images/gallery/foodshering.jpg" class="img-fluid rounded shadow" alt="...">
-                        </div>
-                    </div>
+                <div class="col-md-4" style="margin-left: 4em;">
+                    <img src="https://www.edinaianatsiia.org.ua/wp-content/uploads/2023/08/photo_2023-08-22_16-27-31-1024x768.jpg"
+                        alt="Подяка" >
                 </div>
             </div>
         </div>
     </section>
-    <!-- End-of About us Area -->
 
-    <!-- Our event Start-->
-    <section class="py-5">
+    <section class="content-section bg-light">
         <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="display-5 text-primary">Звіти</h2>
-                <p class="lead text-primary">Підсумки діяльності</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-7">
-                    <div class="card">
-                        <img src="https://en.torushost.com/assets/images/gallery/event-5.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">ГО “Єдина Нація” передала генератор дитячій спортивній школі для забезпечення електроенергією спортивних тренувань.</h5>
-                            <p class="card-text"><i class="bi bi-calendar"></i> Червень 2024</p>
-                            <a href="event-details.html" class="btn btn-outline-primary">Детальніше</a>
-                        </div>
-                    </div>
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="https://www.edinaianatsiia.org.ua/wp-content/uploads/2023/08/photo_2023-08-22_16-26-41-1024x682.jpg"
+                        alt="Команда" style="margin-left: -4em;">
                 </div>
-                <div class="col-lg-5">
-                    <div class="card">
-                        <img src="https://en.torushost.com/assets/images/gallery/event-4.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">6 травня 2024 року передали обладнання для хірургічного відділення 25-ї лікарні міста Харкова.</h5>
-                            <p class="card-text"><i class="bi bi-calendar"></i> Травень 2024</p>
-                            <a href="event-details.html" class="btn btn-outline-primary">Детальніше</a>
-                        </div>
-                    </div>
+                <div class="col-md-8" >
+                    <p>Для отримання більш детальної інформації про нашу організацію та наші проекти, ви можете переглянути
+                        наші розділи на сайті або слідкувати за нами в соціальних мережах. Ми будемо раді почути ваші думки
+                        та пропозиції.</p>
                 </div>
             </div>
         </div>
     </section>
-    <!-- End-of All Product -->
 
-    <!-- Popular brand Start -->
-    <section class="bg-light py-5">
+    <section class="content-section">
         <div class="container">
-            <div class="row g-4 text-center">
-                <div class="col">
-                    <img src="https://en.torushost.com/assets/images/gallery/brand-1.png" alt="brand" class="img-fluid">
-                </div>
-                <div class="col">
-                    <img src="https://en.torushost.com/assets/images/gallery/brand-2.png" alt="brand" class="img-fluid">
-                </div>
-                <div class="col">
-                    <img src="https://en.torushost.com/assets/images/gallery/brand-3.png" alt="brand" class="img-fluid">
-                </div>
-                <div class="col">
-                    <img src="https://en.torushost.com/assets/images/gallery/brand-4.png" alt="brand" class="img-fluid">
-                </div>
-            </div>
+            <p class="text-center h5 font-weight-bold">Єдина Нація &#8211; це не просто назва, а наша філософія. Ми &#8211;
+                одна нація, одна родина, одна команда. Давайте допомагати один одному та робити світ кращим!</p>
+            <p class="text-center h5 font-weight-bold">Наша організація була заснована у 2019 році і з того часу ми
+                допомогли тисячам людей та тварин.</p>
         </div>
     </section>
-    <!-- End-of Popular brand -->
-
 @endsection

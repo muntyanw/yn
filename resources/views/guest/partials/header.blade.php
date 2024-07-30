@@ -2,18 +2,31 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
             <a href="/" class="navbar-brand">
-                <img src="/storage/common/Os1U2BnGzy4nxtgiuLRlXiutEmz1JClchoKtx2UG.png" alt="logo"
-                    class="d-none d-lg-block">
+                <img src="/storage/common/Os1U2BnGzy4nxtgiuLRlXiutEmz1JClchoKtx2UG.png" alt="logo" class="d-none d-lg-block">
             </a>
             <nav class="d-none d-lg-block">
                 <ul class="nav">
-                    <li class="nav-item"><a href="index.php" class="nav-link active">Головна</a></li>
-                    <li class="nav-item"><a href="index.php" class="nav-link">Про нас</a></li>
-                    <li class="nav-item"><a href="volunteers.php" class="nav-link">Команда</a></li>
-                    <li class="nav-item"><a href="projects.php" class="nav-link">Проекти</a></li>
-                    <li class="nav-item"><a href="tenders.php" class="nav-link">Тендери</a></li>
-                    <li class="nav-item"><a href="reports.php" class="nav-link">Звіти</a></li>
-                    <li class="nav-item"><a href="blog.php" class="nav-link">Блог</a></li>
+                    <li class="nav-item">
+                        <a href="{{ route('guest_home') }}" class="nav-link {{ request()->routeIs('guest_home') ? 'active' : '' }}">Головна</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('guest_aboutus') }}" class="nav-link {{ request()->routeIs('guest_aboutus') ? 'active' : '' }}">Про нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('guest_team') }}" class="nav-link {{ request()->routeIs('guest_team') ? 'active' : '' }}">Команда</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('guest_volunteers') }}" class="nav-link {{ request()->routeIs('guest_volunteers') ? 'active' : '' }}">Волонтери</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tenders.php" class="nav-link {{ request()->is('tenders') ? 'active' : '' }}">Тендери</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="reports.php" class="nav-link {{ request()->is('reports') ? 'active' : '' }}">Звіти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.php" class="nav-link {{ request()->is('blog') ? 'active' : '' }}">Підтримати Нас</a>
+                    </li>
                 </ul>
             </nav>
             <nav class="d-none d-lg-block ms-auto">
@@ -53,16 +66,30 @@
     </div>
     <div class="offcanvas-body">
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="index.php" class="nav-link active">Головна</a></li>
-            <li class="nav-item"><a href="index.php" class="nav-link">Про нас</a></li>
-            <li class="nav-item"><a href="volunteers.php" class="nav-link">Команда</a></li>
-            <li class="nav-item"><a href="projects.php" class="nav-link">Проекти</a></li>
-            <li class="nav-item"><a href="tenders.php" class="nav-link">Тендери</a></li>
-            <li class="nav-item"><a href="reports.php" class="nav-link">Звіти</a></li>
-            <li class="nav-item"><a href="blog.php" class="nav-link">Блог</a></li>
+            <li class="nav-item">
+                <a href="{{ route('guest_home') }}" class="nav-link {{ request()->routeIs('guest_home') ? 'active' : '' }}">Головна</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('guest_aboutus') }}" class="nav-link {{ request()->routeIs('guest_aboutus') ? 'active' : '' }}">Про нас</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('guest_team') }}" class="nav-link {{ request()->routeIs('guest_team') ? 'active' : '' }}">Команда</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('guest_volunteers') }}" class="nav-link {{ request()->routeIs('guest_volunteers') ? 'active' : '' }}">Волонтери</a>
+            </li>
+            <li class="nav-item">
+                <a href="tenders.php" class="nav-link {{ request()->is('tenders') ? 'active' : '' }}">Тендери</a>
+            </li>
+            <li class="nav-item">
+                <a href="reports.php" class="nav-link {{ request()->is('reports') ? 'active' : '' }}">Звіти</a>
+            </li>
+            <li class="nav-item">
+                <a href="blog.php" class="nav-link {{ request()->is('blog') ? 'active' : '' }}">Підтримати Нас</a>
+            </li>
             <li class="nav-item ms-auto">
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="nav-link">
+                    <a href="{{ url('/dashboard') }}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
                         {{ __('Dashboard') }}
                     </a>
                 @else
