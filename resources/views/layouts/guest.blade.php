@@ -32,7 +32,8 @@
         }
 
         .navbar-brand img {
-            height: 40px;
+            height: 80px;
+            margin-right: 1em;
         }
 
         .nav-link {
@@ -83,8 +84,9 @@
         footer a:hover {
             color: #FFC107;
         }
-        }
     </style>
+    
+    @yield('style')
 </head>
 
 <body>
@@ -205,7 +207,7 @@
             }
         });
     </script>
-    
+
 </body>
 
 </html>

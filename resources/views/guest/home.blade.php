@@ -1,4 +1,4 @@
-@extends('layouts.guest_layout')
+@extends('layouts.guest')
 
 @section('title', __('About Us'))
 
@@ -32,7 +32,7 @@
     <!-- End-of Hero -->
 
     <!-- Blog Start -->
-    <section class="py-5">
+    <section class="py-5" style="background-color:beige;">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="display-5 text-primary">Новини</h2>
