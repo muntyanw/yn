@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Volunteer\OfferVolunteerController;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,6 +26,15 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
+
+        if ($request->session()->has('offer_id')) {
+            $offer_id = session('offer_id');
+            $request->session()->forget('offer_id'); // Remove it from the session
+            Auth::user()->assignRole('volunteer');
+
+            // Redirect to the volunteer help route with the offer_id
+            redirect()->route('offer_volunteer_help', ['offer_id' => $offer_id]);
+        }
 
         $request->session()->regenerate();
 

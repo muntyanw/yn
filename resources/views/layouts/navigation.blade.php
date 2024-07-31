@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('guest_aboutUs') }}">
+                    <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -16,12 +16,16 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @role('volunteer')
+                        <x-nav-link :href="route('offer_volunteer_index')" :active="request()->routeIs('offer_volunteer_index')">
+                            {{ __('Offers') }}
+                        </x-nav-link>
+                    @endrole
+
                     @role('admin')
                         <x-nav-link :href="route('admin_panel')" :active="request()->routeIs('admin_panel')">
                             {{ __('Admin panel') }}
                         </x-nav-link>
-                    @else
-                       
                     @endrole
                 </div>
             </div>

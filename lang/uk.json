@@ -47,7 +47,7 @@
     "Create :name": "Створити :name",
     "Created": "Створено",
     "Current Password": "Поточний пароль",
-    "Dashboard": "Головна",
+    "Dashboard": "Кабінет",
     "Delete": "Видалити",
     "Delete :name": "Видалити :name",
     "Delete Account": "Видалити обліковий запис",
@@ -308,7 +308,7 @@
     "Edit Offer": "Редагувати пропозицію",
     "Title": "Назва",
     "Skills Type": "Тип навичок",
-    "Vacancies": "Вакансії",
+    "vacancies_number": "Вакансії",
     "Active": "Активний",
     "Current Image": "Поточне зображення",
     "No offers found": "Пропозицій не знайдено",
@@ -384,5 +384,9 @@
     "News successfully updated": "Новина успішно оновлена",
     "News successfully deleted": "Новина успішно видалена",
     "Are you sure you want to delete this news?": "Ви впевнені, що хочете видалити цю новину?",
-    "No news found": "Новини не знайдені"
+    "No news found": "Новини не знайдені",
+    "Specialization/type of work":"Спеціалізація/вид робіт",
+    "Term":"Термін",
+    "No.":"№пп",
+    "Requirements Volunteers":"Потрібні Волонтери"
 }

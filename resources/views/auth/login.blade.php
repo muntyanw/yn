@@ -62,9 +62,12 @@
                     </a>
                 @endif
 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" style="margin-left: 4em;">
                     {{ __('Log in') }}
                 </button>
+                <a href="{{ route('register') }}" class="btn btn-primary {{ request()->is('dashboard') ? 'active' : '' }}">
+                    Register
+                </a>
             </div>
         </form>
     </div>

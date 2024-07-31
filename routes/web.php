@@ -12,16 +12,20 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StorageController;
 use App\Http\Controllers\Guest\GuestController;
 use App\Http\Controllers\Admin\NewsController;
-use App\Http\Controllers\Guest\GuestVolunteersController;
 use App\Http\Controllers\Guest\TeamController;
+use App\Http\Controllers\Guest\OfferGuestController;
+use App\Http\Controllers\Volunteer\OfferVolunteerController;
 
 Route::get('/', [GuestController::class, 'home'])->name('guest_home');
+Route::get('/dashboard', [GuestController::class, 'home'])->name('dashboard');
 Route::get('/aboutus', [GuestController::class, 'aboutUs'])->name('guest_aboutus');
-Route::get('/volunteers', [GuestVolunteersController::class, 'index'])->name('guest_volunteers');
-Route::get('/volunteers/fetch', [GuestVolunteersController::class, 'fetchVolunteers'])->name('guest_volunteers_fetch');
+
 Route::get('/team', [TeamController::class, 'index'])->name('guest_team');
+Route::get('/volunteers/fetch', [TeamController::class, 'fetchVolunteers'])->name('guest_volunteers_fetch');
 
-
+Route::get('/volunteer/offers', [OfferGuestController::class, 'index'])->name('guest_offers_index');
+Route::post('/volunteer/help/{offer_id}', [OfferGuestController::class, 'volunteerHelp'])->name('guest_volunteer_help');
+Route::get('/volunteer/register', [VolunteerController::class, 'showRegistrationForm'])->name('guest_volunteer_register');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
@@ -30,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/cabinet/volunteer/offers', [OfferVolunteerController::class, 'index'])->name('offer_volunteer_index');
+    Route::get('/cabinet/volunteer/help/{offer_id}', [OfferVolunteerController::class, 'volunteerHelp'])->name('offer_volunteer_help');
 });
 
 Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {

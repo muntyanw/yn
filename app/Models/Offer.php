@@ -15,7 +15,7 @@ class Offer extends Model
         'description',
         'skills_type',
         'created_at',
-        'vacancies',
+        'vacancies_number',
         'is_active',
     ];
 
@@ -26,5 +26,10 @@ class Offer extends Model
     public function skills()
     {
         return $this->belongsToMany(Skill::class);
+    }
+
+    public function timePeriods()
+    {
+        return $this->hasMany(OfferTimePeriod::class);
     }
 }

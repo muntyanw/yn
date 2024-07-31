@@ -7,11 +7,6 @@
         .header {
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/common/BgusTKIorv14R5WHlfXUy5FZYKwEbkauxbHsxIAP.jpg') center/cover no-repeat;
         }
-
-        .bg-light-beige {
-            background-color: #f5f5dc;
-        }
-
         .bg-dark-beige {
             background-color: #8e785a;
         }

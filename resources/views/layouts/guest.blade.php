@@ -119,12 +119,16 @@
         footer a:hover {
             color: #FFC107;
         }
+
+        .bg-light-beige {
+            background-color: #f5f5dc;
+        }
     </style>
 
     @yield('style')
 </head>
 
-<body>
+<body class="bg-light-beige">
     @include('guest.partials.header')
     <main>
         @yield('content')

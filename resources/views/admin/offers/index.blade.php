@@ -15,6 +15,7 @@
                 <th>{{ __('Image') }}</th>
                 <th>{{ __('Title') }}</th>
                 <th>{{ __('Skills') }}</th>
+                <th>{{ __('Time Periods') }}</th>
                 <th>{{ __('Actions') }}</th>
             </tr>
         </thead>
@@ -33,6 +34,17 @@
                         {{ $offer->skills->pluck('name')->implode(', ') }}
                     </td>
                     <td>
+                        @if($offer->timePeriods->isNotEmpty())
+                            <ul>
+                                @foreach($offer->timePeriods as $period)
+                                    <li>{{ $period->start_date }} - {{ $period->end_date }} ({{ $period->start_time }} - {{ $period->end_time }})</li>
+                                @endforeach
+                            </ul>
+                        @else
+                            {{ __('No Periods') }}
+                        @endif
+                    </td>
+                    <td>
                         <a href="{{ route('admin_offer_show', ['id' => $offer->id]) }}" class="btn btn-info btn-sm">{{ __('View') }}</a>
                         <a href="{{ route('admin_offer_edit', ['id' => $offer->id]) }}" class="btn btn-warning btn-sm">{{ __('Edit') }}</a>
                         <form action="{{ route('admin_offer_destroy', ['id' => $offer->id]) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('{{ __('Are you sure you want to delete this offer?') }}');">
@@ -44,7 +56,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4" class="text-center">{{ __('No offers found') }}</td>
+                    <td colspan="5" class="text-center">{{ __('No offers found') }}</td>
                 </tr>
             @endforelse
         </tbody>

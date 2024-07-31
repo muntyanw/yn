@@ -12,7 +12,7 @@ class OfferController extends Controller
 {
    public function index()
    {
-      $offers = Offer::with('skills')->paginate(10); // Загружаем связи skills
+      $offers = Offer::with('skills')->with('timePeriods')->paginate(10); // Загружаем связи skills
       return view('admin.offers.index', compact('offers'));
    }
 
@@ -32,9 +32,9 @@ class OfferController extends Controller
    {
       $request->validate([
          'title' => 'required|string|max:255',
-         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,avif|max:4096',
          'description' => 'nullable|string',
-         'vacancies' => 'required|integer|min:1',
+         'vacancies_number' => 'required|integer|min:1',
          'is_active' => 'string',
          'skills' => 'array'
       ]);
@@ -42,7 +42,7 @@ class OfferController extends Controller
       $offer = new Offer();
       $offer->title = $request->input('title');
       $offer->description = $request->input('description');
-      $offer->vacancies = $request->input('vacancies');
+      $offer->vacancies_number = $request->input('vacancies_number');
       $offer->is_active = $request->has('is_active') ? 1 : 0;
 
       if ($request->hasFile('image')) {
@@ -53,6 +53,10 @@ class OfferController extends Controller
       $offer->save();
 
       $offer->skills()->sync($request->skills);
+
+      foreach ($request->time_periods as $timePeriod) {
+         $offer->timePeriods()->create($timePeriod);
+      }
 
       return redirect()->route('admin_offers_index')->with('success', __('Offer created successfully.'));
    }
@@ -68,9 +72,9 @@ class OfferController extends Controller
    {
       $request->validate([
          'title' => 'required|string|max:255',
-         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+         'image' => 'nullable|mimes:jpeg,png,jpg,gif,avif|max:4096',
          'description' => 'nullable|string',
-         'vacancies' => 'required|integer|min:1',
+         'vacancies_number' => 'required|integer|min:1',
          'is_active' => 'string',
          'skills' => 'array'
       ]);
@@ -78,7 +82,7 @@ class OfferController extends Controller
       $offer = Offer::findOrFail($id);
       $offer->title = $request->input('title');
       $offer->description = $request->input('description');
-      $offer->vacancies = $request->input('vacancies');
+      $offer->vacancies_number = $request->input('vacancies_number');
       $offer->is_active = $request->has('is_active') ? 1 : 0;
 
       if ($request->hasFile('image')) {
@@ -96,6 +100,14 @@ class OfferController extends Controller
          $offer->skills()->sync($request->input('skills'));
       } else {
          $offer->skills()->sync([]);
+      }
+
+      // Удаляем старые временные периоды
+      $offer->timePeriods()->delete();
+
+      // Добавляем новые временные периоды
+      foreach ($request->time_periods as $timePeriod) {
+         $offer->timePeriods()->create($timePeriod);
       }
 
       return redirect()->route('admin_offers_index')->with('success', __('Offer updated successfully.'));

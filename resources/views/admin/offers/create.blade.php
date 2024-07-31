@@ -50,9 +50,9 @@
         </div>
 
         <div class="form-group">
-            <label for="vacancies">{{ __('Vacancies') }}</label>
-            <input type="number" class="form-control" id="vacancies" name="vacancies" value="1" required>
-            @error('vacancies')
+            <label for="vacancies_number">{{ __('Vacancies Number') }}</label>
+            <input type="number" class="form-control" id="vacancies_number" name="vacancies_number" value="1" required>
+            @error('vacancies_number')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -64,6 +64,27 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
+
+        <div id="time-periods">
+            <h3>{{ __('Time Periods') }}</h3>
+            <div class="form-group">
+                <label for="start_date_0">{{ __('Start Date') }}</label>
+                <input type="date" name="time_periods[0][start_date]" id="start_date_0" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="end_date_0">{{ __('End Date') }}</label>
+                <input type="date" name="time_periods[0][end_date]" id="end_date_0" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="start_time_0">{{ __('Start Time') }}</label>
+                <input type="time" name="time_periods[0][start_time]" id="start_time_0" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="end_time_0">{{ __('End Time') }}</label>
+                <input type="time" name="time_periods[0][end_time]" id="end_time_0" class="form-control" required>
+            </div>
+        </div>
+        <button type="button" id="add-time-period" class="btn btn-secondary">{{ __('Add Time Period') }}</button>
 
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
     </form>
@@ -85,6 +106,35 @@
                 previewContainer.innerHTML = '';
             }
         }
+
+        document.getElementById('add-time-period').addEventListener('click', function () {
+            var index = document.querySelectorAll('#time-periods .form-group').length / 4;
+            var timePeriods = document.getElementById('time-periods');
+
+            var startDateGroup = document.createElement('div');
+            startDateGroup.className = 'form-group';
+            startDateGroup.innerHTML = '<label for="start_date_' + index + '">{{ __('Start Date') }}</label>' +
+                '<input type="date" name="time_periods[' + index + '][start_date]" id="start_date_' + index + '" class="form-control" required>';
+            timePeriods.appendChild(startDateGroup);
+
+            var endDateGroup = document.createElement('div');
+            endDateGroup.className = 'form-group';
+            endDateGroup.innerHTML = '<label for="end_date_' + index + '">{{ __('End Date') }}</label>' +
+                '<input type="date" name="time_periods[' + index + '][end_date]" id="end_date_' + index + '" class="form-control" required>';
+            timePeriods.appendChild(endDateGroup);
+
+            var startTimeGroup = document.createElement('div');
+            startTimeGroup.className = 'form-group';
+            startTimeGroup.innerHTML = '<label for="start_time_' + index + '">{{ __('Start Time') }}</label>' +
+                '<input type="time" name="time_periods[' + index + '][start_time]" id="start_time_' + index + '" class="form-control" required>';
+            timePeriods.appendChild(startTimeGroup);
+
+            var endTimeGroup = document.createElement('div');
+            endTimeGroup.className = 'form-group';
+            endTimeGroup.innerHTML = '<label for="end_time_' + index + '">{{ __('End Time') }}</label>' +
+                '<input type="time" name="time_periods[' + index + '][end_time]" id="end_time_' + index + '" class="form-control" required>';
+            timePeriods.appendChild(endTimeGroup);
+        });
     </script>
 @endsection
 @endsection
