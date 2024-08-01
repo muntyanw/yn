@@ -8,7 +8,7 @@
         <p><strong>{{ __('Дата') }}:</strong> {{ $news->date }}</p>
         <p><strong>{{ __('Час') }}:</strong> {{ $news->time }}</p>
         @if ($news->photo)
-            <img src="{{ asset('storage/' . $news->photo) }}" alt="{{ $news->title }}" class="img-fluid mb-3">
+            <img src="{{ $news->photo }}" alt="{{ $news->title }}" class="img-fluid mb-3">
         @endif
         <p><strong>{{ __('Короткий зміст') }}:</strong> {{ $news->short_content }}</p>
         <p><strong>{{ __('Повний зміст') }}:</strong> {!! nl2br(e($news->full_content)) !!}</p>

@@ -20,4 +20,10 @@ class NewsController extends Controller
         $news = News::orderBy('date', 'desc')->orderBy('time', 'desc')->skip($offset)->take(3)->get();
         return response()->json($news);
     }
+
+    public function show($id)
+    {
+        $newsItem = News::findOrFail($id);
+        return view('admin.news.show', compact('newsItem'));
+    }
 }

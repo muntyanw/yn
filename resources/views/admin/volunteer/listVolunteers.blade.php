@@ -12,44 +12,46 @@
     @if($volunteers->isEmpty())
         <p>{{ __('No volunteers found') }}</p>
     @else
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>{{ __('Photo') }}</th>
-                    <th>{{ __('Name') }}</th>
-                    <th>{{ __('Phone') }}</th>
-                    <th>{{ __('Email') }}</th>
-                    <th>{{ __('Skills') }}</th>
-                    <th>{{ __('Actions') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($volunteers as $volunteer)
-                    <tr>
-                        <td>
-                            @if($volunteer->photo)
-                                <img src="{{ asset('storage/' . $volunteer->photo) }}" alt="{{ $volunteer->first_name }}" style="width: 50px; height: 50px;">
-                            @else
-                                {{ __('No Photo') }}
-                            @endif
-                        </td>
-                        <td>{{ $volunteer->first_name }} {{ $volunteer->last_name }}</td>
-                        <td>{{ $volunteer->phone }}</td>
-                        <td>{{ $volunteer->email }}</td>
-                        <td>{{ $volunteer->skills->pluck('name')->implode(', ') }}</td>
-                        <td>
-                            <a href="{{ route('admin_volunteer_show', $volunteer->id) }}" class="btn btn-info">{{ __('Show') }}</a>
-                            <a href="{{ route('admin_volunteer_edit', $volunteer->id) }}" class="btn btn-warning">{{ __('Edit') }}</a>
-                            <form action="{{ route('admin_volunteer_destroy', $volunteer->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('{{ __('Are you sure you want to delete this volunteer?') }}')">{{ __('Delete') }}</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <div class="d-flex bg-light font-weight-bold p-2">
+                <div class="p-2 flex-fill">{{ __('Photo') }}</div>
+                <div class="p-2 flex-fill">{{ __('Name') }}</div>
+                <div class="p-2 flex-fill">{{ __('Phone') }}</div>
+                <div class="p-2 flex-fill">{{ __('Email') }}</div>
+                <div class="p-2 flex-fill">{{ __('Skills') }}</div>
+                <div class="p-2 flex-fill">{{ __('About Me') }}</div>
+                <div class="p-2 flex-fill">{{ __('Is Employee') }}</div>
+                <div class="p-2 flex-fill">{{ __('Public Info') }}</div>
+                <div class="p-2 flex-fill">{{ __('Actions') }}</div>
+            </div>
+            @foreach($volunteers as $volunteer)
+                <div class="d-flex align-items-center border-bottom p-2">
+                    <div class="p-2 flex-fill">
+                        @if($volunteer->photo)
+                            <img src="{{ $volunteer->photo }}" alt="{{ $volunteer->first_name }}" class="img-fluid rounded" style="width: 50px; height: 50px;">
+                        @else
+                            {{ __('No Photo') }}
+                        @endif
+                    </div>
+                    <div class="p-2 flex-fill">{{ $volunteer->first_name }} {{ $volunteer->last_name }}</div>
+                    <div class="p-2 flex-fill">{{ $volunteer->phone }}</div>
+                    <div class="p-2 flex-fill">{{ $volunteer->email }}</div>
+                    <div class="p-2 flex-fill">{{ $volunteer->skills->pluck('name')->implode(', ') }}</div>
+                    <div class="p-2 flex-fill">{{ $volunteer->about_me }}</div>
+                    <div class="p-2 flex-fill">{{ $volunteer->is_employee ? __('Yes') : __('No') }}</div>
+                    <div class="p-2 flex-fill">{{ $volunteer->public_info ? __('Yes') : __('No') }}</div>
+                    <div class="p-2 flex-fill d-flex flex-wrap">
+                        <a href="{{ route('admin_volunteer_show', $volunteer->id) }}" class="btn btn-info btn-sm mr-2">{{ __('Show') }}</a>
+                        <a href="{{ route('admin_volunteer_edit', $volunteer->id) }}" class="btn btn-warning btn-sm mr-2">{{ __('Edit') }}</a>
+                        <form action="{{ route('admin_volunteer_destroy', $volunteer->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('Are you sure you want to delete this volunteer?') }}')">{{ __('Delete') }}</button>
+                        </form>
+                    </div>
+                </div>
+            @endforeach
+        </div>
 
         {{ $volunteers->links() }} <!-- Пагинация -->
     @endif

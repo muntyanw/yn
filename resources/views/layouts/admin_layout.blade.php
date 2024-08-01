@@ -454,10 +454,8 @@
                         <!-- /.sidebar -->
                     </aside>
                 </div>
-                <div class="col-lg-10">
-                    <div class="paddi">
-                        @yield('content')
-                    </div>
+                <div class="col-lg-9" style="margin-left: 3em;">
+                    @yield('content')
                 </div>
             </div>
         </div>

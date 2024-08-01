@@ -22,6 +22,7 @@ Route::get('/aboutus', [GuestController::class, 'aboutUs'])->name('guest_aboutus
 
 Route::get('/team', [TeamController::class, 'index'])->name('guest_team');
 Route::get('/volunteers/fetch', [TeamController::class, 'fetchVolunteers'])->name('guest_volunteers_fetch');
+Route::get('/volunteers/{id}', [TeamController::class, 'show'])->name('guest_volunteer_show');
 
 Route::get('/volunteer/offers', [OfferGuestController::class, 'index'])->name('guest_offers_index');
 Route::post('/volunteer/help/{offer_id}', [OfferGuestController::class, 'volunteerHelp'])->name('guest_volunteer_help');
@@ -29,6 +30,7 @@ Route::get('/volunteer/register', [VolunteerController::class, 'showRegistration
 
 Route::get('/news', [NewsController::class, 'showNews'])->name('guest_news_index');
 Route::get('/news/fetch/{offset}', [NewsController::class, 'fetchNews'])->name('guest_news_fetch');
+Route::get('/news/{id}', [NewsController::class, 'show'])->name('guest_news_show');
 
 
 Route::middleware('auth')->group(function () {
@@ -46,7 +48,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
     Route::get('/', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin_panel');
 
-    Route::get('/volunteers_list', [VolunteerController::class, 'list'])->name('admin_volunteers_index');
+    Route::get('/volunteers_index', [VolunteerController::class, 'index'])->name('admin_volunteers_index');
     Route::get('/volunteers_create/{user_id}', [VolunteerController::class, 'create'])->name('admin_volunteer_create');
     Route::get('/volunteers_edit/{id}', [VolunteerController::class, 'edit'])->name('admin_volunteer_edit');
     Route::post('/volunteers_store', [VolunteerController::class, 'store'])->name('admin_volunteer_store');

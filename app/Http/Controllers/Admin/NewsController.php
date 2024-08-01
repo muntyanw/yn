@@ -32,9 +32,9 @@ class NewsController extends Controller
         ]);
 
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('news_photos', 'public');
+            $photoPath = "/storage/" . $request->file('photo')->store('news_photos', 'public');
         } elseif ($request->photo_url) {
-            $photoPath = str_replace("/storage", "", $request->photo_url);;
+            $photoPath = $request->photo_url;;
         } else {
             $photoPath = null;
         }
@@ -70,9 +70,9 @@ class NewsController extends Controller
             if ($news->photo) {
                 Storage::disk('public')->delete($news->photo);
             }
-            $photoPath = $request->file('photo')->store('news_photos', 'public');
+            $photoPath = "/storage/" . $request->file('photo')->store('news_photos', 'public');
         } elseif ($request->photo_url) {
-            $photoPath = str_replace("/storage", "", $request->photo_url);
+            $photoPath = $request->photo_url;
         }
 
         $news->update(array_merge($request->all(), ['photo' => $photoPath]));

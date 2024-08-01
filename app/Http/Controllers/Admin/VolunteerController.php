@@ -11,9 +11,8 @@ use Illuminate\Support\Facades\Storage;
 
 class VolunteerController extends Controller
 {
-    public function list()
+    public function index()
     {
-        // Получаем волонтеров с пагинацией по 20 элементов на страницу
         $volunteers = Volunteer::paginate(20);
         return view('admin.volunteer.listVolunteers', compact('volunteers'));
     }
@@ -21,59 +20,66 @@ class VolunteerController extends Controller
     public function create($user_id)
     {
         $user = $user_id ? User::findOrFail($user_id) : null;
-        return view('admin.volunteer.createVolunteer', compact('user'));
+        $skills = Skill::all();
+        return view('admin.volunteer.createVolunteer', compact('user', 'skills'));
     }
 
     public function store(Request $request)
-    {
-        // Валидируем входящие данные
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'phone' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'address' => 'nullable|string',
-            'skills' => 'nullable|array',
-            'skills.*' => 'exists:skills,id',
-            'user_id' => 'required|exists:users,id' // Добавляем правило для user_id
-        ]);
+{
+    $request->validate([
+        'first_name' => 'required|string|max:255',
+        'middle_name' => 'nullable|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'photo_url' => 'nullable|url',
+        'phone' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'address' => 'nullable|string',
+        'skills' => 'nullable|array',
+        'skills.*' => 'exists:skills,id',
+        'about_me' => 'nullable|string',
+        'is_employee' => 'nullable|string',
+        'public_access' => 'nullable|string',
+        'user_id' => 'required|exists:users,id'
+    ]);
 
-        // Retrieve the user based on user_id
-        $user = User::find($request->input('user_id'));
+    $user = User::find($request->input('user_id'));
 
-        // Check if a volunteer already exists for this user
-        if ($user->volunteer) {
-            return redirect()->back()->withErrors(['user_id' => __('This user already has a volunteer record.')]);
-        }
-
-        // Создаем новый объект волонтера и связываем его с пользователем
-        $volunteer = Volunteer::create(array_merge(
-            $request->only([
-                'first_name',
-                'middle_name',
-                'last_name',
-                'phone',
-                'email',
-                'address',
-            ]),
-            ['user_id' => $request->input('user_id')]
-        ));
-
-        // Сохраняем фото, если оно было загружено
-        if ($request->hasFile('photo')) {
-            $volunteer->photo = $request->file('photo')->store('volunteers', 'public');
-            $volunteer->save();
-        }
-
-        $user = User::find($request->input('user_id'));
-        $user->assignRole('volunteer');
-        // Привязываем выбранные скиллы
-        $volunteer->skills()->sync($request->input('skills', []));
-
-        return redirect()->route('admin_volunteers_index')->with('success', __('Volunteer created successfully.'));
+    if ($user->volunteer) {
+        return redirect()->back()->withErrors(['user_id' => __('This user already has a volunteer record.')]);
     }
+
+    $photoPath = null;
+    if ($request->hasFile('photo')) {
+        $photoPath = "storage/" . $request->file('photo')->store('volunteers_photos', 'public');
+    } elseif ($request->input('photo_url')) {
+        $photoPath = $request->input('photo_url');
+    }
+
+    // Создаем новый объект волонтера и присваиваем значения свойствам
+    $volunteer = new Volunteer();
+    $volunteer->first_name = $request->input('first_name');
+    $volunteer->middle_name = $request->input('middle_name');
+    $volunteer->last_name = $request->input('last_name');
+    $volunteer->phone = $request->input('phone');
+    $volunteer->email = $request->input('email');
+    $volunteer->address = $request->input('address');
+    $volunteer->about_me = $request->input('about_me');
+    $volunteer->is_employee = $request->input('is_employee') === 'on';
+    $volunteer->public_access = $request->input('public_access') === 'on';
+    $volunteer->photo = $photoPath;
+    $volunteer->user_id = $request->input('user_id');
+
+    // Сохраняем объект волонтера
+    $volunteer->save();
+
+    $user->assignRole('volunteer');
+
+    // Привязываем выбранные скиллы
+    $volunteer->skills()->sync($request->input('skills', []));
+
+    return redirect()->route('admin_volunteers_index')->with('success', __('Volunteer created successfully.'));
+}
 
 
     public function edit($id)
@@ -97,35 +103,51 @@ class VolunteerController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo_url' => 'nullable|url',
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'address' => 'nullable|string',
-            'skills' => 'nullable|array',  // <-- Добавьте это правило
-            'skills.*' => 'exists:skills,id',  // <-- Убедитесь, что скиллы существуют
+            'skills' => 'nullable|array',
+            'skills.*' => 'exists:skills,id',
+            'about_me' => 'nullable|string',
+            'is_employee' => 'nullable|string',
+            'public_access' => 'nullable|string',
         ]);
-
+    
         $volunteer = Volunteer::findOrFail($id);
-        $volunteer->fill($request->only([
-            'first_name',
-            'middle_name',
-            'last_name',
-            'phone',
-            'email',
-            'address',
-        ]));
-
+    
+        // Присваиваем значения свойствам объекта волонтера
+        $volunteer->first_name = $request->input('first_name');
+        $volunteer->middle_name = $request->input('middle_name');
+        $volunteer->last_name = $request->input('last_name');
+        $volunteer->phone = $request->input('phone');
+        $volunteer->email = $request->input('email');
+        $volunteer->address = $request->input('address');
+        $volunteer->about_me = $request->input('about_me');
+        $volunteer->is_employee = $request->input('is_employee') === 'on';
+        $volunteer->public_access = $request->input('public_access') === 'on';
+    
+        $photoPath = $volunteer->photo;
         if ($request->hasFile('photo')) {
             if ($volunteer->photo) {
-                Storage::delete('public/' . $volunteer->photo);
+                Storage::disk('public')->delete($volunteer->photo);
             }
-            $volunteer->photo = $request->file('photo')->store('volunteers', 'public');
+            $photoPath = "storage/" . $request->file('photo')->store('volunteers_photos', 'public');
+        } elseif ($request->input('photo_url')) {
+            $photoPath = $request->input('photo_url');
         }
-
+    
+        $volunteer->photo = $photoPath;
+    
+        // Сохраняем объект волонтера
         $volunteer->save();
+    
+        // Привязываем выбранные скиллы
         $volunteer->skills()->sync($request->input('skills', []));
-
+    
         return redirect()->route('admin_volunteers_index')->with('success', __('Volunteer updated successfully.'));
     }
+    
 
     public function destroy(Volunteer $volunteer)
     {

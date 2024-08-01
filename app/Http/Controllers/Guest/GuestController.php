@@ -22,6 +22,6 @@ class GuestController extends Controller
 
     public function team()
     {
-        return view('guest.team');
+        return view('guest');
     }
 }

@@ -12,7 +12,7 @@ class TeamController extends Controller
     public function index()
     {
         $volunteers = Volunteer::limit(6)->get();
-        return view('guest.volunteers', compact('volunteers'));
+        return view('guest.volunteer.volunteers', compact('volunteers'));
     }
 
 
@@ -22,5 +22,11 @@ class TeamController extends Controller
         $volunteers = Volunteer::offset($offset)->limit(6)->get();
 
         return response()->json($volunteers);
+    }
+
+    public function show($id)
+    {
+        $volunteer = Volunteer::with('skills')->findOrFail($id);
+        return view('guest.volunteer.show', compact('volunteer'));
     }
 }

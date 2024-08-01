@@ -10,59 +10,44 @@
                 {{ session('success') }}
             </div>
         @endif
+
         <div class="accordion mt-4" id="accordionExample">
             @foreach ($files as $directory => $fileList)
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header" id="heading{{ md5($directory) }}">
                         <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                data-target="#collapse{{ md5($directory) }}" aria-expanded="true"
-                                aria-controls="collapse{{ md5($directory) }}">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ md5($directory) }}" aria-expanded="true" aria-controls="collapse{{ md5($directory) }}">
                                 {{ str_replace('public/', '', $directory) }}
                             </button>
                         </h2>
                     </div>
-                    <div id="collapse{{ md5($directory) }}" class="collapse" aria-labelledby="heading{{ md5($directory) }}"
-                        data-parent="#accordionExample">
+                    <div id="collapse{{ md5($directory) }}" class="collapse" aria-labelledby="heading{{ md5($directory) }}" data-parent="#accordionExample">
                         <div class="card-body">
-                            <table class="table table-striped table-hover w-100">
-                                <thead>
-                                    <tr>
-                                        <th>{{ __('Image') }}</th>
-                                        <th>{{ __('File Name') }}</th>
-                                        <th>{{ __('Link') }}</th>
-                                        <th>{{ __('Actions') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($fileList as $file)
-                                        <tr>
-                                            <td><img src="{{ Storage::url($file) }}" alt="{{ basename($file) }}"
-                                                    style="max-width: 100px;"></td>
-                                            <td>{{ basename($file) }}</td>
-                                            <td>{{ Storage::url($file) }}</td>
-                                            <td>
-                                                <a href="{{ Storage::url($file) }}" target="_blank"
-                                                    class="btn btn-primary btn-sm">{{ __('View') }}</a>
-                                                <button class="btn btn-secondary btn-sm"
-                                                    onclick="copyToClipboard('{{ Storage::url($file) }}')">{{ __('Copy Link') }}</button>
-                                                <button class="btn btn-danger btn-sm"
-                                                    onclick="deleteFile('{{ Storage::url($file) }}')">{{ __('Delete') }}</button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            @foreach ($fileList as $file)
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="d-flex align-items-center me-3">
+                                        <img src="{{ Storage::url($file) }}" alt="{{ basename($file) }}" class="img-fluid" style="max-width: 100px; margin-right: 15px;">
+                                        <div class="ms-3">
+                                            <p class="mb-0">{{ basename($file) }}</p>
+                                            <a href="{{ Storage::url($file) }}" target="_blank">{{ Storage::url($file) }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <a href="{{ Storage::url($file) }}" target="_blank" class="btn btn-primary btn-sm me-2">{{ __('View') }}</a>
+                                        <button class="btn btn-secondary btn-sm me-2" onclick="copyToClipboard('{{ Storage::url($file) }}')">{{ __('Copy Link') }}</button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteFile('{{ Storage::url($file) }}')">{{ __('Delete') }}</button>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
 
-        <form id="upload-form" action="{{ route('admin_storage_files_upload') }}" method="POST"
-            enctype="multipart/form-data">
+        <form id="upload-form" action="{{ route('admin_storage_files_upload') }}" method="POST" enctype="multipart/form-data" class="mt-4">
             @csrf
-            <div class="form-group mt-4">
+            <div class="form-group">
                 <label for="image">{{ __('Add Image to Common Folder') }}</label>
                 <input type="file" class="form-control" name="image" id="image">
             </div>

@@ -39,11 +39,17 @@
                         <div class="row">
                             @foreach ($volunteers as $volunteer)
                                 <div class="col-md-4">
-                                    <img src="{{ asset('storage/' . $volunteer->photo) }}"
-                                        alt="{{ $volunteer->first_name }} {{ $volunteer->last_name }}"
-                                        class="img-fluid rounded"
-                                        style="height: 300px; width: 100%; object-fit: cover;">
-                                    <p class="text-center">{{ $volunteer->first_name }} {{ $volunteer->last_name }}</p>
+                                    <a href="{{ route('guest_volunteer_show', $volunteer->id) }}">
+                                        <img src="{{ asset('storage/' . $volunteer->photo) }}"
+                                            alt="{{ $volunteer->first_name }} {{ $volunteer->last_name }}"
+                                            class="img-fluid rounded"
+                                            style="height: 300px; width: 100%; object-fit: cover;">
+                                    </a>
+                                    <p class="text-center">
+                                        <a href="{{ route('guest_volunteer_show', $volunteer->id) }}">
+                                            {{ $volunteer->first_name }} {{ $volunteer->last_name }}
+                                        </a>
+                                    </p>
                                 </div>
                             @endforeach
                         </div>
@@ -82,6 +88,8 @@
                             let col = document.createElement('div');
                             col.classList.add('col-md-4');
 
+                            let imgLink = document.createElement('a');
+                            imgLink.href = `/volunteers/${volunteer.id}`;
                             let img = document.createElement('img');
                             img.src = `/storage/${volunteer.photo}`;
                             img.alt = `${volunteer.first_name} ${volunteer.last_name}`;
@@ -89,12 +97,17 @@
                             img.style.height = '300px';
                             img.style.width = '100%';
                             img.style.objectFit = 'cover';
+                            imgLink.appendChild(img);
+
+                            let nameLink = document.createElement('a');
+                            nameLink.href = `/volunteers/${volunteer.id}`;
+                            nameLink.textContent = `${volunteer.first_name} ${volunteer.last_name}`;
 
                             let p = document.createElement('p');
                             p.classList.add('text-center');
-                            p.textContent = `${volunteer.first_name} ${volunteer.last_name}`;
+                            p.appendChild(nameLink);
 
-                            col.appendChild(img);
+                            col.appendChild(imgLink);
                             col.appendChild(p);
                             row.appendChild(col);
                         });
@@ -113,4 +126,3 @@
     </script>
 
 @endsection
-

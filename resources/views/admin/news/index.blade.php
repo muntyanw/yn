@@ -33,7 +33,7 @@
                         <td>{{ $item->title }}</td>
                         <td>
                             @if ($item->photo)
-                                <img src="{{ asset('storage/' . $item->photo) }}" alt="{{ $item->title }}" style="max-width: 100px;" class="img-fluid">
+                                <img src="{{ $item->photo }}" alt="{{ $item->title }}" style="max-width: 100px;" class="img-fluid">
                             @else
                                 {{ __('Немає фото') }}
                             @endif

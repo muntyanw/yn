@@ -44,7 +44,7 @@
                 <input type="file" class="form-control" id="photo" name="photo" onchange="previewImage(event)">
                 <input type="text" class="form-control mt-2" id="photo_url" name="photo_url" placeholder="URL або шлях до фото">
                 @if ($news->photo)
-                    <img id="preview" src="{{ asset('storage/' . $news->photo) }}" alt="{{ $news->title }}" class="img-fluid mt-2">
+                    <img id="preview" src="{{ $news->photo }}" alt="{{ $news->title }}" class="img-fluid mt-2">
                 @else
                     <img id="preview" src="#" alt="{{ __('Попередній перегляд фото') }}" class="img-fluid mt-2" style="display: none;">
                 @endif

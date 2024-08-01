@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +23,9 @@ class CreateVolunteersTable extends Migration
             $table->string('phone'); // Телефон
             $table->string('email')->unique(); // Емайл
             $table->text('address'); // Адреса проживання
+            $table->text('about_me')->nullable(); // Обо мне
+            $table->boolean('is_employee')->default(false); // Это сотрудник
+            $table->boolean('public_access')->default(true); // Публичный доступ к информации обо мне
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
