@@ -42,6 +42,7 @@
             <div class="mb-3">
                 <label for="photo" class="form-label">{{ __('Фото') }}</label>
                 <input type="file" class="form-control" id="photo" name="photo" onchange="previewImage(event)">
+                <input type="text" class="form-control mt-2" id="photo_url" name="photo_url" placeholder="URL або шлях до фото">
                 @if ($news->photo)
                     <img id="preview" src="{{ asset('storage/' . $news->photo) }}" alt="{{ $news->title }}" class="img-fluid mt-2">
                 @else
@@ -54,13 +55,38 @@
 
     <script>
         function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function(){
-                var output = document.getElementById('preview');
-                output.src = reader.result;
-                output.style.display = 'block';
-            };
-            reader.readAsDataURL(event.target.files[0]);
+            const fileInput = event.target;
+            const urlInput = document.getElementById('photo_url');
+            const preview = document.getElementById('preview');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                preview.src = '#';
+                preview.style.display = 'none';
+            }
+
+            urlInput.value = ''; // Clear URL input if file is selected
         }
+
+        document.getElementById('photo_url').addEventListener('input', function(event) {
+            const url = event.target.value;
+            const fileInput = document.getElementById('photo');
+            const preview = document.getElementById('preview');
+
+            if (url) {
+                preview.src = url;
+                preview.style.display = 'block';
+                fileInput.value = ''; // Clear file input if URL is provided
+            } else {
+                preview.src = '#';
+                preview.style.display = 'none';
+            }
+        });
     </script>
 @endsection

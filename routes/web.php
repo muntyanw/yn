@@ -27,6 +27,10 @@ Route::get('/volunteer/offers', [OfferGuestController::class, 'index'])->name('g
 Route::post('/volunteer/help/{offer_id}', [OfferGuestController::class, 'volunteerHelp'])->name('guest_volunteer_help');
 Route::get('/volunteer/register', [VolunteerController::class, 'showRegistrationForm'])->name('guest_volunteer_register');
 
+Route::get('/news', [NewsController::class, 'showNews'])->name('guest_news_index');
+Route::get('/news/fetch/{offset}', [NewsController::class, 'fetchNews'])->name('guest_news_fetch');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('user.dashboard');

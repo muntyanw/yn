@@ -15,7 +15,7 @@
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4" style="width: 100%; max-width: 400px;">
         <div class="text-center mb-4">
-            <img src="/storage/common/j4IQVqbmHuTecqRnCYtxY32xTIUNZ3LuScf7jryL.png" alt="logo" class="img-fluid">
+            <img src="/storage/common/j4IQVqbmHuTecqRnCYtxY32xTIUNZ3LuScf7jryL.png" alt="logo" class="img-fluid" style="width: 14em;">
         </div>
         <!-- Session Status -->
         @if (session('status'))

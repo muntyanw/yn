@@ -2,7 +2,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
             <a href="/" class="navbar-brand">
-                <img src="/storage/common/Os1U2BnGzy4nxtgiuLRlXiutEmz1JClchoKtx2UG.png" alt="logo"
+                <img src="/storage/common/j4IQVqbmHuTecqRnCYtxY32xTIUNZ3LuScf7jryL.png" alt="logo"
                     class="d-none d-lg-block">
             </a>
             <nav class="d-none d-lg-block">

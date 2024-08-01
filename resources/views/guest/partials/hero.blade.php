@@ -24,7 +24,7 @@
             </div>
             @if ($isButton)
                 <div class="row align-items-center justify-content-center">
-                    <a href="donation.html" class="btn btn-primary" style="width: 16em">Детальніше</a>
+                    <a href="{{route('guest_aboutus')}}" class="btn btn-primary" style="width: 16em">Детальніше</a>
                 </div>
             @endif
 

@@ -29,7 +29,7 @@
 
     <section class="content-section" style="min-height: 60em; margin-top: 4em;">
         <div class="container">
-            <h2 class="section-heading text-center">Волонтери</h2>
+            <h2 class="section-heading text-center">{{ __('Team') }}</h2>
             <div id="employeeCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     @php

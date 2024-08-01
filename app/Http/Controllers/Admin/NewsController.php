@@ -5,6 +5,7 @@ use App\Models\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {
@@ -23,7 +24,7 @@ class NewsController extends Controller
     {
         $request->validate([
             'date' => 'required|date',
-            'time' => 'required|date_format:H:i:s',
+            'time' => 'required',
             'title' => 'required|string|max:255',
             'short_content' => 'required|string',
             'full_content' => 'required|string',
@@ -32,6 +33,8 @@ class NewsController extends Controller
 
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('news_photos', 'public');
+        } elseif ($request->photo_url) {
+            $photoPath = str_replace("/storage", "", $request->photo_url);;
         } else {
             $photoPath = null;
         }
@@ -55,20 +58,21 @@ class NewsController extends Controller
     {
         $request->validate([
             'date' => 'required|date',
-            'time' => 'required|date_format:H:i:s',
+            'time' => 'required',
             'title' => 'required|string|max:255',
             'short_content' => 'required|string',
             'full_content' => 'required|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $photoPath = null;
         if ($request->hasFile('photo')) {
             if ($news->photo) {
                 Storage::disk('public')->delete($news->photo);
             }
             $photoPath = $request->file('photo')->store('news_photos', 'public');
-        } else {
-            $photoPath = $news->photo;
+        } elseif ($request->photo_url) {
+            $photoPath = str_replace("/storage", "", $request->photo_url);
         }
 
         $news->update(array_merge($request->all(), ['photo' => $photoPath]));
@@ -78,7 +82,7 @@ class NewsController extends Controller
 
     public function destroy(News $news)
     {
-        if ($news->photo) {
+        if ($news->photo && !filter_var($news->photo, FILTER_VALIDATE_URL)) {
             Storage::disk('public')->delete($news->photo);
         }
         $news->delete();
@@ -86,4 +90,3 @@ class NewsController extends Controller
         return redirect()->route('admin.news.index')->with('success', 'Новина успішно видалена');
     }
 }
-

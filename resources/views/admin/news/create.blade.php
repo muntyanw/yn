@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="date" class="form-label">{{ __('Дата') }}</label>
@@ -40,9 +40,32 @@
             </div>
             <div class="mb-3">
                 <label for="photo" class="form-label">{{ __('Фото') }}</label>
-                <input type="file" class="form-control" id="photo" name="photo">
+                <input type="file" class="form-control mb-2" id="photo" name="photo" onchange="previewImage(event)">
+                <label for="photo_url" class="form-label">{{ __('Посилання на фото') }}</label>
+                <input type="url" class="form-control" id="photo_url" name="photo_url" placeholder="https://example.com/photo.jpg" oninput="previewImageFromUrl()">
+                <img id="preview" src="#" alt="{{ __('Попередній перегляд фото') }}" class="img-fluid mt-2" style="display: none;">
             </div>
             <button type="submit" class="btn btn-primary">{{ __('Зберегти') }}</button>
         </form>
     </div>
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function previewImageFromUrl() {
+            const url = document.getElementById('photo_url').value;
+            const output = document.getElementById('preview');
+            output.src = url;
+            output.style.display = 'block';
+        }
+    </script>
 @endsection
