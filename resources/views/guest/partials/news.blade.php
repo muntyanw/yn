@@ -8,11 +8,15 @@
                     <div class="row">
                         @foreach ($newsChunk as $newsItem)
                             <div class="col-md-4">
-                                <img src="{{ $newsItem->photo }}" alt="{{ $newsItem->title }}" class="img-fluid rounded"
-                                    style="min-height: 19em;">
+                                <a href="/news/{{ $newsItem->id }}">
+                                    <img src="{{ $newsItem->photo }}" alt="{{ $newsItem->title }}"
+                                        class="img-fluid rounded" style="min-height: 19em;">
+                                </a>
                                 <h3>{{ $newsItem->title }}</h3>
                                 <p>{{ $newsItem->short_content }}</p>
-                                <p>{{ $newsItem->date }} {{ $newsItem->time }}</p>
+                                <a href="/news/{{ $newsItem->id }}">
+                                    <p>{{ $newsItem->date }} {{ $newsItem->time }}</p>
+                                </a>
                             </div>
                         @endforeach
                     </div>
@@ -33,7 +37,7 @@
         </button>
     </div>
     <div class="row align-items-center justify-content-center" style="margin-bottom: 2em;">
-        <a href="{{ route('guest_news_list') }}" class="btn btn-primary" style="width: 16em">Детальніше</a>
+        <a href="{{ route('guest_news_list') }}" class="btn btn-primary" style="width: 16em">Всі новини</a>
     </div>
 </div>
 

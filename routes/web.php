@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\TenderProposalController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StorageController;
 use App\Http\Controllers\Guest\GuestController;
+use App\Http\Controllers\Guest\GuestVolunteerController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Guest\GuestNewsController;
 use App\Http\Controllers\Guest\TeamController;
@@ -25,9 +26,11 @@ Route::get('/team', [TeamController::class, 'index'])->name('guest_team');
 Route::get('/volunteers/fetch', [TeamController::class, 'fetchVolunteers'])->name('guest_volunteers_fetch');
 Route::get('/volunteers/{id}', [TeamController::class, 'show'])->name('guest_volunteer_show');
 
-Route::get('/volunteer/offers', [OfferGuestController::class, 'index'])->name('guest_offers_index');
-Route::post('/volunteer/help/{offer_id}', [OfferGuestController::class, 'volunteerHelp'])->name('guest_volunteer_help');
-Route::get('/volunteer/register', [VolunteerController::class, 'showRegistrationForm'])->name('guest_volunteer_register');
+Route::get('/want-help', [GuestVolunteerController::class, 'showForm'])->name('guest_volunteer_want_help_form');
+Route::post('/contact', [GuestVolunteerController::class, 'sendEmail'])->name('guest_volunteer_want_help_send');
+
+Route::get('/volunteer/offers', [GuestVolunteerController::class, 'index'])->name('guest_offers_index');
+Route::get('/volunteer/help/{offer_id}', [GuestVolunteerController::class, 'volunteerHelp'])->name('guest_volunteer_help');
 
 Route::get('/news', [GuestNewsController::class, 'showNews'])->name('guest_news_index');
 Route::get('/news-list', [GuestNewsController::class, 'list'])->name('guest_news_list');

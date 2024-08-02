@@ -81,7 +81,7 @@
             <div id="news-container">
                 <!-- Здесь будут загруженные новости -->
             </div>
-            <button id="load-more-btn" class="btn btn-primary load-more-btn">{{ __('Далее') }}</button>
+            <button id="load-more-btn" class="btn btn-primary load-more-btn">{{ __('Ще новини') }}</button>
             <div class="d-flex justify-content-center mt-4">
                 <div id="loading" style="display: none;">{{ __('Loading...') }}</div>
             </div>

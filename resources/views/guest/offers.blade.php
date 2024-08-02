@@ -48,39 +48,21 @@
                         </td>
                         <td>{{ $offer->description }}</td>
                         <td>
-                            <form action="{{ route('guest_volunteer_help', ['offer_id' => $offer->id]) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-primary">{{ __('Хочу допомогти') }}</button>
-                            </form>
+                            <a href="{{ route('guest_volunteer_help', ['offer_id' => $offer->id]) }}"
+                                class="btn btn-primary">{{ __('Хочу допомогти') }}</a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
-        <div class="d-flex justify-content-center">
+        {{-- <div class="d-flex justify-content-center">
             <a href="{{ route('guest_volunteer_register') }}"
                 class="btn btn-lg btn-primary btn-lg-custom me-3">{{ __('Хочу стати волонтером') }}</a>
             <a href=""
                 class="btn btn-lg btn-success btn-lg-custom">{{ __('Кабінет волонтера') }}</a>
-        </div>
+        </div> --}}
 
 
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const buttons = document.querySelectorAll('.btn-primary');
-            buttons.forEach(button => {
-                button.addEventListener('click', function(event) {
-                    @if (!Auth::check())
-                        event.preventDefault();
-                        window.location.href = '{{ route('login') }}';
-                    @endif
-                });
-            });
-        });
-    </script>
 @endsection
