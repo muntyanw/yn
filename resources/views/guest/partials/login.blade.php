@@ -7,9 +7,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                {{ __('Profile') }}
-            </li>
-            <li class="nav-item">
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

@@ -40,10 +40,10 @@
                             @foreach ($volunteers as $volunteer)
                                 <div class="col-md-4">
                                     <a href="{{ route('guest_volunteer_show', $volunteer->id) }}">
-                                        <img src="{{ asset('storage/' . $volunteer->photo) }}"
+                                        <img src="{{ $volunteer->photo }}"
                                             alt="{{ $volunteer->first_name }} {{ $volunteer->last_name }}"
                                             class="img-fluid rounded"
-                                            style="height: 300px; width: 100%; object-fit: cover;">
+                                            style="height: 300px; width: 100%; object-fit: cover;object-position: top;">
                                     </a>
                                     <p class="text-center">
                                         <a href="{{ route('guest_volunteer_show', $volunteer->id) }}">
@@ -91,7 +91,7 @@
                             let imgLink = document.createElement('a');
                             imgLink.href = `/volunteers/${volunteer.id}`;
                             let img = document.createElement('img');
-                            img.src = `/storage/${volunteer.photo}`;
+                            img.src = `${volunteer.photo}`;
                             img.alt = `${volunteer.first_name} ${volunteer.last_name}`;
                             img.classList.add('img-fluid', 'rounded');
                             img.style.height = '300px';

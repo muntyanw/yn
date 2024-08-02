@@ -14,6 +14,7 @@
             aspect-ratio: 1.618;
             /* Golden ratio */
             object-fit: cover;
+            object-position: top;
         }
     </style>
 @endsection
@@ -27,16 +28,16 @@
                 <div class="col-md-8">
                     <div class="card mb-4">
                         <div class="card-body text-center">
-                            <img src="{{ asset('storage/' . $volunteer->photo) }}"
+                            <img src="{{ $volunteer->photo }}"
                                 alt="{{ $volunteer->first_name }} {{ $volunteer->last_name }}"
                                 class="img-fluid rounded volunteer-photo mb-4">
                             <h3>{{ $volunteer->first_name }} {{ $volunteer->last_name }}</h3>
-                            <p><strong>{{ __('Phone') }}:</strong> {{ $volunteer->phone }}</p>
-                            <p><strong>{{ __('Email') }}:</strong> {{ $volunteer->email }}</p>
-                            <p><strong>{{ __('Address') }}:</strong> {{ $volunteer->address }}</p>
+                            {{-- <p><strong>{{ __('Phone') }}:</strong> {{ $volunteer->phone }}</p> --}}
+                            {{-- <p><strong>{{ __('Email') }}:</strong> {{ $volunteer->email }}</p>
+                            <p><strong>{{ __('Address') }}:</strong> {{ $volunteer->address }}</p> --}}
                             <p><strong>{{ __('About Me') }}:</strong> {{ $volunteer->about_me }}</p>
-                            <p><strong>{{ __('Skills') }}:</strong>
-                                {{ $volunteer->skills->pluck('name')->implode(', ') }}</p>
+                            {{-- <p><strong>{{ __('Skills') }}:</strong>
+                                {{ $volunteer->skills->pluck('name')->implode(', ') }}</p> --}}
                         </div>
                     </div>
                 </div>

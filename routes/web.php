@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StorageController;
 use App\Http\Controllers\Guest\GuestController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Guest\GuestNewsController;
 use App\Http\Controllers\Guest\TeamController;
 use App\Http\Controllers\Guest\OfferGuestController;
 use App\Http\Controllers\Volunteer\OfferVolunteerController;
@@ -28,9 +29,10 @@ Route::get('/volunteer/offers', [OfferGuestController::class, 'index'])->name('g
 Route::post('/volunteer/help/{offer_id}', [OfferGuestController::class, 'volunteerHelp'])->name('guest_volunteer_help');
 Route::get('/volunteer/register', [VolunteerController::class, 'showRegistrationForm'])->name('guest_volunteer_register');
 
-Route::get('/news', [NewsController::class, 'showNews'])->name('guest_news_index');
-Route::get('/news/fetch/{offset}', [NewsController::class, 'fetchNews'])->name('guest_news_fetch');
-Route::get('/news/{id}', [NewsController::class, 'show'])->name('guest_news_show');
+Route::get('/news', [GuestNewsController::class, 'showNews'])->name('guest_news_index');
+Route::get('/news-list', [GuestNewsController::class, 'list'])->name('guest_news_list');
+Route::get('/news/fetch/{offset}', [GuestNewsController::class, 'fetchNews'])->name('guest_news_fetch');
+Route::get('/news/{id}', [GuestNewsController::class, 'show'])->name('guest_news_show');
 
 
 Route::middleware('auth')->group(function () {
@@ -111,7 +113,7 @@ Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
         Route::get('{id}', [UserController::class, 'show'])->name('show');
         Route::get('{id}/edit', [UserController::class, 'edit'])->name('edit');
         Route::put('{id}', [UserController::class, 'update'])->name('update');
-        Route::delete('{id}', [UserController::class, 'destroy'])->name('destroy');
+        Route::post('delete', [UserController::class, 'destroy'])->name('destroy');
     });
 
     Route::get('/storage/files', [StorageController::class, 'index'])->name('admin_storage_files_index');

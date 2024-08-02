@@ -20,7 +20,7 @@
                             </li>
                             <li class="nav-item">
                                 <i class="fas fa-map-marker-alt text-light"></i>
-                                <span class="nav-link text-light d-inline-block">Місцезнаходження, Харків</span>
+                                <span class="nav-link text-light d-inline-block">Харків</span>
                             </li>
                         </ul>
                     </div>

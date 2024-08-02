@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label for="first_name">{{ __('First Name') }}</label>
                 <input type="text" class="form-control" id="first_name" name="first_name"
-                    value="{{ old('first_name', $volunteer->first_name) }}" required>
+                    value="{{ old('first_name', $volunteer->first_name) }}" >
                 @error('first_name')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label for="last_name">{{ __('Last Name') }}</label>
                 <input type="text" class="form-control" id="last_name" name="last_name"
-                    value="{{ old('last_name', $volunteer->last_name) }}" required>
+                    value="{{ old('last_name', $volunteer->last_name) }}" >
                 @error('last_name')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -67,7 +67,7 @@
             <div class="form-group">
                 <label for="phone">{{ __('Phone') }}</label>
                 <input type="text" class="form-control" id="phone" name="phone"
-                    value="{{ old('phone', $volunteer->phone) }}" required>
+                    value="{{ old('phone', $volunteer->phone) }}">
                 @error('phone')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -76,7 +76,7 @@
             <div class="form-group">
                 <label for="email">{{ __('Email') }}</label>
                 <input type="email" class="form-control" id="email" name="email"
-                    value="{{ old('email', $volunteer->email) }}" required>
+                    value="{{ old('email', $volunteer->email) }}">
                 @error('email')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\News;
 use App\Http\Controllers\Controller;
 
-class NewsController extends Controller
+class GuestNewsController extends Controller
 {
 
     public function showNews()
@@ -20,10 +20,16 @@ class NewsController extends Controller
         $news = News::orderBy('date', 'desc')->orderBy('time', 'desc')->skip($offset)->take(3)->get();
         return response()->json($news);
     }
+    
 
     public function show($id)
     {
         $newsItem = News::findOrFail($id);
-        return view('admin.news.show', compact('newsItem'));
+        return view('guest.news.showone', compact('newsItem'));
+    }
+
+    public function list()
+    {
+        return view('guest.news.list');
     }
 }

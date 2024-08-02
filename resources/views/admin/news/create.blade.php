@@ -42,7 +42,7 @@
                 <label for="photo" class="form-label">{{ __('Фото') }}</label>
                 <input type="file" class="form-control mb-2" id="photo" name="photo" onchange="previewImage(event)">
                 <label for="photo_url" class="form-label">{{ __('Посилання на фото') }}</label>
-                <input type="url" class="form-control" id="photo_url" name="photo_url" placeholder="https://example.com/photo.jpg" oninput="previewImageFromUrl()">
+                <input type="text" class="form-control" id="photo_url" name="photo_url" placeholder="https://example.com/photo.jpg" oninput="previewImageFromUrl()">
                 <img id="preview" src="#" alt="{{ __('Попередній перегляд фото') }}" class="img-fluid mt-2" style="display: none;">
             </div>
             <button type="submit" class="btn btn-primary">{{ __('Зберегти') }}</button>

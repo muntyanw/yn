@@ -36,9 +36,9 @@
                     </td>
                     <td>
                         <a href="{{ route('admin_users_edit', ['id' => $user->id]) }}" class="btn btn-warning btn-sm">{{ __('Edit') }}</a>
-                        <form action="{{ route('admin_users_destroy', ['id' => $user->id]) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('{{ __('Are you sure you want to delete this user?') }}');">
+                        <form action="{{ route('admin_users_destroy') }}" method="POST" style="display:inline-block;" onsubmit="return confirm('{{ __('Are you sure you want to delete this user?') }}');">
                             @csrf
-                            @method('DELETE')
+                            <input type="hidden" name="user_id" value="{{ $user->id }}">
                             <button type="submit" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
                         </form>
                     </td>

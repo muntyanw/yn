@@ -8,6 +8,7 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -87,12 +88,24 @@ class UserController extends Controller
         return redirect()->route('admin_users_index')->with('success', 'User updated successfully.');
     }
 
-    // Удаление пользователя
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
+        $user_id = $request->input('user_id');
+        $user = User::findOrFail($user_id);
+
+        // Проверяем, есть ли у пользователя волонтер
+        if ($user->volunteer) {
+            // Удаляем волонтера, связанного с пользователем
+            $user->volunteer->delete();
+        }
+
+        // Удаляем самого пользователя
         $user->delete();
-        return redirect()->route('admin_users_index')->with('success', 'User deleted successfully.');
+
+        // Перенаправляем с сообщением об успешном удалении
+        return redirect()->route('admin_users_index')->with('success', 'User and associated volunteer deleted successfully.');
     }
+
 
     public function show($id)
     {
