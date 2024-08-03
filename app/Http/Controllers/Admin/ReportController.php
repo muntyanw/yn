@@ -9,7 +9,7 @@ use App\Models\ReportPhoto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ReportController extends Controller
+class ReportController extends AdminBaseController
 {
    public function index()
    {

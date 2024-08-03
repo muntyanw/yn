@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class NewsController extends Controller
+class NewsController extends AdminBaseController
 {
     public function index()
     {

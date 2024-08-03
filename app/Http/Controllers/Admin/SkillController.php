@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 
-class SkillController extends Controller
+class SkillController extends AdminBaseController
 {
    public function index()
    {

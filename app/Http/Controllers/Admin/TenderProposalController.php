@@ -7,7 +7,7 @@ use App\Models\TenderProposal;
 use Illuminate\Http\Request;
 use App\Models\Tender;
 
-class TenderProposalController extends Controller
+class TenderProposalController extends AdminBaseController
 {
     public function index()
     {

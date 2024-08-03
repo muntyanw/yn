@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
-class UserController extends Controller
+class UserController extends AdminBaseController
 {
     // Отображение списка пользователей
     public function index()

@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/cabinet/volunteer/help/{offer_id}', [OfferVolunteerController::class, 'volunteerHelp'])->name('offer_volunteer_help');
 });
 
-Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
+Route::middleware(['auth','role:admin'])->prefix('admin_panel')->group(function () {
     Route::get('/', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin_panel');
 
     Route::get('/volunteers_index', [VolunteerController::class, 'index'])->name('admin_volunteers_index');
@@ -131,8 +131,6 @@ Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
     Route::get('/news/{news}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
     Route::put('/news/{news}', [NewsController::class, 'update'])->name('admin.news.update');
     Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
-
-
 });
 
 require __DIR__ . '/auth.php';

@@ -36,6 +36,12 @@ class AuthenticatedSessionController extends Controller
             redirect()->route('offer_volunteer_help', ['offer_id' => $offer_id]);
         }
 
+        // $return_url = $request->session()->has('return_url');
+        // if ($return_url) {
+        //     $request->session()->forget('return_url');
+        //     return redirect($return_url);
+        // }
+
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));

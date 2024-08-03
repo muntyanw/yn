@@ -9,7 +9,7 @@ use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class VolunteerController extends Controller
+class VolunteerController extends AdminBaseController
 {
     public function index()
     {

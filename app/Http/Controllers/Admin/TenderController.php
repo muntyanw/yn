@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tender;
 use Illuminate\Http\Request;
 
-class TenderController extends Controller
+class TenderController extends AdminBaseController
 {
     public function index()
     {

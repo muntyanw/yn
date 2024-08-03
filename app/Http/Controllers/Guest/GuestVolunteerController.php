@@ -32,7 +32,7 @@ class GuestVolunteerController extends Controller
             'message' => $request->message,
         ];
 
-        Mail::to('your_email@example.com')->send(new \App\Mail\ContactMail($details));
+        Mail::to("pounitednation@gmail.com")->send(new \App\Mail\ContactMail($details));
 
         return back()->with('success', 'Ваше сообщение было успешно отправлено!');
     }
