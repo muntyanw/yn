@@ -14,6 +14,11 @@ class VolunteerController extends AdminBaseController
     public function index()
     {
         $volunteers = Volunteer::paginate(20);
+        $volunteers->getCollection()->transform(function ($volunteer) {
+            $volunteer->about_me = strlen($volunteer->about_me) > 30 ? substr($volunteer->about_me, 0, 30) . '...' : $volunteer->about_me;
+            return $volunteer;
+        });
+
         return view('admin.volunteer.listVolunteers', compact('volunteers'));
     }
 

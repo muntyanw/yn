@@ -29,18 +29,17 @@ class AuthenticatedSessionController extends Controller
 
         if ($request->session()->has('offer_id')) {
             $offer_id = session('offer_id');
-            $request->session()->forget('offer_id'); // Remove it from the session
+            $request->session()->forget('offer_id');
             Auth::user()->assignRole('volunteer');
 
-            // Redirect to the volunteer help route with the offer_id
             redirect()->route('offer_volunteer_help', ['offer_id' => $offer_id]);
         }
 
-        // $return_url = $request->session()->has('return_url');
-        // if ($return_url) {
-        //     $request->session()->forget('return_url');
-        //     return redirect($return_url);
-        // }
+        
+        if ($request->session()->has('want-become')) {
+            $request->session()->forget('want-become');
+            Auth::user()->assignRole('volunteer');
+        }
 
         $request->session()->regenerate();
 

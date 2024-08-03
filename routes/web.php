@@ -15,20 +15,18 @@ use App\Http\Controllers\Guest\GuestVolunteerController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Guest\GuestNewsController;
 use App\Http\Controllers\Guest\TeamController;
-use App\Http\Controllers\Guest\OfferGuestController;
 use App\Http\Controllers\Volunteer\OfferVolunteerController;
 
 Route::get('/', [GuestController::class, 'home'])->name('guest_home');
-Route::get('/dashboard', [GuestController::class, 'home'])->name('dashboard');
 Route::get('/aboutus', [GuestController::class, 'aboutUs'])->name('guest_aboutus');
 
 Route::get('/team', [TeamController::class, 'index'])->name('guest_team');
 Route::get('/volunteers/fetch', [TeamController::class, 'fetchVolunteers'])->name('guest_volunteers_fetch');
 Route::get('/volunteers/{id}', [TeamController::class, 'show'])->name('guest_volunteer_show');
 
-Route::get('/want-help', [GuestVolunteerController::class, 'showForm'])->name('guest_volunteer_want_help_form');
-Route::post('/contact', [GuestVolunteerController::class, 'sendEmail'])->name('guest_volunteer_want_help_send');
-
+Route::get('/volunteer-want-become', [GuestVolunteerController::class, 'wantBecome'])->name('guest_want_become_volunteer');
+Route::get('/volunteers/want-help', [GuestVolunteerController::class, 'showForm'])->name('guest_volunteer_want_help_form');
+Route::post('/volunteers/contact', [GuestVolunteerController::class, 'sendEmail'])->name('guest_volunteer_want_help_send');
 Route::get('/volunteer/offers', [GuestVolunteerController::class, 'index'])->name('guest_offers_index');
 Route::get('/volunteer/help/{offer_id}', [GuestVolunteerController::class, 'volunteerHelp'])->name('guest_volunteer_help');
 

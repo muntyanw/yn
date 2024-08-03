@@ -56,12 +56,12 @@
             </tbody>
         </table>
 
-        {{-- <div class="d-flex justify-content-center">
-            <a href="{{ route('guest_volunteer_register') }}"
+        <div class="d-flex justify-content-center">
+            <a href="{{ route('guest_want_become_volunteer') }}"
                 class="btn btn-lg btn-primary btn-lg-custom me-3">{{ __('Хочу стати волонтером') }}</a>
-            <a href=""
-                class="btn btn-lg btn-success btn-lg-custom">{{ __('Кабінет волонтера') }}</a>
-        </div> --}}
+            {{-- <a href="{{ route('dashboard') }}"
+                class="btn btn-lg btn-success btn-lg-custom">{{ __('Кабінет волонтера') }}</a> --}}
+        </div>
 
 
     </div>

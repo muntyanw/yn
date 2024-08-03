@@ -70,4 +70,13 @@ class GuestVolunteerController extends Controller
         // Redirect to the dashboard or any other intended page
         return redirect()->route('dashboard')->with('success', 'You have successfully signed up to help with the offer.');
     }
+
+    public function wantBecome()
+    {
+        // Check if the user is authenticated
+        if (!auth()->check()) {
+            session(['want-become' => true]);
+        }
+        return redirect()->route('dashboard');
+    }
 }
