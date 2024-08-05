@@ -36,7 +36,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="/storage/common/Os1U2BnGzy4nxtgiuLRlXiutEmz1JClchoKtx2UG.png"
+            <img class="animation__shake" src="/storage/common/RpZqJOaoyYyaBBb4tyXS9gf9nYBjJ5UXOD5roamN.png"
                 alt="AdminLTELogo" height="60" width="60">
         </div>
 

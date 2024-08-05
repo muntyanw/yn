@@ -40,7 +40,7 @@
                     <div class="p-2 flex-fill">{{ $volunteer->skills->pluck('name')->implode(', ') }}</div>
                     {{-- <div class="p-2 flex-fill">{{ $volunteer->about_me }}</div>  --}}
                         <div class="p-2 flex-fill">{{ $volunteer->is_employee ? __('Yes') : __('No') }}</div>
-                        <div class="p-2 flex-fill">{{ $volunteer->public_info ? __('Yes') : __('No') }}</div>
+                        <div class="p-2 flex-fill">{{ $volunteer->public_access ? __('Yes') : __('No') }}</div>
                         <div class="p-2 flex-fill d-flex flex-wrap">
                             <a href="{{ route('admin_volunteer_show', $volunteer->id) }}"
                                 class="btn btn-info btn-sm mr-2">{{ __('Show') }}</a>

@@ -3,11 +3,10 @@
 // app/Http/Controllers/Admin/ReportController.php
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Report;
 use App\Models\ReportPhoto;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Models\ReportFile;
 
 class ReportController extends AdminBaseController
 {
@@ -57,6 +56,28 @@ class ReportController extends AdminBaseController
          }
       }
 
+      if ($request->hasFile('files')) {
+         foreach ($request->file('files') as $file) {
+            $path = $file->store('report_files', 'public');
+            ReportFile::create([
+               'report_id' => $report->id,
+               'file_path' => $path
+            ]);
+         }
+      }
+
+      if ($request->file_urls) {
+         $fileUrls = explode("\n", str_replace("\r", "", $request->file_urls));
+         foreach ($fileUrls as $file_url) {
+            if (!empty($file_url)) {
+               ReportFile::create([
+                  'report_id' => $report->id,
+                  'file_url' => trim($file_url)
+               ]);
+            }
+         }
+      }
+
       // Redirect or return response
       return redirect()->route('admin_reports_index')->with('success', __('Report created successfully.'));
    }
@@ -73,7 +94,7 @@ class ReportController extends AdminBaseController
          'month' => 'required|integer',
          'year' => 'required|integer',
          'text' => 'required',
-         'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+         // 'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
       ]);
 
       $report = Report::findOrFail($id);
@@ -84,6 +105,28 @@ class ReportController extends AdminBaseController
             $path = $photo->store('reports', 'public');
             $htmlLink = '<img src="' . asset('storage/' . $path) . '" alt="Report Photo">';
             ReportPhoto::create(['report_id' => $report->id, 'photo' => $path, 'html_link' => $htmlLink]);
+         }
+      }
+
+      if ($request->hasFile('files')) {
+         foreach ($request->file('files') as $file) {
+            $path = $file->store('report_files', 'public');
+            ReportFile::create([
+               'report_id' => $report->id,
+               'file_path' => $path
+            ]);
+         }
+      }
+
+      if ($request->file_urls) {
+         $fileUrls = explode("\n", str_replace("\r", "", $request->file_urls));
+         foreach ($fileUrls as $file_url) {
+            if (!empty($file_url)) {
+               ReportFile::create([
+                  'report_id' => $report->id,
+                  'file_url' => trim($file_url)
+               ]);
+            }
          }
       }
 

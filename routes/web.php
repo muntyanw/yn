@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Guest\GuestNewsController;
 use App\Http\Controllers\Guest\TeamController;
 use App\Http\Controllers\Volunteer\OfferVolunteerController;
+use App\Http\Controllers\Guest\GuestReportController;
 
 Route::get('/', [GuestController::class, 'home'])->name('guest_home');
 Route::get('/aboutus', [GuestController::class, 'aboutUs'])->name('guest_aboutus');
@@ -35,6 +36,15 @@ Route::get('/news-list', [GuestNewsController::class, 'list'])->name('guest_news
 Route::get('/news/fetch/{offset}', [GuestNewsController::class, 'fetchNews'])->name('guest_news_fetch');
 Route::get('/news/{id}', [GuestNewsController::class, 'show'])->name('guest_news_show');
 
+// Группируем маршруты под одним префиксом и пространством имен
+Route::prefix('reports')->name('guest_reports_')->group(function () {
+    Route::get('/months/{year}', [GuestReportController::class, 'getMonths'])->name('months');
+    Route::get('/', [GuestReportController::class, 'index'])->name('index');
+    Route::get('{year}', [GuestReportController::class, 'showYear'])->name('showYear');
+    Route::get('{year}/{month}', [GuestReportController::class, 'showMonth'])->name('showMonth');
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
@@ -48,7 +58,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/cabinet/volunteer/help/{offer_id}', [OfferVolunteerController::class, 'volunteerHelp'])->name('offer_volunteer_help');
 });
 
-Route::middleware(['auth','role:admin'])->prefix('admin_panel')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin_panel')->group(function () {
     Route::get('/', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin_panel');
 
     Route::get('/volunteers_index', [VolunteerController::class, 'index'])->name('admin_volunteers_index');

@@ -17,12 +17,16 @@ class TeamController extends Controller
 
 
     public function fetchVolunteers(Request $request)
-    {
-        $offset = $request->get('offset', 0);
-        $volunteers = Volunteer::offset($offset)->limit(6)->get();
+{
+    $offset = $request->get('offset', 0);
+    $volunteers = Volunteer::where('public_access', true)
+                           ->offset($offset)
+                           ->limit(6)
+                           ->get();
 
-        return response()->json($volunteers);
-    }
+    return response()->json($volunteers);
+}
+
 
     public function show($id)
     {

@@ -29,6 +29,7 @@
                                         <img src="{{ Storage::url($file) }}" alt="{{ basename($file) }}" class="img-fluid" style="max-width: 100px; margin-right: 15px;">
                                         <div class="ms-3">
                                             <p class="mb-0">{{ basename($file) }}</p>
+                                            <p class="mb-0">{{ \Carbon\Carbon::createFromTimestamp(Storage::lastModified($file))->toDateTimeString() }}</p>
                                             <a href="{{ Storage::url($file) }}" target="_blank">{{ Storage::url($file) }}</a>
                                         </div>
                                     </div>

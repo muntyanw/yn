@@ -22,11 +22,11 @@
                     {{-- <li class="nav-item">
                         <a href="tenders.php"
                             class="nav-link {{ request()->is('tenders') ? 'active' : '' }}">Тендери</a>
-                    </li>
+                    </li>--}}
                     <li class="nav-item">
-                        <a href="reports.php" class="nav-link {{ request()->is('reports') ? 'active' : '' }}">Звіти</a>
+                        <a href="{{ route('guest_reports_index') }}" class="nav-link {{ request()->is('reports') ? 'active' : '' }}">Звіти</a>
                     </li>
-                    <li class="nav-item">
+                    {{--<li class="nav-item">
                         <a href="blog.php" class="nav-link {{ request()->is('blog') ? 'active' : '' }}">Підтримати
                             Нас</a>
                     </li> --}}

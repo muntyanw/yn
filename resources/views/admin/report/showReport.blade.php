@@ -43,6 +43,24 @@
                         @endforeach
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="font-weight-bold">{{ __('Files') }}</label>
+                    <div class="row">
+                        @foreach ($report->files as $file)
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    @if ($file->file_path)
+                                        <a href="{{ asset('storage/' . $file->file_path) }}" class="btn btn-primary btn-sm"
+                                            target="_blank">{{ __('View File') }}</a>
+                                    @elseif($file->file_url)
+                                        <a href="{{ $file->file_url }}" class="btn btn-primary btn-sm"
+                                            target="_blank">{{ __('View File') }}</a>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>

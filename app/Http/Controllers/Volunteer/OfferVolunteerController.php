@@ -61,6 +61,6 @@ class OfferVolunteerController extends Controller
       }
 
       // Redirect to the dashboard or any other intended page
-      return redirect()->route('dashboard')->with('success', 'You have successfully signed up to help with the offer.');
+      return redirect()->route('dashboard')->with('success', "You have successfully signed up to help with the offer.");
    }
 }

@@ -13,6 +13,46 @@
             padding: 1rem 2rem;
             margin: 1rem 0;
         }
+
+        .circle-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .circle {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 20px solid #007bff;
+        }
+        .month {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .month:nth-child(1) { top: 5%; left: 50%; transform: translate(-50%, -50%); }
+        .month:nth-child(2) { top: 18%; left: 77%; transform: translate(-50%, -50%); }
+        .month:nth-child(3) { top: 50%; left: 95%; transform: translate(-50%, -50%); }
+        .month:nth-child(4) { top: 82%; left: 77%; transform: translate(-50%, -50%); }
+        .month:nth-child(5) { top: 95%; left: 50%; transform: translate(-50%, -50%); }
+        .month:nth-child(6) { top: 82%; left: 23%; transform: translate(-50%, -50%); }
+        .month:nth-child(7) { top: 50%; left: 5%; transform: translate(-50%, -50%); }
+        .month:nth-child(8) { top: 18%; left: 23%; transform: translate(-50%, -50%); }
     </style>
 @endsection
 
@@ -62,7 +102,6 @@
             {{-- <a href="{{ route('dashboard') }}"
                 class="btn btn-lg btn-success btn-lg-custom">{{ __('Кабінет волонтера') }}</a> --}}
         </div>
-
 
     </div>
 @endsection

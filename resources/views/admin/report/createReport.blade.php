@@ -49,6 +49,16 @@
             <div id="photoPreviews" class="mt-3"></div>
         </div>
 
+        <div class="form-group">
+            <label for="files">Files</label>
+            <input type="file" name="files[]" class="form-control-file" multiple>
+        </div>
+
+        <div class="form-group">
+            <label for="file_urls">File URLs (одне посилання на одной строці)</label>
+            <textarea name="file_urls" class="form-control" rows="3" placeholder="Enter file URLs, one per line"></textarea>
+        </div>
+
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
     </form>
 </div>
