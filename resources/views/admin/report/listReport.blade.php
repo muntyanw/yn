@@ -15,6 +15,7 @@
                     <th>{{ __('Month') }}</th>
                     <th>{{ __('Year') }}</th>
                     <th>{{ __('Photos') }}</th>
+                    <th>{{ __('Files') }}</th>
                     <th>{{ __('Text') }}</th>
                     <th>{{ __('Actions') }}</th>
                 </tr>
@@ -29,6 +30,11 @@
                                 <a href="{{ asset('storage/' . $photo->photo) }}" target="_blank">
                                     <img src="{{ asset('storage/' . $photo->photo) }}" alt="Photo" class="img-thumbnail" width="100" />
                                 </a>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach($report->files as $file)
+                                <a href="{{ asset('storage/' . $file->file_path) }}" target="_blank">{{ basename($file->file_path) }}</a><br>
                             @endforeach
                         </td>
                         <td>
@@ -50,7 +56,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center">{{ __('No reports found') }}</td>
+                        <td colspan="6" class="text-center">{{ __('No reports found') }}</td>
                     </tr>
                 @endforelse
             </tbody>

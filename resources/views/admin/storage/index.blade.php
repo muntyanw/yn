@@ -46,7 +46,7 @@
             @endforeach
         </div>
 
-        <form id="upload-form" action="{{ route('admin_storage_files_upload') }}" method="POST" enctype="multipart/form-data" class="mt-4">
+        <form id="upload-form" action="{{ route('admin_storage_images_upload') }}" method="POST" enctype="multipart/form-data" class="mt-4">
             @csrf
             <div class="form-group">
                 <label for="image">{{ __('Add Image to Common Folder') }}</label>

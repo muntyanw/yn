@@ -23,12 +23,18 @@ class ReportController extends AdminBaseController
 
    public function store(Request $request)
    {
+       // Предварительная обработка данных
+       $input = $request->all();
+       $input['month'] = (int)$request->input('month');
+       $input['year'] = (int)$request->input('year');
+       $request->replace($input);
+
       // Validate the incoming request data
       $request->validate([
          'month' => 'required|integer',
          'year' => 'required|integer',
          'text' => 'required|string',
-         'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for multiple photo files
+         // 'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for multiple photo files
       ]);
 
       // Create a new report
@@ -90,6 +96,12 @@ class ReportController extends AdminBaseController
 
    public function update(Request $request, $id)
    {
+       // Предварительная обработка данных
+       $input = $request->all();
+       $input['month'] = (int)$request->input('month');
+       $input['year'] = (int)$request->input('year');
+       $request->replace($input);
+       
       $request->validate([
          'month' => 'required|integer',
          'year' => 'required|integer',

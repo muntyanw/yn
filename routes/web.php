@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ReportController;
@@ -36,14 +37,12 @@ Route::get('/news-list', [GuestNewsController::class, 'list'])->name('guest_news
 Route::get('/news/fetch/{offset}', [GuestNewsController::class, 'fetchNews'])->name('guest_news_fetch');
 Route::get('/news/{id}', [GuestNewsController::class, 'show'])->name('guest_news_show');
 
-// Группируем маршруты под одним префиксом и пространством имен
 Route::prefix('reports')->name('guest_reports_')->group(function () {
     Route::get('/months/{year}', [GuestReportController::class, 'getMonths'])->name('months');
     Route::get('/', [GuestReportController::class, 'index'])->name('index');
     Route::get('{year}', [GuestReportController::class, 'showYear'])->name('showYear');
     Route::get('{year}/{month}', [GuestReportController::class, 'showMonth'])->name('showMonth');
 });
-
 
 
 Route::middleware('auth')->group(function () {
@@ -127,8 +126,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin_panel')->group(function
         Route::post('delete', [UserController::class, 'destroy'])->name('destroy');
     });
 
-    Route::get('/storage/files', [StorageController::class, 'index'])->name('admin_storage_files_index');
     Route::post('/storage/files/upload', [StorageController::class, 'upload'])->name('admin_storage_files_upload');
+    Route::get('/storage/files', [StorageController::class, 'index'])->name('admin_storage_files_index');
+    Route::post('/storage/images/upload', [StorageController::class, 'upload_images'])->name('admin_storage_images_upload');
     Route::delete('/storage/files/delete', [StorageController::class, 'delete'])->name('admin_storage_files_delete');
     Route::post('/storage/download-images', [StorageController::class, 'downloadImages'])->name('admin_storage_download_images');
 

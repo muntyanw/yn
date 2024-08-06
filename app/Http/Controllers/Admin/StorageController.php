@@ -21,7 +21,7 @@ class StorageController extends AdminBaseController
         return view('admin.storage.index', compact('files'));
     }
 
-    public function upload(Request $request)
+    public function upload_images(Request $request)
     {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -79,5 +79,18 @@ class StorageController extends AdminBaseController
 
         // Возвращаемся на предыдущую страницу с сообщением об успехе
         return back()->with('status', __('Images downloaded successfully'))->with('files', $savedFiles);
+    }
+
+    public function upload(Request $request) {
+        if ($request->hasFile('upload')) {
+            $file = $request->file('upload');
+            $path = $file->store('uploads', 'public');
+    
+            return response()->json([
+                'url' => asset('storage/' . $path)
+            ]);
+        }
+    
+        return response()->json(['error' => 'No file uploaded.'], 400);
     }
 }

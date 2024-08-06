@@ -55,8 +55,9 @@ class UserController extends AdminBaseController
     }
 
     // Форма редактирования пользователя
-    public function edit(User $user)
+    public function edit(int $id)
     {
+        $user = User::find($id);
         return view('admin.users.edit', compact('user'));
     }
 
