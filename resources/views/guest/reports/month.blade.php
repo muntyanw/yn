@@ -1,7 +1,7 @@
 <!-- resources/views/reports/month.blade.php -->
 
 <div class="report-details mt-4">
-    <h3>{{ __('Report for') }} {{ \Carbon\Carbon::create()->month($report->month)->format('F') }} {{ $report->year }}</h3>
+    <h3>{{ __('Report for') }} {{ \Carbon\Carbon::create()->month($report->month)->locale('uk')->translatedFormat('F') }} {{ $report->year }}</h3>
     <div>{!! $report->text !!}</div>
 
     @if ($report->photos->isNotEmpty())

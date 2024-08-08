@@ -29,6 +29,7 @@ class GuestReportController extends Controller
 
    public function showMonth($year, $month)
    {
+      \Carbon\Carbon::setLocale('uk');
       $report = Report::where('year', $year)->where('month', $month)->firstOrFail();
       return view('guest.reports.month', compact('year', 'month', 'report'));
    }

@@ -301,7 +301,7 @@
                                         </a>
                                         <ul class="nav nav-treeview">
                                             <li class="nav-item">
-                                                <a href="{{ route('admin_reports_index') }}" class="nav-link">
+                                                <a href="{{ route('admin_report_list') }}" class="nav-link">
                                                     <i class="fas fa-layer-group"></i>
                                                     <p class="ml-3">{{ __('List') }}</p>
                                                 </a>

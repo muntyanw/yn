@@ -20,6 +20,7 @@
             padding: 2em;
             border-radius: 10px;
             margin-top: 2em;
+            border: 3px solid white;
         }
 
         .btn-primary {
@@ -148,6 +149,15 @@
                     });
             }
 
+            function loadReport(year, month) {
+                fetch(`/reports/${year}/${month}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        reportContent.style.display = 'block';
+                        reportContent.innerHTML = html;
+                    });
+            }
+
             monthLinks.forEach(month => {
                 month.addEventListener('click', function() {
                     if (this.classList.contains('inactive')) return;
@@ -157,12 +167,7 @@
 
                     const monthNumber = this.dataset.month;
                     const year = document.querySelector('.nav-link[data-year].active').dataset.year;
-                    fetch(`/reports/${year}/${monthNumber}`)
-                        .then(response => response.text())
-                        .then(html => {
-                            reportContent.style.display = 'block';
-                            reportContent.innerHTML = html;
-                        });
+                    loadReport(year, monthNumber);
                 });
             });
 
@@ -177,7 +182,20 @@
             });
 
             // Initial update for the months
-            updateMonthStyles('{{ $lastYear }}');
+            const lastYearLink = navLinks[0];
+            lastYearLink.classList.add('active');
+            const lastYear = lastYearLink.dataset.year;
+
+            fetch(`/reports/months/${lastYear}`)
+                .then(response => response.json())
+                .then(months => {
+                    const lastMonth = Math.max(...months);
+                    const lastMonthLink = document.querySelector(`.nav-link[data-month="${lastMonth}"]`);
+                    if (lastMonthLink) {
+                        lastMonthLink.classList.add('active');
+                        loadReport(lastYear, lastMonth);
+                    }
+                });
         });
     </script>
 @endsection

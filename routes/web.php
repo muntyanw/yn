@@ -68,13 +68,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin_panel')->group(function
     Route::post('/volunteers_destroy', [VolunteerController::class, 'destroy'])->name('admin_volunteer_destroy');
     Route::get('/volunteers_show/{id}', [VolunteerController::class, 'show'])->name('admin_volunteer_show');
 
-    Route::get('/reports', [ReportController::class, 'index'])->name('admin_reports_index');
+    Route::get('/reports', [ReportController::class, 'index'])->name('admin_report_list');
     Route::get('/reports/create', [ReportController::class, 'create'])->name('admin_report_create');
     Route::post('/reports', [ReportController::class, 'store'])->name('admin_report_store');
     Route::get('/reports/{id}/edit', [ReportController::class, 'edit'])->name('admin_report_edit');
     Route::put('/reports/{id}', [ReportController::class, 'update'])->name('admin_report_update');
     Route::delete('/reports/{id}', [ReportController::class, 'destroy'])->name('admin_report_destroy');
     Route::get('/reports/{id}', [ReportController::class, 'show'])->name('admin_report_show');
+    Route::delete('/reports/{reportId}/photo-remove/{photoId}', [ReportController::class, 'deletePhoto'])->name('admin_report_delete_photo');
+    Route::delete('/reports/{report}/file-remove/{file}', [ReportController::class, 'removeFile'])->name('admin_report_delete_file');
+    Route::post('/reports/upload-photo', [ReportController::class, 'uploadPhoto'])->name('admin_report_upload_photo');
+
+
 
     Route::get('skills', [SkillController::class, 'index'])->name('admin_skills_list');
     Route::get('skills/create', [SkillController::class, 'create'])->name('admin_skill_create');

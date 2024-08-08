@@ -409,5 +409,16 @@
     "September": "Вересень",
     "October": "Жовтень",
     "November": "Листопад",
-    "December": "Грудень"
+    "December": "Грудень",
+    "Search..." : "Поиск...",
+    "Search by month..." : "Поиск по месяцу...",
+    "Search by year..." : "Поиск по году...",
+    "Are you sure you want to delete this photo?" : "Вы уверены, что хотите удалить эту фотографию?",
+    "Photo deleted successfully." : "Фотография успешно удалена.",
+    "Add Another Block": "Добавить еще один блок", 
+    "View Image": "Посмотреть изображение", 
+    "Current Files": "Текущие файлы",
+    "File URLs (one URL per line)":"URL-адреси файлів (одна URL-адреса на рядок)",
+    "Enter file URLs, one per line":"Введіть URL-адреси файлів, по одній на рядок"
+
 }

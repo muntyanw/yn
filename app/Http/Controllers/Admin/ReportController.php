@@ -7,110 +7,111 @@ use App\Models\Report;
 use App\Models\ReportPhoto;
 use Illuminate\Http\Request;
 use App\Models\ReportFile;
+use Illuminate\Support\Facades\Storage;
 
 class ReportController extends AdminBaseController
 {
-   public function index()
+   public function index(Request $request)
    {
-      $reports = Report::paginate(20);
-      return view('admin.report.listReport', compact('reports'));
+      $query = Report::query();
+
+      // Поиск по всем полям
+      if ($request->has('search') && strlen($request->get('search')) > 3) {
+         $search = $request->get('search');
+         $query->where(function ($q) use ($search) {
+            $q->where('month', 'like', '%' . $search . '%')
+               ->orWhere('year', 'like', '%' . $search . '%')
+               ->orWhereHas('photos', function ($q) use ($search) {
+                  $q->where('photo', 'like', '%' . $search . '%');
+               })
+               ->orWhereHas('files', function ($q) use ($search) {
+                  $q->where('file_path', 'like', '%' . $search . '%');
+               })
+               ->orWhere('text', 'like', '%' . $search . '%');
+         });
+      }
+
+      // Поиск по месяцу
+      if ($request->has('month_search') && strlen($request->get('month_search')) > 0) {
+         $monthSearch = $request->get('month_search');
+         $query->where('month', 'like', '%' . $monthSearch . '%');
+      }
+
+      // Поиск по году
+      if ($request->has('year_search') && strlen($request->get('year_search')) > 0) {
+         $yearSearch = $request->get('year_search');
+         $query->where('year', 'like', '%' . $yearSearch . '%');
+      }
+
+      // Сортировка
+      $sortColumn = $request->get('sort', 'month'); // выбранный столбец, по умолчанию 'month'
+      $sortDirection = $request->get('direction', 'asc'); // направление сортировки, по умолчанию 'asc'
+
+      $query->orderBy($sortColumn, $sortDirection);
+
+      if ($sortColumn !== 'year') {
+         $query->orderBy('year', 'asc'); // вторичная сортировка по году, если год не выбран для первичной сортировки
+      }
+      if ($sortColumn !== 'month') {
+         $query->orderBy('month', 'asc'); // третичная сортировка по месяцу, если месяц не выбран для первичной сортировки
+      }
+      $query->orderBy('id', 'asc'); // дополнительная сортировка по ID
+
+      $reports = $query->paginate(20);
+
+      if ($request->ajax()) {
+         return view('admin.report.partials.table', compact('reports'))->render();
+      }
+
+      return view('admin.report.index', compact('reports'));
    }
 
    public function create()
    {
-      return view('admin.report.createReport');
-   }
-
-   public function store(Request $request)
-   {
-       // Предварительная обработка данных
-       $input = $request->all();
-       $input['month'] = (int)$request->input('month');
-       $input['year'] = (int)$request->input('year');
-       $request->replace($input);
-
-      // Validate the incoming request data
-      $request->validate([
-         'month' => 'required|integer',
-         'year' => 'required|integer',
-         'text' => 'required|string',
-         // 'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for multiple photo files
-      ]);
-
       // Create a new report
       $report = Report::create([
-         'month' => $request->month,
-         'year' => $request->year,
-         'text' => $request->text,
+         'month' => date('m'),
+         'year' => date('yyyy'),
+         'text' => "",
       ]);
-
-      // Process and save the photos
-      if ($request->hasFile('photos')) {
-         foreach ($request->file('photos') as $photo) {
-            // Store the photo and get its path
-            $path = $photo->store('reports', 'public');
-
-            // Create an HTML linkFfor the photo
-            $htmlLink = '<img src="' . asset('storage/' . $path) . '" alt="Report Photo">';
-
-            // Save the photo details in the report_photos table
-            ReportPhoto::create([
-               'report_id' => $report->id,
-               'photo' => $path,
-               'html_link' => $htmlLink,
-            ]);
-         }
-      }
-
-      if ($request->hasFile('files')) {
-         foreach ($request->file('files') as $file) {
-            $path = $file->store('report_files', 'public');
-            ReportFile::create([
-               'report_id' => $report->id,
-               'file_path' => $path
-            ]);
-         }
-      }
-
-      if ($request->file_urls) {
-         $fileUrls = explode("\n", str_replace("\r", "", $request->file_urls));
-         foreach ($fileUrls as $file_url) {
-            if (!empty($file_url)) {
-               ReportFile::create([
-                  'report_id' => $report->id,
-                  'file_url' => trim($file_url)
-               ]);
-            }
-         }
-      }
-
-      // Redirect or return response
-      return redirect()->route('admin_reports_index')->with('success', __('Report created successfully.'));
+      return view('admin.report.editReport', compact('report'));
    }
 
    public function edit($id)
    {
-      $report = Report::with('photos')->findOrFail($id);
+      $report = Report::with('photos')->with('files')->findOrFail($id);
       return view('admin.report.editReport', compact('report'));
    }
 
    public function update(Request $request, $id)
    {
-       // Предварительная обработка данных
-       $input = $request->all();
-       $input['month'] = (int)$request->input('month');
-       $input['year'] = (int)$request->input('year');
-       $request->replace($input);
-       
+      // Предварительная обработка данных
+      $input = $request->all();
+      $input['month'] = (int)$request->input('month');
+      $input['year'] = (int)$request->input('year');
+      $request->replace($input);
+
       $request->validate([
          'month' => 'required|integer',
          'year' => 'required|integer',
-         'text' => 'required',
+         'combined_content' => 'required|string',
          // 'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
       ]);
 
-      $report = Report::findOrFail($id);
-      $report->update($request->all());
+      if (!empty($id)) {
+         $report = Report::findOrFail($id);
+      } else {
+         // Create a new report
+         $report = Report::create([
+            'month' => $request->month,
+            'year' => $request->year,
+            'text' => $request->text,
+         ]);
+      }
+
+      $report->month = $request->month;
+      $report->year = $request->year;
+      $report->text = $request->combined_content;
 
       if ($request->hasFile('photos')) {
          foreach ($request->file('photos') as $photo) {
@@ -142,19 +143,68 @@ class ReportController extends AdminBaseController
          }
       }
 
-      return redirect()->route('admin_reports_index')->with('success', __('Report updated successfully.'));
+      $report->save();
+
+      return "ok";
+      // return redirect()->route('admin_report_list')->with('success', __('Report updated successfully.'));
    }
 
    public function destroy($id)
    {
       $report = Report::findOrFail($id);
       $report->delete();
-      return redirect()->route('admin_reports_index')->with('success', __('Report deleted successfully.'));
+      return redirect()->route('admin_report_list')->with('success', __('Report deleted successfully.'));
    }
 
    public function show($id)
    {
       $report = Report::with('photos')->findOrFail($id);
       return view('admin.report.showReport', compact('report'));
+   }
+
+   public function deletePhoto($reportId, $photoId)
+   {
+      $report = Report::findOrFail($reportId);
+      $photo = $report->photos()->findOrFail($photoId);
+
+      // Удаление файла из хранилища
+      Storage::delete($photo->photo);
+
+      // Удаление записи из базы данных
+      $photo->delete();
+
+      return response()->json(['success' => 'Photo deleted successfully.']);
+   }
+
+   public function removeFile($reportId, $fileId)
+   {
+      $report = Report::findOrFail($reportId);
+      $file = $report->files()->findOrFail($fileId);
+
+      if (Storage::exists($file)) {
+         // Удалите файл из хранилища
+         Storage::delete($file->file);
+      }
+
+      // Удалите запись из базы данных
+      $file->delete();
+
+      return response()->json(['success' => __('File deleted successfully')]);
+   }
+
+   public function uploadPhoto(Request $request)
+   {
+      $request->validate([
+         'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      ]);
+
+      if ($request->hasFile('photo')) {
+         $path = $request->file('photo')->store('photos', 'public');
+         $url = Storage::url($path);
+
+         return response()->json(['success' => true, 'url' => $url]);
+      }
+
+      return response()->json(['success' => false, 'message' => 'Failed to upload photo']);
    }
 }

@@ -4,16 +4,26 @@
 
 @section('style')
     @include('admin.partials.ckeditorcss')
+    <style>
+        .dynamic-field {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+    </style>
 @endsection
 
 @section('content')
     <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>{{ __('Edit Report') }}</h2>
-            <a href="{{ route('admin_reports_index') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
+            <a href="{{ route('admin_report_list') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
         </div>
 
-        <form action="{{ route('admin_report_update', ['id' => $report->id]) }}" method="POST" enctype="multipart/form-data">
+        <form id="reportForm" action="{{ route('admin_report_update', ['id' => $report->id]) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -35,85 +45,94 @@
                 @enderror
             </div>
 
-            <div class="form-group">
-                <label for="text">{{ __('Text') }}</label>
-                <textarea class="form-control" id="editor" name="text" required>{{ old('text', $report->text) }}</textarea>
-                @error('text')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="photos">{{ __('Photos') }}</label>
-                <input type="file" class="form-control-file" id="photos" name="photos[]" multiple
-                    onchange="previewImages(event)">
-                @error('photos.*')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mt-3">
-                <h4>{{ __('Current Photos') }}</h4>
-                @foreach ($report->photos as $photo)
-                    <div class="mb-2 d-flex align-items-center">
-                        <img src="{{ asset('storage/' . $photo->photo) }}" alt="{{ __('Current Photo') }}"
-                            class="img-thumbnail" width="150">
-                        <a href="{{ asset('storage/' . $photo->photo) }}" target="_blank"
-                            class="ml-3">{{ __('View Image') }}</a>
+            <div id="dynamicFields">
+                <div class="dynamic-field">
+                    <div class="form-group">
+                        <label for="text">{{ __('Text') }}</label>
+                        <textarea class="form-control ckeditor" name="texts[]" rows="5" required>
+                            {{ old('text', $report->text) }}
+                        </textarea>
+                        @error('texts.*')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                @endforeach
-                <div id="photoPreviews" class="mt-3"></div>
+
+                    <div class="form-group">
+                        <label for="photo">{{ __('Photo') }}</label>
+                        <input type="file" class="form-control-file photo-upload" name="photosCK[]">
+                        @error('photos.*')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                        <div class="photo-preview mt-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-secondary" id="addField">{{ __('Add Another Block') }}</button>
+
+            <div class="dynamic-field" style="margin-top: 2em;">
+
+                <div class="form-group">
+                    <label for="photos">{{ __('Photos') }}</label>
+                    <input type="file" class="form-control-file" id="photos" name="photos[]" multiple
+                        onchange="previewImages(event)">
+                    @error('photos.*')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mt-3">
+                    <h4>{{ __('Current Photos') }}</h4>
+                    @foreach ($report->photos as $photo)
+                        <div class="mb-2 d-flex align-items-center">
+                            <img src="{{ asset('storage/' . $photo->photo) }}" alt="{{ __('Current Photo') }}"
+                                class="img-thumbnail" width="150">
+                            <a href="{{ asset('storage/' . $photo->photo) }}" target="_blank"
+                                class="btn btn-primary btn-sm"
+                                style="margin-left:1em;margin-right: 1em;">{{ __('View Image') }}</a>
+                            <a href="javascript:deletePhoto('{{ $report->id }}', '{{ $photo->id }}');"
+                                class="btn btn-danger btn-sm">{{ __('Delete') }}</a>
+                        </div>
+                    @endforeach
+                    <div id="photoPreviews" class="mt-3"></div>
+                </div>
+
+                <div class="mt-3">
+                    <div class="form-group">
+                        <label for="files">{{ __('Files') }}</label>
+                        <input type="file" class="form-control-file" id="files" name="files[]" multiple
+                            onchange="previewFiles(event)">
+                        @error('files.*')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <h4>{{ __('Current Files') }}</h4>
+                    @foreach ($report->files as $file)
+                        <div class="mb-2 d-flex align-items-center">
+                            <a href="{{ asset('storage/' . $file->file_path) }}" target="_blank"
+                                class="btn btn-primary btn-sm">{{ __('View File') . " " . $file->file_path}}</a>
+                            <a href="javascript:deleteFile('{{ $report->id }}', '{{ $file->id }}');"
+                                class="btn btn-danger btn-sm"
+                                style="margin-left:1em;margin-right: 1em;">{{ __('Delete') }}</a>
+                        </div>
+                    @endforeach
+                    <div id="filePreviews" class="mt-3"></div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="files">Files</label>
-                <input type="file" name="files[]" class="form-control-file" multiple>
+                <label for="file_urls">{{ __('File URLs (one URL per line)') }}</label>
+                <textarea name="file_urls" class="form-control" rows="3" placeholder="{{ __('Enter file URLs, one per line') }}">{{ old('file_urls') }}</textarea>
             </div>
 
-            <div class="form-group">
-                <label for="file_urls">File URLs (одне посилання на одной строці)</label>
-                <textarea name="file_urls" class="form-control" rows="3" placeholder="Enter file URLs, one per line"></textarea>
+            <div class="form-group mt-4">
+                <button id="butsub" type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+                <img id="waitico" src="/storage/img/loadingCircle.gif" style="display: none;width:4em;" />
             </div>
-
-            <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
         </form>
     </div>
 @endsection
 
 @section('scripts')
-    <script>
-        function previewImages(event) {
-            const files = event.target.files;
-            const previewContainer = document.getElementById('photoPreviews');
-            previewContainer.innerHTML = ''; // Clear previous previews
-
-            Array.from(files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'img-thumbnail';
-                    img.width = 150;
-
-                    const link = document.createElement('a');
-                    link.href = e.target.result;
-                    link.target = '_blank';
-                    link.className = 'ml-3';
-                    link.innerText = '{{ __('View Image') }}';
-
-                    const div = document.createElement('div');
-                    div.className = 'mb-2 d-flex align-items-center';
-                    div.appendChild(img);
-                    div.appendChild(link);
-
-                    previewContainer.appendChild(div);
-                }
-
-                if (file) {
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
-    </script>
-    @include('admin.partials.ckeditorjs')
+    @include('admin.report.partials.editJs')
 @endsection

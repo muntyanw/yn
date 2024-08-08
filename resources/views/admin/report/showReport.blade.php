@@ -8,7 +8,7 @@
     <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>{{ __('View Report') }}</h2>
-            <a href="{{ route('admin_reports_index') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
+            <a href="{{ route('admin_report_list') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
         </div>
 
         <div class="card mb-4">
@@ -64,4 +64,9 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+    
+    </script>
 @endsection
