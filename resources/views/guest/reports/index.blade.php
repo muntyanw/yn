@@ -60,19 +60,11 @@
         }
 
         @media (max-width: 992px) {
-            .reportimgwith {
-                width: 200px;
-            }
-
-            .reportcontwith {
-                width: 260px;
-            }
+            
         }
 
         @media (min-width: 992px) {
-            .reportimgwith {
-                width: 600px;
-            }
+            
         }
     </style>
 @endsection

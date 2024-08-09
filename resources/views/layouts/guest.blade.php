@@ -23,22 +23,79 @@
             text-align: center;
         }
 
-        .zasnov{
+        /***********************************************************************/
+
+        /* Стили для экранов меньше 768px */
+        .zasnov {
             text-align: center;
+        }
+
+        .reportimgwith {
+            width: 280px;
+        }
+
+        .reportcontwith {
+            width: 340px;
+        }
+
+        /* Стили для экранов от 768px до 991px */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .reportimgwith {
+                width: 560px;
             }
 
-        @media (min-width: 992px) {
+            .reportcontwith {
+                width: 700px;
+            }
+
+        }
+
+        /* Стили для экранов от 768px до 991px */
+        @media (min-width: 992px) and (max-width: 1024px) {            .carousel-control-prev,
+            .carousel-control-next {
+                position: absolute !important;
+            }
+
+            .zasnov {
+                text-align: justify;
+            }
+
+            .reportimgwith {
+                width: 600px;
+            }
+
+            .reportcontwith {
+                width: 960px;
+            }
+
+
+        }
+
+        /* Стили для экранов от 992px и выше */
+        @media (min-width: 1025px) {
 
             .carousel-control-prev,
             .carousel-control-next {
                 position: absolute !important;
             }
-            .zasnov{
-                text-align:justify;
+
+            .zasnov {
+                text-align: justify;
             }
+
+            .reportimgwith {
+                width: 600px;
+            }
+
+            .reportcontwith {
+                width: 1100px;
+            }
+
         }
 
-     
+
+
+
         .content-section {
             padding: 3rem 1rem;
             background-color: #f5f5dc;

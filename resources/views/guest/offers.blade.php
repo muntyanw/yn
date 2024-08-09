@@ -70,7 +70,8 @@
                     @foreach ($offers as $offer)
                         <tr>
                             <td data-label="{{ __('No.') }}">{{ $loop->iteration }}</td>
-                            <td data-label="{{ __('Specialization/type of work') }}">{{ $offer->skills->pluck('name')->implode(', ') }}</td>
+                            <td data-label="{{ __('Specialization/type of work') }}">
+                                {{ $offer->skills->pluck('name')->implode(', ') }}</td>
                             <td data-label="{{ __('Term') }}">
                                 @foreach ($offer->timePeriods as $period)
                                     <div>{{ $period->start_date }} - {{ $period->end_date }}</div>
@@ -81,9 +82,11 @@
                                     <div>{{ $period->start_time }} - {{ $period->end_time }}</div>
                                 @endforeach
                             </td>
-                            <td data-label="{{ __('Description') }}">{{ $offer->description }}</td>
+                            <td data-label="{{ __('Description') }}&nbsp;" style="text-align: justify;">{{ $offer->description }}
+                            </td>
                             <td data-label="{{ __('Action') }}">
-                                <a href="{{ route('guest_volunteer_help', ['offer_id' => $offer->id]) }}" class="btn btn-primary">{{ __('Хочу допомогти') }}</a>
+                                <a href="{{ route('guest_volunteer_help', ['offer_id' => $offer->id]) }}"
+                                    class="btn btn-primary">{{ __('Хочу допомогти') }}</a>
                             </td>
                         </tr>
                     @endforeach
@@ -92,7 +95,8 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            <a href="{{ route('guest_want_become_volunteer') }}" class="btn btn-lg btn-primary btn-lg-custom me-3">{{ __('Хочу стати волонтером') }}</a>
+            <a href="{{ route('guest_want_become_volunteer') }}"
+                class="btn btn-lg btn-primary btn-lg-custom me-3">{{ __('Хочу стати волонтером') }}</a>
         </div>
     </div>
 @endsection
