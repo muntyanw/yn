@@ -15,7 +15,14 @@ class StorageController extends AdminBaseController
         $files = [];
 
         foreach ($directories as $directory) {
-            $files[$directory] = Storage::files($directory);
+            $fileList = Storage::files($directory);
+    
+            // Сортировка по времени последней модификации
+            usort($fileList, function ($a, $b) {
+                return Storage::lastModified($b) - Storage::lastModified($a);
+            });
+    
+            $files[$directory] = $fileList;
         }
 
         return view('admin.storage.index', compact('files'));

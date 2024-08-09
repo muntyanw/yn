@@ -71,7 +71,7 @@ class ReportController extends AdminBaseController
       // Create a new report
       $report = Report::create([
          'month' => date('m'),
-         'year' => date('yyyy'),
+         'year' => date('Y'),
          'text' => "",
       ]);
       return view('admin.report.editReport', compact('report'));

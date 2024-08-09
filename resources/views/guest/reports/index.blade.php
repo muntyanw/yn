@@ -58,6 +58,22 @@
             background-color: #f0f5fe;
             color: #003366 !important;
         }
+
+        @media (max-width: 992px) {
+            .reportimgwith {
+                width: 200px;
+            }
+
+            .reportcontwith {
+                width: 260px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .reportimgwith {
+                width: 600px;
+            }
+        }
     </style>
 @endsection
 
@@ -120,7 +136,7 @@
             @endforeach
         </ul>
 
-        <div id="report-content" class="report-content mt-4">
+        <div id="report-content" class="report-content mt-4 reportcontwith" style="overflow: hidden;">
             <!-- Здесь будет содержимое отчета -->
         </div>
     </div>
@@ -146,6 +162,14 @@
                                 link.classList.add('inactive');
                             }
                         });
+
+                        // Загрузить отчет за последний доступный месяц
+                        const lastMonth = Math.max(...months);
+                        const lastMonthLink = document.querySelector(`.nav-link[data-month="${lastMonth}"]`);
+                        if (lastMonthLink) {
+                            lastMonthLink.classList.add('active');
+                            loadReport(year, lastMonth);
+                        }
                     });
             }
 

@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container">
     <h2 class="text-center mb-4">{{ __('Новини') }}</h2>
 
     <div id="newsCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -40,32 +40,6 @@
         <a href="{{ route('guest_news_list') }}" class="btn btn-primary" style="width: 16em">Всі новини</a>
     </div>
 </div>
-
-@section('styles')
-    <style>
-        .carousel-control-prev,
-        .carousel-control-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 5%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .carousel-control-prev {
-            left: -2%;
-        }
-
-        .carousel-control-next {
-            right: -2%;
-        }
-    </style>
-@endsection
 
 @section('scripts')
     <script>

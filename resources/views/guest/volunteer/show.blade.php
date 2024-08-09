@@ -36,8 +36,8 @@
                             {{-- <p><strong>{{ __('Email') }}:</strong> {{ $volunteer->email }}</p>
                             <p><strong>{{ __('Address') }}:</strong> {{ $volunteer->address }}</p> --}}
                             <p><strong>{{ __('About Me') }}:</strong> {{ $volunteer->about_me }}</p>
-                            {{-- <p><strong>{{ __('Skills') }}:</strong>
-                                {{ $volunteer->skills->pluck('name')->implode(', ') }}</p> --}}
+                            <p><strong>{{ __('Speciality') }}:</strong>
+                                {{ $volunteer->skills->pluck('name')->implode(', ') }}</p>
                         </div>
                     </div>
                 </div>

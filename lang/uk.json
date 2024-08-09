@@ -419,6 +419,7 @@
     "View Image": "Посмотреть изображение", 
     "Current Files": "Текущие файлы",
     "File URLs (one URL per line)":"URL-адреси файлів (одна URL-адреса на рядок)",
-    "Enter file URLs, one per line":"Введіть URL-адреси файлів, по одній на рядок"
+    "Enter file URLs, one per line":"Введіть URL-адреси файлів, по одній на рядок",
+    "Speciality":"Спеціальність"
 
 }

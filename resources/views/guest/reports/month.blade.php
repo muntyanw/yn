@@ -18,7 +18,7 @@
     @endif
 
     @if ($report->files->isNotEmpty())
-        <div class="report-files mt-4">
+        <div class="report-files mt-4 reportimgwith" style="overflow: hidden;">
             <h4>{{ __('Files') }}</h4>
             <ul>
                 @foreach ($report->files as $file)

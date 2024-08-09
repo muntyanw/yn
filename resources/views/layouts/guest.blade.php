@@ -12,11 +12,33 @@
     <meta name="author" content="initTheme">
     <title>Громадська організація "Єдина Нація"</title>
     <link rel="icon" type="image/x-icon" sizes="20x20"
-        href="https://en.torushost.com/assets/images/icon/favicon.ico">
+        href="/storage/common/oovpKJMyh4leT8NYjk3JRxd1g5MRMn7C3texDBqP.png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        .carousel-control-prev,
+        .carousel-control-next {
+            position: relative !important;
+            text-align: center;
+        }
+
+        .zasnov{
+            text-align: center;
+            }
+
+        @media (min-width: 992px) {
+
+            .carousel-control-prev,
+            .carousel-control-next {
+                position: absolute !important;
+            }
+            .zasnov{
+                text-align:justify;
+            }
+        }
+
+     
         .content-section {
             padding: 3rem 1rem;
             background-color: #f5f5dc;
@@ -152,7 +174,7 @@
             }
         });
     </script>
-     @yield('scripts')
+    @yield('scripts')
 
 </body>
 

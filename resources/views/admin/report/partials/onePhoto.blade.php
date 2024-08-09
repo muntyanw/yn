@@ -1,6 +1,6 @@
 <div class="raw-html-embed">
     <p style="text-align:center;">
-        <img src="{{ $src }}" width="600"
+        <img src="{{ $src }}" class="reportimgwith"
             style="border: 2px solid white;
                    padding: 2px;
                    background-color: white;

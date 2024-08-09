@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/x-icon" sizes="20x20"
+        href="/storage/common/oovpKJMyh4leT8NYjk3JRxd1g5MRMn7C3texDBqP.png">
     <title>
         @yield('title')
     </title>
@@ -32,6 +34,12 @@
     <link rel="stylesheet" href="/admin/plugins/summernote/summernote-bs4.min.css">
 
     @yield('style')
+
+    <style>
+        .btn {
+            margin:2px 2px;
+        }
+    </style>
 
 </head>
 

@@ -40,7 +40,10 @@ class GuestVolunteerController extends Controller
     public function index()
     {
         // Retrieve active offers with related skills and time periods
-        $offers = Offer::with(['skills', 'timePeriods'])->where('is_active', true)->get();
+        $offers = Offer::with(['skills', 'timePeriods'])
+            ->where('is_active', true)
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         // Pass the offers to the view
         return view('guest.offers', compact('offers'));

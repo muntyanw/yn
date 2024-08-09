@@ -2,6 +2,14 @@
 
 @section('title', __('Storage Files'))
 
+@section('style')
+    <style>
+        .collapse{
+            background-color: rgb(246, 249, 254);
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container mt-5">
         <h2>{{ __('Storage Files') }}</h2>
@@ -11,7 +19,7 @@
             </div>
         @endif
 
-        <div class="accordion mt-4" id="accordionExample">
+        <div class="accordion mt-4" id="accordionExample" style="background-color: rgb(209, 223, 242);">
             @foreach ($files as $directory => $fileList)
                 <div class="card mb-3">
                     <div class="card-header" id="heading{{ md5($directory) }}">
