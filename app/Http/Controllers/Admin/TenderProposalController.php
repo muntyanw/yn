@@ -56,13 +56,22 @@ class TenderProposalController extends AdminBaseController
             ->with('success', __('Tender Proposal updated successfully.'));
     }
 
-    public function destroy(TenderProposal $tenderProposal)
+    public function destroy(Request $request)
     {
+        // Получаем ID предложения из POST параметра
+        $tenderProposalId = $request->input('id');
+
+        // Находим предложение по ID
+        $tenderProposal = TenderProposal::findOrFail($tenderProposalId);
+
+        // Удаляем предложение
         $tenderProposal->delete();
 
+        // Перенаправляем обратно с сообщением об успешном удалении
         return redirect()->route('admin_tender_proposals_index')
             ->with('success', __('Tender Proposal deleted successfully.'));
     }
+
 
     public function show(TenderProposal $tenderProposal)
     {

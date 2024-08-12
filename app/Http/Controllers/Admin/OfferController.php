@@ -46,7 +46,8 @@ class OfferController extends AdminBaseController
       $offer->is_active = $request->has('is_active') ? 1 : 0;
 
       if ($request->hasFile('image')) {
-         $imagePath = $request->file('image')->store('offers', 'public');
+         $originalName = $request->file('image')->getClientOriginalName();
+         $imagePath = "/storage/" . $request->file('image')->storeAs('offers', $originalName, 'public');
          $offer->image = $imagePath;
       }
 
@@ -89,7 +90,8 @@ class OfferController extends AdminBaseController
          if ($offer->image) {
             Storage::delete('public/' . $offer->image);
          }
-         $imagePath = $request->file('image')->store('offers', 'public');
+         $originalName = $request->file('image')->getClientOriginalName();
+         $imagePath = $request->file('image')->storeAs('offers', $originalName, 'public');
          $offer->image = $imagePath;
       }
 

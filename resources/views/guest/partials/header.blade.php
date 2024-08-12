@@ -22,11 +22,18 @@
                     {{-- <li class="nav-item">
                         <a href="tenders.php"
                             class="nav-link {{ request()->is('tenders') ? 'active' : '' }}">Тендери</a>
-                    </li>--}}
-                    <li class="nav-item">
-                        <a href="{{ route('guest_reports_index') }}" class="nav-link {{ request()->is('reports') ? 'active' : '' }}">Звіти</a>
-                    </li>
-                    {{--<li class="nav-item">
+                    </li> --}}
+                   {{-- Звіти с выпадающим подменю --}}
+                   <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle {{ request()->is('reports', 'financial-reports') ? 'active' : '' }}" id="reportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Звіти
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
+                        <li><a href="{{ route('guest_reports_last') }}" class="dropdown-item {{ request()->is('reports') ? 'active' : '' }}">Звіти по діяльності</a></li>
+                        <li><a href="{{ route('guest_financial_reports_last') }}" class="dropdown-item {{ request()->is('financial-reports') ? 'active' : '' }}">Фінансові звіти</a></li>
+                    </ul>
+                </li>
+                    {{-- <li class="nav-item">
                         <a href="blog.php" class="nav-link {{ request()->is('blog') ? 'active' : '' }}">Підтримати
                             Нас</a>
                     </li> --}}
@@ -69,8 +76,22 @@
             {{-- <li class="nav-item">
                 <a href="tenders.php" class="nav-link {{ request()->is('tenders') ? 'active' : '' }}">Тендери</a>
             </li> --}}
+            {{-- Звіти с выпадающим подменю --}}
             <li class="nav-item">
-                <a href="{{ route('guest_reports_index') }}" class="nav-link {{ request()->is('reports') ? 'active' : '' }}">Звіти</a>
+                <a href="#reportsSubMenu"
+                    class="nav-link {{ request()->is('reports', 'financial-reports') ? 'active' : '' }}"
+                    data-bs-toggle="collapse" aria-expanded="false">Звіти</a>
+                <ul class="nav collapse" id="reportsSubMenu">
+                    <li class="nav-item">
+                        <a href="{{ route('guest_reports_last') }}"
+                            class="nav-link {{ request()->is('reports') ? 'active' : '' }}">Звіти по діяльності</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('guest_financial_reports_last') }}"
+                            class="nav-link {{ request()->is('financial-reports') ? 'active' : '' }}">Фінансові
+                            звіти</a>
+                    </li>
+                </ul>
             </li>
             {{-- <li class="nav-item">
                 <a href="blog.php" class="nav-link {{ request()->is('blog') ? 'active' : '' }}">Підтримати Нас</a>

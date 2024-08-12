@@ -32,7 +32,8 @@ class NewsController extends AdminBaseController
         ]);
 
         if ($request->hasFile('photo')) {
-            $photoPath = "/storage/" . $request->file('photo')->store('news_photos', 'public');
+            $originalName = $request->file('photo')->getClientOriginalName();
+            $photoPath = '/storage/' . $request->file('photo')->storeAs('news_photos', $originalName, 'public');
         } elseif ($request->photo_url) {
             $photoPath = $request->photo_url;;
         } else {
@@ -70,7 +71,8 @@ class NewsController extends AdminBaseController
             if ($news->photo) {
                 Storage::disk('public')->delete($news->photo);
             }
-            $photoPath = "/storage/" . $request->file('photo')->store('news_photos', 'public');
+            $originalName = $request->file('photo')->getClientOriginalName();
+            $photoPath = "/storage/" . $request->file('photo')->storeAs('news_photos', $originalName, 'public');
         } elseif ($request->photo_url) {
             $photoPath = $request->photo_url;
         }

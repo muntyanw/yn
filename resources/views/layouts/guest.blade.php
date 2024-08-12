@@ -17,6 +17,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        .btn {
+            margin: 2px 4px;
+        }
+
         .carousel-control-prev,
         .carousel-control-next {
             position: relative !important;
@@ -51,7 +55,9 @@
         }
 
         /* Стили для экранов от 768px до 991px */
-        @media (min-width: 992px) and (max-width: 1024px) {            .carousel-control-prev,
+        @media (min-width: 992px) and (max-width: 1024px) {
+
+            .carousel-control-prev,
             .carousel-control-next {
                 position: absolute !important;
             }

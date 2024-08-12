@@ -188,6 +188,7 @@
             $(el).data('initialized', true);
 
     }
+    
     document.addEventListener('DOMContentLoaded', () => {
         initCK(document.querySelector('.ckeditor'));
     });

@@ -33,11 +33,14 @@
                                class="btn btn-info btn-sm">{{ __('View') }}</a>
                             <a href="{{ route('admin_tender_proposals_edit', ['id' => $proposal->id]) }}"
                                class="btn btn-warning btn-sm">{{ __('Edit') }}</a>
-                            <form action="{{ route('admin_tender_proposals_destroy', ['id' => $proposal->id]) }}" method="POST"
-                                  style="display:inline-block;" onsubmit="return confirm('{{ __('Are you sure you want to delete this tender proposal?') }}');">
+                               <form action="{{ route('admin_tender_proposals_destroy') }}" method="POST">
                                 @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
+                                <!-- Добавляем скрытое поле для передачи ID предложения -->
+                                <input type="hidden" name="id" value="{{ $proposal->id }}">
+                                
+                                <button type="submit" class="btn btn-danger">
+                                    {{ __('Delete') }}
+                                </button>
                             </form>
                         </td>
                     </tr>

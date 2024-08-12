@@ -2,6 +2,10 @@
 
 @section('title', __('Edit Offer'))
 
+@section('style')
+    @include('admin.partials.ckeditorcss')
+@endsection
+
 @section('content')
     <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -22,7 +26,7 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="image">{{ __('Image') }}</label>
                 @if ($offer->image)
                     <div class="mb-2">
@@ -37,11 +41,11 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <div id="imagePreview" class="mt-2"></div>
-            </div>
+            </div> --}}
 
             <div class="form-group">
                 <label for="description">{{ __('Description') }}</label>
-                <textarea class="form-control" id="description" name="description" required>{{ old('description', $offer->description) }}</textarea>
+                <textarea class="form-control ckeditor" id="description" name="description" required>{{ old('description', $offer->description) }}</textarea>
                 @error('description')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -117,21 +121,23 @@
     </div>
 
 @section('scripts')
+    @include('admin.partials.ckeditorjs')
     <script>
-        function previewImage(event) {
-            const file = event.target.files[0];
-            const previewContainer = document.getElementById('imagePreview');
+       
+        // function previewImage(event) {
+        //     const file = event.target.files[0];
+        //     const previewContainer = document.getElementById('imagePreview');
 
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewContainer.innerHTML = `<img src="${e.target.result}" class="img-thumbnail" width="150">`;
-                }
-                reader.readAsDataURL(file);
-            } else {
-                previewContainer.innerHTML = '';
-            }
-        }
+        //     if (file) {
+        //         const reader = new FileReader();
+        //         reader.onload = function(e) {
+        //             previewContainer.innerHTML = `<img src="${e.target.result}" class="img-thumbnail" width="150">`;
+        //         }
+        //         reader.readAsDataURL(file);
+        //     } else {
+        //         previewContainer.innerHTML = '';
+        //     }
+        // }
 
         document.getElementById('add-time-period').addEventListener('click', function() {
             var index = document.querySelectorAll('#time-periods .form-group').length / 4;

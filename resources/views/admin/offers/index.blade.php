@@ -12,7 +12,7 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>{{ __('Image') }}</th>
+                {{-- <th>{{ __('Image') }}</th> --}}
                 <th>{{ __('Title') }}</th>
                 <th>{{ __('Skills') }}</th>
                 <th>{{ __('Time Periods') }}</th>
@@ -22,13 +22,13 @@
         <tbody>
             @forelse($offers as $offer)
                 <tr>
-                    <td>
+                    {{-- <td>
                         @if($offer->image)
                             <img src="{{ asset('storage/' . $offer->image) }}" alt="{{ $offer->title }}" style="width: 50px; height: 50px;">
                         @else
                             {{ __('No Image') }}
                         @endif
-                    </td>
+                    </td> --}}
                     <td>{{ $offer->title }}</td>
                     <td>
                         {{ $offer->skills->pluck('name')->implode(', ') }}

@@ -58,14 +58,7 @@
             background-color: #f0f5fe;
             color: #003366 !important;
         }
-
-        @media (max-width: 992px) {
-            
-        }
-
-        @media (min-width: 992px) {
-            
-        }
+       
     </style>
 @endsection
 

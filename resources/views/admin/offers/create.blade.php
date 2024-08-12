@@ -20,14 +20,14 @@
             @enderror
         </div>
 
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label for="image">{{ __('Image') }}</label>
             <input type="file" class="form-control-file" id="image" name="image" onchange="previewImage(event)">
             @error('image')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
             <div id="imagePreview" class="mt-2"></div>
-        </div>
+        </div> --}}
 
         <div class="form-group">
             <label for="description">{{ __('Description') }}</label>

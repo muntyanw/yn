@@ -82,7 +82,7 @@
                                     <div>{{ $period->start_time }} - {{ $period->end_time }}</div>
                                 @endforeach
                             </td>
-                            <td data-label="{{ __('Description') }}&nbsp;" style="text-align: justify;">{{ $offer->description }}
+                            <td data-label="{{ __('Description') }}&nbsp;" style="text-align: justify;">{!! $offer->description !!}
                             </td>
                             <td data-label="{{ __('Action') }}">
                                 <a href="{{ route('guest_volunteer_help', ['offer_id' => $offer->id]) }}"

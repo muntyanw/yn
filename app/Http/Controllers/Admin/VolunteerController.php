@@ -56,7 +56,8 @@ class VolunteerController extends AdminBaseController
 
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = "storage/" . $request->file('photo')->store('volunteers_photos', 'public');
+            $originalName = $request->file('photo')->getClientOriginalName();
+            $photoPath = "storage/" . $request->file('photo')->storeAs('volunteers_photos', $originalName, 'public');
         } elseif ($request->input('photo_url')) {
             $photoPath = $request->input('photo_url');
         }
@@ -131,7 +132,8 @@ class VolunteerController extends AdminBaseController
             if ($volunteer->photo) {
                 Storage::disk('public')->delete($volunteer->photo);
             }
-            $photoPath = "storage/" . $request->file('photo')->store('volunteers_photos', 'public');
+            $originalName = $request->file('photo')->getClientOriginalName();
+            $photoPath = "storage/" . $request->file('photo')->storeAs('volunteers_photos', $originalName, 'public');
         } elseif ($request->input('photo_url')) {
             $photoPath = $request->input('photo_url');
         }

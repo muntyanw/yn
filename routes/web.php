@@ -18,6 +18,8 @@ use App\Http\Controllers\Guest\GuestNewsController;
 use App\Http\Controllers\Guest\TeamController;
 use App\Http\Controllers\Volunteer\OfferVolunteerController;
 use App\Http\Controllers\Guest\GuestReportController;
+use App\Http\Controllers\Admin\FinancialReportController;
+use App\Http\Controllers\Guest\GuestFinancialReportController;
 
 Route::get('/', [GuestController::class, 'home'])->name('guest_home');
 Route::get('/aboutus', [GuestController::class, 'aboutUs'])->name('guest_aboutus');
@@ -38,11 +40,18 @@ Route::get('/news/fetch/{offset}', [GuestNewsController::class, 'fetchNews'])->n
 Route::get('/news/{id}', [GuestNewsController::class, 'show'])->name('guest_news_show');
 
 Route::prefix('reports')->name('guest_reports_')->group(function () {
-    Route::get('/months/{year}', [GuestReportController::class, 'getMonths'])->name('months');
-    Route::get('/', [GuestReportController::class, 'index'])->name('index');
-    Route::get('{year}', [GuestReportController::class, 'showYear'])->name('showYear');
-    Route::get('{year}/{month}', [GuestReportController::class, 'showMonth'])->name('showMonth');
+    Route::get('/last', [GuestReportController::class, 'last'])->name('last');
+    Route::get('/{year}', [GuestReportController::class, 'showYear'])->name('year');
+    Route::get('/{year}/{month}', [GuestReportController::class, 'showMonth'])->name('month');
 });
+
+
+
+Route::prefix('financial_reports')->name('guest_financial_reports_')->group(function () {
+    Route::get('/last', [GuestFinancialReportController::class, 'last'])->name('last');
+    Route::get('/{year}', [GuestFinancialReportController::class, 'show'])->name('show');
+});
+
 
 
 Route::middleware('auth')->group(function () {
@@ -70,9 +79,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin_panel')->group(function
 
     Route::get('/reports', [ReportController::class, 'index'])->name('admin_report_list');
     Route::get('/reports/create', [ReportController::class, 'create'])->name('admin_report_create');
-    Route::post('/reports', [ReportController::class, 'store'])->name('admin_report_store');
     Route::get('/reports/{id}/edit', [ReportController::class, 'edit'])->name('admin_report_edit');
-    Route::put('/reports/{id}', [ReportController::class, 'update'])->name('admin_report_update');
+    Route::post('/reports/save/{id?}', [ReportController::class, 'update'])->name('admin_report_save');
     Route::delete('/reports/{id}', [ReportController::class, 'destroy'])->name('admin_report_destroy');
     Route::get('/reports/{id}', [ReportController::class, 'show'])->name('admin_report_show');
     Route::delete('/reports/{reportId}/photo-remove/{photoId}', [ReportController::class, 'deletePhoto'])->name('admin_report_delete_photo');
@@ -117,7 +125,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin_panel')->group(function
         Route::post('store', [TenderProposalController::class, 'store'])->name('store');
         Route::get('{id}/edit', [TenderProposalController::class, 'edit'])->name('edit');
         Route::put('{id}', [TenderProposalController::class, 'update'])->name('update');
-        Route::delete('{id}', [TenderProposalController::class, 'destroy'])->name('destroy');
+        Route::post('/delete', [TenderProposalController::class, 'destroy'])->name('destroy');
         Route::get('{id}', [TenderProposalController::class, 'show'])->name('show');
     });
 
@@ -144,6 +152,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin_panel')->group(function
     Route::get('/news/{news}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
     Route::put('/news/{news}', [NewsController::class, 'update'])->name('admin.news.update');
     Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
+
+    Route::post('/financial-reports-delete-file', [FinancialReportController::class, 'deleteFile'])->name('admin_financial_reports_delete-file');
+    Route::get('/financial-reports', [FinancialReportController::class, 'index'])->name('admin_financial_reports_index');
+    Route::get('/financial-reports/create', [FinancialReportController::class, 'create'])->name('admin_financial_reports_create');
+    Route::get('/financial-reports/edit/{id}', [FinancialReportController::class, 'edit'])->name('admin_financial_reports_edit');
+    Route::post('/financial-reports/store-or-update/{id?}', [FinancialReportController::class, 'storeOrUpdate'])->name('admin_financial_reports_storeOrUpdate');
+    Route::get('/financial-reports/show/{year}', [FinancialReportController::class, 'show'])->name('admin_financial_reports_show');
+    Route::delete('/financial-reports-delete/{id}', [FinancialReportController::class, 'destroy'])->name('admin_financial_reports_destroy');
 });
 
 require __DIR__ . '/auth.php';

@@ -68,12 +68,9 @@ class ReportController extends AdminBaseController
 
    public function create()
    {
-      // Create a new report
-      $report = Report::create([
-         'month' => date('m'),
-         'year' => date('Y'),
-         'text' => "",
-      ]);
+      // Передаем пустую модель в представление, чтобы использовать ту же форму для создания
+      $report = new Report();
+
       return view('admin.report.editReport', compact('report'));
    }
 
@@ -83,7 +80,7 @@ class ReportController extends AdminBaseController
       return view('admin.report.editReport', compact('report'));
    }
 
-   public function update(Request $request, $id)
+   public function update(Request $request, $id = null)
    {
       // Предварительная обработка данных
       $input = $request->all();
@@ -105,7 +102,7 @@ class ReportController extends AdminBaseController
          $report = Report::create([
             'month' => $request->month,
             'year' => $request->year,
-            'text' => $request->text,
+            'text' => $request->combined_content,
          ]);
       }
 
@@ -115,7 +112,8 @@ class ReportController extends AdminBaseController
 
       if ($request->hasFile('photos')) {
          foreach ($request->file('photos') as $photo) {
-            $path = $photo->store('reports', 'public');
+            $originalName = $photo->getClientOriginalName();
+            $path = $photo->storeAs('reports', $originalName, 'public');
             $htmlLink = '<img src="' . asset('storage/' . $path) . '" alt="Report Photo">';
             ReportPhoto::create(['report_id' => $report->id, 'photo' => $path, 'html_link' => $htmlLink]);
          }
@@ -123,7 +121,8 @@ class ReportController extends AdminBaseController
 
       if ($request->hasFile('files')) {
          foreach ($request->file('files') as $file) {
-            $path = $file->store('report_files', 'public');
+            $originalName = $file->getClientOriginalName();
+            $path = $file->storeAs('report_files', $originalName, 'public');
             ReportFile::create([
                'report_id' => $report->id,
                'file_path' => $path
@@ -199,7 +198,8 @@ class ReportController extends AdminBaseController
       ]);
 
       if ($request->hasFile('photo')) {
-         $path = $request->file('photo')->store('photos', 'public');
+         $originalName = $request->file('photo')->getClientOriginalName();
+         $path = $request->file('photo')->storeAs('photos', $originalName, 'public');
          $url = Storage::url($path);
 
          return response()->json(['success' => true, 'url' => $url]);

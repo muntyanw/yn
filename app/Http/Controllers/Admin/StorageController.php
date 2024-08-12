@@ -38,7 +38,8 @@ class StorageController extends AdminBaseController
             Storage::makeDirectory('public/common');
         }
 
-        $path = $request->file('image')->store('public/common');
+        $originalName = $request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('common', $originalName, 'public');
 
         return response()->json(['success' => true, 'path' => Storage::url($path)]);
     }
@@ -91,8 +92,8 @@ class StorageController extends AdminBaseController
     public function upload(Request $request) {
         if ($request->hasFile('upload')) {
             $file = $request->file('upload');
-            $path = $file->store('uploads', 'public');
-    
+            $originalName = $file->getClientOriginalName();
+            $path = $file->storeAs('uploads', $originalName, 'public');
             return response()->json([
                 'url' => asset('storage/' . $path)
             ]);
