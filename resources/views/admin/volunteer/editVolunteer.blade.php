@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label for="first_name">{{ __('First Name') }}</label>
                 <input type="text" class="form-control" id="first_name" name="first_name"
-                    value="{{ old('first_name', $volunteer->first_name) }}" >
+                    value="{{ old('first_name', $volunteer->first_name) }}">
                 @error('first_name')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label for="last_name">{{ __('Last Name') }}</label>
                 <input type="text" class="form-control" id="last_name" name="last_name"
-                    value="{{ old('last_name', $volunteer->last_name) }}" >
+                    value="{{ old('last_name', $volunteer->last_name) }}">
                 @error('last_name')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -47,15 +47,26 @@
                     <div class="mb-2">
                         <img id="currentPhoto" src="{{ $volunteer->photo }}" alt="{{ $volunteer->first_name }}"
                             style="width: 150px; height: 150px;">
+                        <input type="hidden" name="current_photo_remove" id = "current_photo_remove" value="false">
                     </div>
                     <p>{{ __('Current Photo') }}</p>
+                    <div class="btn-group" role="group">
+                        <!-- Кнопка для скачивания -->
+                        <a href="{{ route('admin_volunteer_download_file_path', $volunteer->photo) }}"
+                            class="btn btn-sm btn-primary">
+                            {{ __('Download') }}
+                        </a>
+                        <!-- Кнопка для удаления -->
+                        <a class="btn btn-sm btn-danger" onclick="removePhoto()">
+                            {{ __('Delete') }}
+                        </a>
+                    </div>
                 @endif
                 <input type="file" class="form-control" id="photo" name="photo" onchange="previewPhoto(event)">
                 <img id="previewImage" src="#" alt="Preview" style="display: none; width: 150px; height: 150px;">
                 <p>{{ __('OR') }}</p>
                 <input type="text" class="form-control" id="photo_url" name="photo_url"
-                    placeholder="Enter URL for the photo" value="{{ old('photo_url', $volunteer->photo) }}"
-                    oninput="previewPhotoUrl()">
+                    placeholder="Enter URL for the photo" value="" oninput="previewPhotoUrl()">
                 @error('photo')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -130,6 +141,16 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <label for="files">{{ __('Attach Files') }}</label>
+                <input type="file" class="form-control-file" id="files" name="files[]" multiple>
+                @if ($errors->has('files.*'))
+                    <div class="text-danger mt-2">
+                        {{ $errors->first('files.*') }}
+                    </div>
+                @endif
+            </div>
+
             <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
         </form>
     </div>
@@ -152,6 +173,13 @@
             var output = document.getElementById('previewImage');
             output.src = photoUrl;
             output.style.display = 'block';
+        }
+
+        function removePhoto() {
+            if (confirm('Are you sure you want to delete this file?')) {
+                $('#currentPhoto').attr('src', '');
+                $('#current_photo_remove').val('true');
+            }
         }
     </script>
 @endsection

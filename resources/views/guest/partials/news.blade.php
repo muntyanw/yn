@@ -24,13 +24,13 @@
             @endforeach
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev"
-            style="margin-left: -7em;">
+            style="margin-left: -10em;">
             <span class="carousel-control-prev-icon" aria-hidden="true"
                 style="background-color: black;border-radius: 14px;"></span>
             <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next"
-            style="margin-right: -7em;">
+            style="margin-right: -10em;">
             <span class="carousel-control-next-icon" aria-hidden="true"
                 style="background-color: black;border-radius: 14px;"></span>
             <span class="visually-hidden">Next</span>

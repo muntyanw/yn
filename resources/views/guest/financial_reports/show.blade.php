@@ -6,7 +6,7 @@
     <style>
         .header {
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url('/storage/common/BgusTKIorv14R5WHlfXUy5FZYKwEbkauxbHsxIAP.jpg') center/cover no-repeat;
+                url('/storage/news_photos/k2rNcgk64YDy06dAdXB4LN3nbv7mLeTg0T5TjUWL.jpg') center/cover no-repeat;
         }
     </style>
 @endsection
@@ -37,17 +37,16 @@
                     <div class="form-group">
                         <label>{{ __('Files') }}:</label>
                         @if ($financialReport->files->isNotEmpty())
-                            <ul>
-                                @foreach ($financialReport->files as $file)
-                                    <li>
-                                        <a href="{{ asset('storage/' . $file->file_path) }}" class="btn btn-primary"
-                                            target="_blank">{{ __('View File') . " " . $file->file_path }}</a>
+                            @foreach ($financialReport->files as $file)
+                                <p>
+                                    {{ str_replace('financial_reports/', '', $file->file_path) }}
+                                    <a href="{{ asset('storage/' . $file->file_path) }}" class="btn btn-primary"
+                                        target="_blank">{{ __('View File') . ' ' }}</a>
 
-                                        <a href="{{ asset('storage/' . $file->file_path) }}" class="btn btn-success"
-                                            download="{{ $file->file_path }}">{{ __('Download') }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
+                                    <a href="{{ asset('storage/' . $file->file_path) }}" class="btn btn-success"
+                                        download="{{ $file->file_path }}">{{ __('Download') }}</a>
+                                </p>
+                            @endforeach
                         @else
                             <p>{{ __('No Files Attached') }}</p>
                         @endif

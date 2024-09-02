@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Models\News;
@@ -33,7 +34,7 @@ class NewsController extends AdminBaseController
 
         if ($request->hasFile('photo')) {
             $originalName = $request->file('photo')->getClientOriginalName();
-            $photoPath = '/storage/' . $request->file('photo')->storeAs('news_photos', $originalName, 'public');
+            $photoPath = asset('storage/' . $request->file('photo')->storeAs('news_photos', $originalName, 'public'));
         } elseif ($request->photo_url) {
             $photoPath = $request->photo_url;;
         } else {
@@ -72,7 +73,7 @@ class NewsController extends AdminBaseController
                 Storage::disk('public')->delete($news->photo);
             }
             $originalName = $request->file('photo')->getClientOriginalName();
-            $photoPath = "/storage/" . $request->file('photo')->storeAs('news_photos', $originalName, 'public');
+            $photoPath = asset('storage/' . $request->file('photo')->storeAs('news_photos', $originalName, 'public'));
         } elseif ($request->photo_url) {
             $photoPath = $request->photo_url;
         }

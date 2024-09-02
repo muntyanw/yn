@@ -5,7 +5,7 @@
 @section('style')
     <style>
         .header {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/common/BgusTKIorv14R5WHlfXUy5FZYKwEbkauxbHsxIAP.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/news_photos/k2rNcgk64YDy06dAdXB4LN3nbv7mLeTg0T5TjUWL.jpg') center/cover no-repeat;
         }
 
         .contact-form {
@@ -70,7 +70,9 @@
 
                     <div class="form-group">
                         <label for="message">{{ __('Note') }}</label>
-                        <textarea class="form-control" id="message" name="message" rows="3" required>{{ old('message') }}</textarea>
+                        <textarea class="form-control" id="message" name="message" rows="4" required>@if (session('offer_id')){{ trim(__('Offer') . ' ' . session('offer_id')) }}@endif
+                            {{ old('message') }}
+                        </textarea>
                         @error('message')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

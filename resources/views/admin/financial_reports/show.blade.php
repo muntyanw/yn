@@ -30,6 +30,6 @@
             @endif
         </div>
 
-        <a href="{{ route('financial_reports.index') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
+        <a href="{{ route('admin_financial_reports_index') }}" class="btn btn-secondary">{{ __('Back to List') }}</a>
     </div>
 @endsection

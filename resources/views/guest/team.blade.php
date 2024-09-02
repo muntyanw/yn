@@ -5,7 +5,7 @@
 @section('style')
     <style>
         .header {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/common/BgusTKIorv14R5WHlfXUy5FZYKwEbkauxbHsxIAP.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/news_photos/k2rNcgk64YDy06dAdXB4LN3nbv7mLeTg0T5TjUWL.jpg') center/cover no-repeat;
         }
 
         .bg-dark-beige {
@@ -53,7 +53,7 @@
                         <div class="row align-items-start">
                             <div class="col-md-3">
                                 <img src="https://www.edinaianatsiia.org.ua/wp-content/uploads/2023/08/4_1-814x1024.jpg"
-                                    alt="Гончаренко Світлана Віталіївна" class="img-fluid rounded shadow">
+                                    alt="Гончаренко Світлана Віталіївна" class="img-fluid rounded shadow" style="object-fit: contain;">
                             </div>
                             <div class="col-md-9">
                                 <p class="bg-dark-beige text-light-beige p-2"><strong>Гончаренко Світлана

@@ -4,7 +4,7 @@
 
 @section('style')
     <style>
-        .collapse{
+        .collapse {
             background-color: rgb(246, 249, 254);
         }
     </style>
@@ -24,27 +24,38 @@
                 <div class="card mb-3">
                     <div class="card-header" id="heading{{ md5($directory) }}">
                         <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ md5($directory) }}" aria-expanded="true" aria-controls="collapse{{ md5($directory) }}">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                data-target="#collapse{{ md5($directory) }}" aria-expanded="true"
+                                aria-controls="collapse{{ md5($directory) }}">
                                 {{ str_replace('public/', '', $directory) }}
                             </button>
                         </h2>
                     </div>
-                    <div id="collapse{{ md5($directory) }}" class="collapse" aria-labelledby="heading{{ md5($directory) }}" data-parent="#accordionExample">
+                    <div id="collapse{{ md5($directory) }}" class="collapse" aria-labelledby="heading{{ md5($directory) }}"
+                        data-parent="#accordionExample">
                         <div class="card-body">
                             @foreach ($fileList as $file)
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-3 file-row"
+                                    id="file-row-{{ md5($file) }}">
                                     <div class="d-flex align-items-center me-3">
-                                        <img src="{{ Storage::url($file) }}" alt="{{ basename($file) }}" class="img-fluid" style="max-width: 100px; margin-right: 15px;">
+                                        <img src="{{ Storage::url($file) }}" alt="{{ basename($file) }}" class="img-fluid"
+                                            style="max-width: 100px; margin-right: 15px;">
                                         <div class="ms-3">
                                             <p class="mb-0">{{ basename($file) }}</p>
-                                            <p class="mb-0">{{ \Carbon\Carbon::createFromTimestamp(Storage::lastModified($file))->toDateTimeString() }}</p>
-                                            <a href="{{ Storage::url($file) }}" target="_blank">{{ Storage::url($file) }}</a>
+                                            <p class="mb-0">
+                                                {{ \Carbon\Carbon::createFromTimestamp(Storage::lastModified($file))->toDateTimeString() }}
+                                            </p>
+                                            <a href="{{ Storage::url($file) }}"
+                                                target="_blank">{{ Storage::url($file) }}</a>
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <a href="{{ Storage::url($file) }}" target="_blank" class="btn btn-primary btn-sm me-2">{{ __('View') }}</a>
-                                        <button class="btn btn-secondary btn-sm me-2" onclick="copyToClipboard('{{ Storage::url($file) }}')">{{ __('Copy Link') }}</button>
-                                        <button class="btn btn-danger btn-sm" onclick="deleteFile('{{ Storage::url($file) }}')">{{ __('Delete') }}</button>
+                                        <a href="{{ Storage::url($file) }}" target="_blank"
+                                            class="btn btn-primary btn-sm me-2">{{ __('View') }}</a>
+                                        <button class="btn btn-secondary btn-sm me-2"
+                                            onclick="copyToClipboard('{{ Storage::url($file) }}')">{{ __('Copy Link') }}</button>
+                                        <button class="btn btn-danger btn-sm"
+                                            onclick="deleteFile('{{ Storage::url($file) }}', '{{ md5($file) }}')">{{ __('Delete') }}</button>
                                     </div>
                                 </div>
                             @endforeach
@@ -54,7 +65,8 @@
             @endforeach
         </div>
 
-        <form id="upload-form" action="{{ route('admin_storage_images_upload') }}" method="POST" enctype="multipart/form-data" class="mt-4">
+        <form id="upload-form" action="{{ route('admin_storage_images_upload') }}" method="POST"
+            enctype="multipart/form-data" class="mt-4">
             @csrf
             <div class="form-group">
                 <label for="image">{{ __('Add Image to Common Folder') }}</label>
@@ -66,7 +78,8 @@
         <form id="download-form" action="{{ route('admin_storage_download_images') }}" method="POST" class="mt-4">
             @csrf
             <div class="form-group">
-                <label for="urls">{{ __('Here you insert links to images separated by commas, they are downloaded to our server and appear in the common folder') }}</label>
+                <label
+                    for="urls">{{ __('Here you insert links to images separated by commas, they are downloaded to our server and appear in the common folder') }}</label>
                 <textarea name="urls" class="form-control" rows="10" id="urls"></textarea>
             </div>
             <button type="submit" class="btn btn-primary mt-2">{{ __('Download') }}</button>
@@ -85,7 +98,7 @@
             alert('{{ __('Link copied to clipboard') }}');
         }
 
-        function deleteFile(path) {
+        function deleteFile(path, rowId) {
             if (confirm('{{ __('Are you sure you want to delete this file?') }}')) {
                 fetch('{{ route('admin_storage_files_delete') }}', {
                         method: 'DELETE',
@@ -100,8 +113,8 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
+                            document.getElementById('file-row-' + rowId).remove();
                             alert('{{ __('File deleted successfully') }}');
-                            location.reload();
                         } else {
                             alert(data.message || '{{ __('File deletion failed') }}');
                         }

@@ -15,7 +15,7 @@ class AddFieldsToVolunteersTable extends Migration
     {
         Schema::table('volunteers', function (Blueprint $table) {
             $table->text('about_me')->nullable(); // Обо мне
-            $table->boolean('is_employee')->default(false); // Это сотрудник
+            $table->boolean('is_employee')->default(false); // Это Співробітник
             $table->boolean('public_access')->default(true); // Публичный доступ к информации обо мне
         });
     }

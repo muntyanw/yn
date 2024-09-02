@@ -13,6 +13,9 @@
     <title>Громадська організація "Єдина Нація"</title>
     <link rel="icon" type="image/x-icon" sizes="20x20"
         href="/storage/common/oovpKJMyh4leT8NYjk3JRxd1g5MRMn7C3texDBqP.png">
+
+    {!! $headerAdditions ?? '' !!}
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -42,14 +45,24 @@
             width: 340px;
         }
 
+        .carousel-control-next {
+            margin-top: -2em;
+            margin-left: 94%;
+        }
+
         /* Стили для экранов от 768px до 991px */
-        @media (min-width: 768px) and (max-width: 991px) {
+        @media (min-width: 767px) and (max-width: 991px) {
             .reportimgwith {
                 width: 560px;
             }
 
             .reportcontwith {
                 width: 700px;
+            }
+
+            .carousel-control-next {
+                margin-top: -2em;
+                margin-left: 94%;
             }
 
         }
@@ -74,6 +87,11 @@
                 width: 960px;
             }
 
+            .carousel-control-next {
+                margin-top: -2em;
+                margin-left: 94%;
+            }
+
 
         }
 
@@ -96,6 +114,12 @@
             .reportcontwith {
                 width: 1100px;
             }
+
+            .carousel-control-next {
+                margin-top: 0;
+                margin-left: 0;
+            }
+            
 
         }
 
@@ -168,7 +192,7 @@
         }
 
         .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/common/BgusTKIorv14R5WHlfXUy5FZYKwEbkauxbHsxIAP.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/news_photos/k2rNcgk64YDy06dAdXB4LN3nbv7mLeTg0T5TjUWL.jpg') center/cover no-repeat;
             color: white;
             padding: 100px 0;
         }
@@ -214,6 +238,7 @@
 </head>
 
 <body class="bg-light-beige">
+    {!! $bodyAdditions ?? '' !!}
     @include('guest.partials.header')
     <main>
         @yield('content')
@@ -238,6 +263,7 @@
         });
     </script>
     @yield('scripts')
+    {!! $scriptAdditions ?? '' !!}
 
 </body>
 

@@ -23,16 +23,22 @@
                         <a href="tenders.php"
                             class="nav-link {{ request()->is('tenders') ? 'active' : '' }}">Тендери</a>
                     </li> --}}
-                   {{-- Звіти с выпадающим подменю --}}
-                   <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle {{ request()->is('reports', 'financial-reports') ? 'active' : '' }}" id="reportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Звіти
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
-                        <li><a href="{{ route('guest_reports_last') }}" class="dropdown-item {{ request()->is('reports') ? 'active' : '' }}">Звіти по діяльності</a></li>
-                        <li><a href="{{ route('guest_financial_reports_last') }}" class="dropdown-item {{ request()->is('financial-reports') ? 'active' : '' }}">Фінансові звіти</a></li>
-                    </ul>
-                </li>
+                    {{-- Звіти с выпадающим подменю --}}
+                    <li class="nav-item dropdown">
+                        <a href="#"
+                            class="nav-link dropdown-toggle {{ request()->is('reports', 'financial-reports') ? 'active' : '' }}"
+                            id="reportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Звіти
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
+                            <li><a href="{{ route('guest_reports_last') }}"
+                                    class="dropdown-item {{ request()->is('reports') ? 'active' : '' }}">Звіти по
+                                    діяльності</a></li>
+                            <li><a href="{{ route('guest_financial_reports_last') }}"
+                                    class="dropdown-item {{ request()->is('financial-reports') ? 'active' : '' }}">Фінансові
+                                    звіти</a></li>
+                        </ul>
+                    </li>
                     {{-- <li class="nav-item">
                         <a href="blog.php" class="nav-link {{ request()->is('blog') ? 'active' : '' }}">Підтримати
                             Нас</a>
@@ -54,7 +60,7 @@
 
 <!-- Offcanvas меню для мобильных устройств -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel"
-    style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/common/BgusTKIorv14R5WHlfXUy5FZYKwEbkauxbHsxIAP.jpg') center/cover no-repeat;">
+    style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/news_photos/k2rNcgk64YDy06dAdXB4LN3nbv7mLeTg0T5TjUWL.jpg') center/cover no-repeat;">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="mobileMenuLabel">Меню</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -96,9 +102,10 @@
             {{-- <li class="nav-item">
                 <a href="blog.php" class="nav-link {{ request()->is('blog') ? 'active' : '' }}">Підтримати Нас</a>
             </li> --}}
+            @include('guest.partials.login_mobile')
         </ul>
 
-        @include('guest.partials.login')
+
 
     </div>
 </div>

@@ -24,7 +24,7 @@ class CreateVolunteersTable extends Migration
             $table->string('email')->unique(); // Емайл
             $table->text('address'); // Адреса проживання
             $table->text('about_me')->nullable(); // Обо мне
-            $table->boolean('is_employee')->default(false); // Это сотрудник
+            $table->boolean('is_employee')->default(false); // Это Співробітник
             $table->boolean('public_access')->default(true); // Публичный доступ к информации обо мне
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

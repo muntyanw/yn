@@ -126,6 +126,18 @@
                     </div>
                 </a>
             </div>
+
+             <!-- Adds -->
+             <div class="col-md-3 mb-4">
+                <a href="{{ route('adds_pages_index') }}"
+                    class="btn btn-outline-primary w-100 p-3 d-flex align-items-center justify-content-center flex-column h-100">
+                    <i class="fab fa-adn fa-2x mb-3"></i>
+                    <div class="text-center">
+                        <h5>{{ __('Add to pages') }}</h5>
+                        <p>{{ __('Manage storage files') }}</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 @endsection

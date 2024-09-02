@@ -20,38 +20,43 @@ use App\Http\Controllers\Volunteer\OfferVolunteerController;
 use App\Http\Controllers\Guest\GuestReportController;
 use App\Http\Controllers\Admin\FinancialReportController;
 use App\Http\Controllers\Guest\GuestFinancialReportController;
+use App\Http\Controllers\Admin\AddsPageController;
+use App\Http\Middleware\AddAdditionsToView;
 
-Route::get('/', [GuestController::class, 'home'])->name('guest_home');
-Route::get('/aboutus', [GuestController::class, 'aboutUs'])->name('guest_aboutus');
+Route::middleware([AddAdditionsToView::class])->group(function () {
+    Route::get('/', [GuestController::class, 'home'])->name('guest_home');
+    Route::get('/aboutus', [GuestController::class, 'aboutUs'])->name('guest_aboutus');
 
-Route::get('/team', [TeamController::class, 'index'])->name('guest_team');
-Route::get('/volunteers/fetch', [TeamController::class, 'fetchVolunteers'])->name('guest_volunteers_fetch');
-Route::get('/volunteers/{id}', [TeamController::class, 'show'])->name('guest_volunteer_show');
+    Route::get('/team', [TeamController::class, 'index'])->name('guest_team');
+    Route::get('/volunteers/fetch', [TeamController::class, 'fetchTeam'])->name('guest_teem_fetch');
+    Route::get('/employee/{id}', [TeamController::class, 'showEmployee'])->name('guest_emploee_show');
+    Route::get('/volunteers/{id}', [TeamController::class, 'showVolunteer'])->name('guest_volunteer_show');
 
-Route::get('/volunteer-want-become', [GuestVolunteerController::class, 'wantBecome'])->name('guest_want_become_volunteer');
-Route::get('/volunteers/want-help', [GuestVolunteerController::class, 'showForm'])->name('guest_volunteer_want_help_form');
-Route::post('/volunteers/contact', [GuestVolunteerController::class, 'sendEmail'])->name('guest_volunteer_want_help_send');
-Route::get('/volunteer/offers', [GuestVolunteerController::class, 'index'])->name('guest_offers_index');
-Route::get('/volunteer/help/{offer_id}', [GuestVolunteerController::class, 'volunteerHelp'])->name('guest_volunteer_help');
+    Route::get('/volunteer-want-become', [GuestVolunteerController::class, 'wantBecome'])->name('guest_want_become_volunteer');
+    Route::post('/volunteers/contact', [GuestVolunteerController::class, 'sendEmail'])->name('guest_volunteer_want_help_send');
+    Route::get('/volunteer/offers', [GuestVolunteerController::class, 'index'])->name('guest_offers_index');
+    Route::get('/volunteer/help/{offer_id}', [GuestVolunteerController::class, 'volunteerHelp'])->name('guest_volunteer_help');
 
-Route::get('/news', [GuestNewsController::class, 'showNews'])->name('guest_news_index');
-Route::get('/news-list', [GuestNewsController::class, 'list'])->name('guest_news_list');
-Route::get('/news/fetch/{offset}', [GuestNewsController::class, 'fetchNews'])->name('guest_news_fetch');
-Route::get('/news/{id}', [GuestNewsController::class, 'show'])->name('guest_news_show');
+    Route::get('/want-help', function () {
+        return view('guest.want_help');
+    })->name('guest_volunteer_want_help_form');
 
-Route::prefix('reports')->name('guest_reports_')->group(function () {
-    Route::get('/last', [GuestReportController::class, 'last'])->name('last');
-    Route::get('/{year}', [GuestReportController::class, 'showYear'])->name('year');
-    Route::get('/{year}/{month}', [GuestReportController::class, 'showMonth'])->name('month');
+    Route::get('/news', [GuestNewsController::class, 'showNews'])->name('guest_news_index');
+    Route::get('/news-list', [GuestNewsController::class, 'list'])->name('guest_news_list');
+    Route::get('/news/fetch/{offset}', [GuestNewsController::class, 'fetchNews'])->name('guest_news_fetch');
+    Route::get('/news/{id}', [GuestNewsController::class, 'show'])->name('guest_news_show');
+
+    Route::prefix('reports')->name('guest_reports_')->group(function () {
+        Route::get('/last', [GuestReportController::class, 'last'])->name('last');
+        Route::get('/{year}', [GuestReportController::class, 'showYear'])->name('year');
+        Route::get('/{year}/{month}', [GuestReportController::class, 'showMonth'])->name('month');
+    });
+
+    Route::prefix('financial_reports')->name('guest_financial_reports_')->group(function () {
+        Route::get('/last', [GuestFinancialReportController::class, 'last'])->name('last');
+        Route::get('/{year}', [GuestFinancialReportController::class, 'show'])->name('show');
+    });
 });
-
-
-
-Route::prefix('financial_reports')->name('guest_financial_reports_')->group(function () {
-    Route::get('/last', [GuestFinancialReportController::class, 'last'])->name('last');
-    Route::get('/{year}', [GuestFinancialReportController::class, 'show'])->name('show');
-});
-
 
 
 Route::middleware('auth')->group(function () {
@@ -61,6 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile/file/delete/{id}', [ProfileController::class, 'deleteFile'])->name('profile_delete_file');
 
     Route::get('/cabinet/volunteer/offers', [OfferVolunteerController::class, 'index'])->name('offer_volunteer_index');
     Route::get('/cabinet/volunteer/help/{offer_id}', [OfferVolunteerController::class, 'volunteerHelp'])->name('offer_volunteer_help');
@@ -70,12 +76,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin_panel')->group(function
     Route::get('/', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin_panel');
 
     Route::get('/volunteers_index', [VolunteerController::class, 'index'])->name('admin_volunteers_index');
+    Route::get('/volunteers/fetch/{offset}', [VolunteerController::class, 'fetchVolunteers'])->name('admin_volunteers_fetch');
     Route::get('/volunteers_create/{user_id}', [VolunteerController::class, 'create'])->name('admin_volunteer_create');
     Route::get('/volunteers_edit/{id}', [VolunteerController::class, 'edit'])->name('admin_volunteer_edit');
     Route::post('/volunteers_store', [VolunteerController::class, 'store'])->name('admin_volunteer_store');
     Route::put('/volunteers_update/{id}', [VolunteerController::class, 'update'])->name('admin_volunteer_update');
     Route::post('/volunteers_destroy', [VolunteerController::class, 'destroy'])->name('admin_volunteer_destroy');
     Route::get('/volunteers_show/{id}', [VolunteerController::class, 'show'])->name('admin_volunteer_show');
+    Route::get('volunteer/file/download/{id}', [VolunteerController::class, 'downloadFile'])->name('admin_volunteer_download_file');
+    Route::get('volunteer/file/download-path/{id}', [VolunteerController::class, 'downloadFilePath'])->name('admin_volunteer_download_file_path');
+    Route::delete('volunteer/file/delete/{id}', [VolunteerController::class, 'deleteFile'])->name('admin_volunteer_delete_file');
+
 
     Route::get('/reports', [ReportController::class, 'index'])->name('admin_report_list');
     Route::get('/reports/create', [ReportController::class, 'create'])->name('admin_report_create');
@@ -160,6 +171,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin_panel')->group(function
     Route::post('/financial-reports/store-or-update/{id?}', [FinancialReportController::class, 'storeOrUpdate'])->name('admin_financial_reports_storeOrUpdate');
     Route::get('/financial-reports/show/{year}', [FinancialReportController::class, 'show'])->name('admin_financial_reports_show');
     Route::delete('/financial-reports-delete/{id}', [FinancialReportController::class, 'destroy'])->name('admin_financial_reports_destroy');
+
+    Route::get('adds_pages', [AddsPageController::class, 'index'])->name('adds_pages_index');
+    Route::get('adds_pages/create_or_edit/{addsPage?}', [AddsPageController::class, 'createOrEdit'])->name('adds_pages_create_or_edit');
+    Route::post('adds_pages/save/{addsPage?}', [AddsPageController::class, 'save'])->name('adds_pages_save');
+    Route::delete('adds_pages/destroy/{id}', [AddsPageController::class, 'destroy'])->name('adds_pages_delete');
 });
 
 require __DIR__ . '/auth.php';

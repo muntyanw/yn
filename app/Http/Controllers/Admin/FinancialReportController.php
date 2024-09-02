@@ -62,8 +62,8 @@ class FinancialReportController extends Controller
 
     public function show($year)
     {
-        $report = FinancialReport::where('year', $year)->with('files')->firstOrFail();
-        return response()->json($report);
+        $financialReport = FinancialReport::where('year', $year)->with('files')->firstOrFail();
+        return view('admin.financial_reports.show', compact('financialReport'));
     }
 
     public function destroy($id)

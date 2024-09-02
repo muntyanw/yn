@@ -129,6 +129,16 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <label for="files">{{ __('Attach Files') }}</label>
+                <input type="file" class="form-control-file" id="files" name="files[]" multiple>
+                @if ($errors->has('files.*'))
+                    <div class="text-danger mt-2">
+                        {{ $errors->first('files.*') }}
+                    </div>
+                @endif
+            </div>
+
             <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
         </form>
     </div>

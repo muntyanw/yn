@@ -356,6 +356,24 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="fab fa-adn"></i>
+                                            <p style="margin-left: 8px;">
+                                                {{ __('Add to pages') }}
+                                                <i class="right fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="{{ route('adds_pages_index') }}" class="nav-link">
+                                                    <i class="fas fa-bars"></i>
+                                                    <p class="ml-3">{{ __('List') }}</p>
+                                                </a>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>

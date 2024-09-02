@@ -37,7 +37,7 @@
                                     class="nav-link text-light"><i class="fab fa-facebook-f"></i></a></li>
                             <li class="nav-item"><a href="https://www.youtube.com/@edinaianatsiia/featured"
                                     class="nav-link text-light"><i class="fab fa-youtube"></i></a></li>
-                            <li class="nav-item"><a href="href="https://www.instagram.com/edinaianatsiia/"
+                            <li class="nav-item"><a href="https://www.instagram.com/edinaianatsiia/"
                                     class="nav-link text-light"><i class="fab fa-instagram"></i></a></li>
                             <li class="nav-item"><a href="https://twitter.com/ENcvetkov_boris"
                                     class="nav-link text-light"><i class="fab fa-twitter"></i></a></li>

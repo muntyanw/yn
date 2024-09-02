@@ -1,5 +1,5 @@
-<nav class="d-none d-lg-block ms-auto">
-    <ul class="nav">
+    <!-- Меню для больших экранов -->
+    <ul class="nav d-none d-lg-flex">
         @auth
             <li class="nav-item">
                 <a href="{{ url('/dashboard') }}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
@@ -8,26 +8,26 @@
             </li>
             <li class="nav-item">
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
+                <a href="{{ route('logout') }}" class="nav-link"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    {{ __('Log Out') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
-                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-dropdown-link>
                 </form>
             </li>
         @else
             <li class="nav-item">
-                <a href="{{ route('login') }}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('login') }}" class="nav-link {{ request()->is('login') ? 'active' : '' }}">
                     {{ __('Log in') }}
                 </a>
             </li>
             @if (Route::has('register'))
                 <li class="nav-item">
-                    <a href="{{ route('register') }}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('register') }}" class="nav-link {{ request()->is('register') ? 'active' : '' }}">
                         {{ __('Register') }}
                     </a>
                 </li>
             @endif
         @endauth
     </ul>
-</nav>

@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label for="comment">{{ __('Comment') }}</label>
-                <textarea name="comment" class="form-control" id="comment" required>{{ $financialReport->comment }}</textarea>
+                <textarea name="comment" class="form-control" id="comment">{{ $financialReport->comment }}</textarea>
             </div>
             <div class="form-group">
                 <label for="files">{{ __('Files') }}</label>

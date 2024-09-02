@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\VolunteerFile;
 use App\Models\User;
 use App\Models\Volunteer;
 use App\Models\Skill;
@@ -36,7 +36,7 @@ class VolunteerController extends AdminBaseController
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_url' => 'nullable|url',
+            'photo_url' => 'nullable|string',
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'address' => 'nullable|string',
@@ -57,7 +57,7 @@ class VolunteerController extends AdminBaseController
         $photoPath = null;
         if ($request->hasFile('photo')) {
             $originalName = $request->file('photo')->getClientOriginalName();
-            $photoPath = "storage/" . $request->file('photo')->storeAs('volunteers_photos', $originalName, 'public');
+            $photoPath = asset('storage/' . $request->file('photo')->storeAs('volunteers_photos', $originalName, 'public'));
         } elseif ($request->input('photo_url')) {
             $photoPath = $request->input('photo_url');
         }
@@ -81,12 +81,25 @@ class VolunteerController extends AdminBaseController
 
         $volunteer->skills()->sync($request->input('skills', []));
 
+        // Сохранение файлов
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $nameFile = $file->getClientOriginalName();
+                $path = $file->storeAs('volunteer_files', $nameFile, 'public');
+                VolunteerFile::create([
+                    'volunteer_id' => $volunteer->id,
+                    'file_path' => $path,
+                    'file_name' => $nameFile,
+                ]);
+            }
+        }
+
         return redirect()->route('admin_volunteers_index')->with('success', __('Volunteer created successfully.'));
     }
 
     public function edit($id)
     {
-        $volunteer = Volunteer::with('skills')->findOrFail($id);
+        $volunteer = Volunteer::with('skills')->with('files')->findOrFail($id);
         $skills = Skill::all();
 
         return view('admin.volunteer.editVolunteer', compact('volunteer', 'skills'));
@@ -105,7 +118,7 @@ class VolunteerController extends AdminBaseController
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_url' => 'nullable|url',
+            'photo_url' => 'nullable|string',
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'address' => 'nullable|string',
@@ -133,9 +146,11 @@ class VolunteerController extends AdminBaseController
                 Storage::disk('public')->delete($volunteer->photo);
             }
             $originalName = $request->file('photo')->getClientOriginalName();
-            $photoPath = "storage/" . $request->file('photo')->storeAs('volunteers_photos', $originalName, 'public');
+            $photoPath = asset('storage/' . $request->file('photo')->storeAs('volunteers_photos', $originalName, 'public'));
         } elseif ($request->input('photo_url')) {
             $photoPath = $request->input('photo_url');
+        } elseif ($request->input('current_photo_remove') == 'true') {
+            $photoPath = "";
         }
 
         $volunteer->photo = $photoPath;
@@ -144,12 +159,66 @@ class VolunteerController extends AdminBaseController
 
         $volunteer->skills()->sync($request->input('skills', []));
 
+        // Сохранение файлов
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $nameFile = $file->getClientOriginalName();
+                $path = $file->storeAs('volunteer_files', $nameFile, 'public');
+                VolunteerFile::create([
+                    'volunteer_id' => $volunteer->id,
+                    'file_path' => $path,
+                    'file_name' => $nameFile,
+                ]);
+            }
+        }
+
         return redirect()->route('admin_volunteers_index')->with('success', __('Volunteer updated successfully.'));
     }
 
-    public function destroy(Volunteer $volunteer)
+    public function destroy(Request $request)
     {
+        $request->validate([
+            'id' => ['required', 'integer', 'exists:volunteers,id'],
+        ]);
+
+        $volunteer = Volunteer::findOrFail($request->id);
         $volunteer->delete();
+
         return redirect()->route('admin_volunteers_index')->with('success', __('Volunteer deleted successfully.'));
+    }
+
+    public function downloadFile($id)
+    {
+        $file = VolunteerFile::findOrFail($id);
+        $filePath = storage_path('app/public/' . $file->file_path);
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath, $file->file_name);
+        }
+
+        return redirect()->back()->with('error', __('File not found.'));
+    }
+
+    public function downloadFilePath($filePath)
+    {
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+
+        return redirect()->back()->with('error', __('File not found.'));
+    }
+
+    public function deleteFile($id)
+    {
+        $file = VolunteerFile::findOrFail($id);
+        $filePath = storage_path('app/public/' . $file->file_path);
+
+        if (file_exists($filePath)) {
+            unlink($filePath); // Удаление файла из файловой системы
+        }
+
+        $file->delete(); // Удаление записи о файле из базы данных
+
+        return redirect()->back()->with('success', __('File deleted successfully.'));
     }
 }

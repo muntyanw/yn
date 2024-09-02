@@ -8,12 +8,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\Offer;
+use App\Services\VolunteerService;
 
 class GuestVolunteerController extends Controller
 {
-    public function showForm()
+    protected $volunteerService;
+
+    public function __construct(VolunteerService $volunteerService)
     {
-        return view('guest.want_help');
+        $this->volunteerService = $volunteerService;
     }
 
     public function sendEmail(Request $request)
@@ -36,7 +39,7 @@ class GuestVolunteerController extends Controller
 
         return back()->with('success', 'Ваше сообщение было успешно отправлено!');
     }
-
+    
     public function index()
     {
         // Retrieve active offers with related skills and time periods
@@ -45,8 +48,19 @@ class GuestVolunteerController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
 
+        $volunteers = $this->volunteerService->fetchVolunteers(0, 8, false, true);
+
         // Pass the offers to the view
-        return view('guest.offers', compact('offers'));
+        return view('guest.offers', compact('offers', 'volunteers'));
+    }
+
+    public function fetchVolunteers(Request $request)
+    {
+
+        $offset = $request->get('offset', 0);
+        $volunteers = $this->volunteerService->fetchVolunteers($offset, 8, false, true);
+
+        return response()->json($volunteers);
     }
 
     public function volunteerHelp($offer_id)

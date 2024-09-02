@@ -5,7 +5,7 @@
 @section('style')
     <style>
         .header {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/common/BgusTKIorv14R5WHlfXUy5FZYKwEbkauxbHsxIAP.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/storage/news_photos/k2rNcgk64YDy06dAdXB4LN3nbv7mLeTg0T5TjUWL.jpg') center/cover no-repeat;
         }
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
@@ -32,21 +32,18 @@
             <h2 class="section-heading text-center">{{ __('Team') }}</h2>
             <div id="employeeCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    @php
-                        $volunteers = \App\Models\Volunteer::limit(6)->get();
-                    @endphp
                     <div class="carousel-item active">
                         <div class="row">
                             @foreach ($volunteers as $volunteer)
                                 <div class="col-md-4">
-                                    <a href="{{ route('guest_volunteer_show', $volunteer->id) }}">
+                                    <a href="{{ route('guest_emploee_show', $volunteer->id) }}">
                                         <img src="{{ $volunteer->photo }}"
                                             alt="{{ $volunteer->first_name }} {{ $volunteer->last_name }}"
                                             class="img-fluid rounded"
                                             style="height: 300px; width: 100%; object-fit: cover;object-position: top;">
                                     </a>
                                     <p class="text-center">
-                                        <a href="{{ route('guest_volunteer_show', $volunteer->id) }}">
+                                        <a href="{{ route('guest_emploee_show', $volunteer->id) }}">
                                             {{ $volunteer->first_name }} {{ $volunteer->last_name }}
                                         </a>
                                     </p>
@@ -56,12 +53,12 @@
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#employeeCarousel"
-                    data-bs-slide="prev" style="left: -5%;">
+                    data-bs-slide="prev" style="left: -7%;">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#employeeCarousel"
-                    data-bs-slide="next" style="right: -5%;">
+                    data-bs-slide="next" style="right: -7%;">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>

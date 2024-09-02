@@ -36,9 +36,9 @@
                         </div>
                         <div class="p-2 flex-fill">{{ $volunteer->first_name }} {{ $volunteer->last_name }}</div>
                         {{-- <div class="p-2 flex-fill">{{ $volunteer->phone }}</div>
-                    <div class="p-2 flex-fill">{{ $volunteer->email }}</div>--}}
-                    <div class="p-2 flex-fill">{{ $volunteer->skills->pluck('name')->implode(', ') }}</div>
-                    {{-- <div class="p-2 flex-fill">{{ $volunteer->about_me }}</div>  --}}
+                    <div class="p-2 flex-fill">{{ $volunteer->email }}</div> --}}
+                        <div class="p-2 flex-fill">{{ $volunteer->skills->pluck('name')->implode(', ') }}</div>
+                        {{-- <div class="p-2 flex-fill">{{ $volunteer->about_me }}</div>  --}}
                         <div class="p-2 flex-fill">{{ $volunteer->is_employee ? __('Yes') : __('No') }}</div>
                         <div class="p-2 flex-fill">{{ $volunteer->public_access ? __('Yes') : __('No') }}</div>
                         <div class="p-2 flex-fill d-flex flex-wrap">
@@ -46,13 +46,13 @@
                                 class="btn btn-info btn-sm mr-2">{{ __('Show') }}</a>
                             <a href="{{ route('admin_volunteer_edit', $volunteer->id) }}"
                                 class="btn btn-warning btn-sm mr-2">{{ __('Edit') }}</a>
-                            <form action="{{ route('admin_volunteer_destroy', $volunteer->id) }}" method="POST"
-                                style="display:inline;">
+                            <form action="{{ route('admin_volunteer_destroy') }}" method="POST" style="display:inline;">
                                 @csrf
-                                @method('DELETE')
+                                <input type="hidden" name="id" value="{{ $volunteer->id }}">
                                 <button type="submit" class="btn btn-danger btn-sm"
                                     onclick="return confirm('{{ __('Are you sure you want to delete this volunteer?') }}')">{{ __('Delete') }}</button>
                             </form>
+
                         </div>
                     </div>
                 @endforeach

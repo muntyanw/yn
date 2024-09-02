@@ -1,0 +1,45 @@
+YN
+
+Ссылка: https://hostiq.ua/clients/clientarea.php
+
+Адрес электронной почты: pounitednation@gmail.com
+
+Пароль: E3SKPRp7ST
+
+BD edinaia1_lara
+user edinaia1_lara
+pass 6Alyh@3VI81z)l&
+
+ftp: 
+edinaianatsiia.org.ua
+mvv@edinaianatsiia.org.ua
+Y94TjEz54j
+
+Жодних проблем. Вкажіть хост для підключення такий:
+eushared19.twinservers.net
+
+Працювати з базами даними можливо за статтею - https://hostiq.ua/wiki/ukr/cpanel-databases/
+
+https://hostiq.ua/clients/clientarea.php
+
+https://eushared19.twinservers.net:2083/cpsess8831872827/frontend/jupiter/terminal/index.html
+
+https://www.youtube.com/watch?v=bsil8XwFGjY&list=PLTucyHptHtTkUbXaikXEmCWL8GradRx9I&index=2
+
+https://github.com/vmuntyan/yn
+
+Можна зробити так:
+1. Змініть основний домен на неіснуючий. Наприклад - edinaianatsiia1.org.ua
+2. Додайте домен edinaianatsiia.org.ua на ваш хостинг як додатковий. 
+https://hostiq.ua/wiki/ukr/cpanel-change-primary-domain/
+Встановіть для нього потрібний корінь. Наприклад, "public_html/public".
+
+Сайт на Laravel, тіло CMS буде в "public_html", і тека "public" буде вже в "public_html/public"
+
+Успешно: You have successfully created the new “new.edinaianatsiia.org.ua” domain with the document root of “/home3/edinaia1/home3/edinaia1/public_html/laravel/public”.
+
+
+https://prnt.sc/P6438QTrObwj
+
+"github.gitAuthentication": true
+
