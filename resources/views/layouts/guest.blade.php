@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
-        content="Цей шаблон підходить для благодійних організацій, НПО, неприбуткових організацій, пожертвувань, церкви або сайтів для збору коштів.">
+        content="Благодійна організація Єдина">
     <meta name="keywords"
         content="благодійність, причини, пожертвування, благодійний фонд, благодійний хаб, благодійна тема, пожертвування, неприбуткова організація, фандрейзер, соціальна, НПО, неприбуткова, волонтер">
     <meta name="author" content="initTheme">
